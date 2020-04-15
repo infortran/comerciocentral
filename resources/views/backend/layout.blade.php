@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name')}}</title>
+    <title>Administracion | {{ config('app.name')}}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -26,6 +26,19 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
+ 
+  
+
+    <style>
+                  .display-none{
+                    display:none !important;
+                  }
+
+                  .display-visible{
+                    display: block !important;
+                  }
+                </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -41,22 +54,11 @@
                     </li>
                 </ul>
 
-                <!-- SEARCH FORM -->
-                <form class="form-inline ml-3">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                
 
-                <!-- Right navbar links -->
+                <!-- Right navbar links ->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Messages Dropdown Menu -->
+                    <!-- Messages Dropdown Menu ->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-comments"></i>
@@ -64,7 +66,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
+                                <!-- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 mr-3 img-circle">
@@ -78,11 +80,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
+                                <!-- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
+                                <!-- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 img-circle mr-3">
@@ -96,11 +98,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
+                                <!-- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
+                                <!-- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 img-circle mr-3">
@@ -114,13 +116,13 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
+                                <!-- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                         </div>
                     </li>
-                    <!-- Notifications Dropdown Menu -->
+                    <!-- Notifications Dropdown Menu ->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
@@ -147,9 +149,14 @@
                             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                         </div>
                     </li>
-                </ul>
+                </ul-->
+
+                <!--=====================================
+                        BOTONES DE VISTA DE PAGINA
+                ==========================================-->
+               <a href="/" class="ml-auto"> <button class="btn btn-warning">Ir al sitio</button></a>
             </nav>
-            <!-- /.navbar -->
+            <!--............. /.fin navbar............. -->
 
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -165,7 +172,7 @@
                     <!-- Sidebar user panel (optional) -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                            <img src="{{asset('images/uploads/admin').'/'. Auth::user()->img}}" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">
@@ -194,14 +201,14 @@
                             data-accordion="false">
 
                             <li class="nav-item">
-                                <a href="/" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="/admin" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>Inicio</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="usuarios"
+                                <a href="/admin"
                                     class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
@@ -213,8 +220,8 @@
                             </li>
 
                             <li class="nav-item has-treeview">
-                                <a href="/admin/productos" class="nav-link">
-                                    <i class="nav-icon far fa-sticky-note"></i>
+                                <a href="{{url('/admin/productos')}}" class="nav-link">
+                                    <i class="nav-icon fa fa-box-open"></i>
                                     <p>
                                         Productos
                                         <?php use App\Producto; $productos_count = Producto::all()->count(); ?>
@@ -244,6 +251,16 @@
                                         </a>
                                     </li>
                                 </ul-->
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="{{url('/admin/blog')}}" class="nav-link">
+                                    <i class="nav-icon fa fa-file-alt"></i>
+                                    <p>
+                                        Blog
+                                        <?php //use App\Producto; $productos_count = Producto::all()->count(); ?>
+                                        <!--span class="right badge badge-danger">{{ $productos_count ?? '0' }}</span-->
+                                    </p>
+                                </a>
                             </li>
 
                         </ul>
@@ -283,6 +300,10 @@
             <!-- /.control-sidebar -->
         </div>
     </div>
+    <!--script src="{{asset('js/jquery.js')}}"></script-->
+    <script src="{{asset('js/admin.js')}}"></script>
+     
+    
 </body>
 
 </html>

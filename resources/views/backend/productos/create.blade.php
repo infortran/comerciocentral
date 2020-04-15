@@ -3,9 +3,21 @@
 @section('content')
 <div class="container">
 	<h2>Agregar un producto </h2>
-	<div class="row">
+	<div class="container">
+		@if ($errors->any())
+		    <div class="alert alert-danger">
+		        <ul>
+		            @foreach ($errors->all() as $error)
+		                <li>{{ $error }}</li>
+		            @endforeach
+		        </ul>
+		    </div>
+		@endif
+	</div>
+	<div class="container">
+		<form class="row" action="/admin/productos/" method="POST" enctype="multipart/form-data">
 		<div class="col-md-6">
-			<form action="/productos" method="POST">
+			
 				@csrf
 			  <div class="form-group">
 			    <label for="nombre">Nombre del producto</label>
@@ -25,11 +37,29 @@
 				        <input type="text" class="form-control" name="precio" placeholder="0">
 				      </div>
 				    </div>
-			  <button type="submit" class="addButton">Guardar</button>
 			  
-			</form>
+			  
+			
 		</div>
-	</div>
+		<div class="col-md-6">
+			<div class="card" style="width: 25rem;">
+			  
+			  <img id="img-create-producto" class="card-img-top" src="{{asset('images/semantic/image.png')}}" alt="Imagen producto">
+			  <div class="card-body">
+			    <h5 class="card-title">Subir una imagen</h5>
+			    
+			    	
+			    	<input type="file" name="img" id="img-input-producto">
+			    <!--button class="btn btn-primary" style="margin-top:5px" type="submit"><i class="fas fa-save"> </i> Subir</button-->
+			    
+			    
+			  </div>
+			</div>
+			
+		</div>
+		<button type="submit" class="addButton">Guardar</button>
+</form>
+	</div><!--.row-->
 
 </div>
 @endsection
