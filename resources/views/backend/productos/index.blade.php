@@ -4,39 +4,34 @@
 @extends('backend.layout')
 
 @section('content')
-
-
-
 <div class="container">
-  <h2>Productos <a href="/admin/productos/create"><button class="addButton float-right"><i class="fas fa-plus" style="margin-right:10px"></i>Agregar nuevo producto</button></a></h2>
-
-  <!-- ============================
-         MODALS ELIMINAR PRODUCTO
-  ================================= -->
-  @foreach($productos as $producto)
-    @include('backend.productos.modal-destroy')
-  @endforeach
-
+    <h1>Productos 
+        <a href="/admin/productos/create">
+            <button class="addButton float-right"><i class="fas fa-plus" style="margin-right:10px"></i>Agregar nuevo producto</button>
+        </a>
+    </h1>
 
   <!-- ============================
           FORMULARIO DE BUSQUEDA
   ================================= -->
-  <div class="container" style="margin-top:50px">
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-          <input name="search" class="form-control form-control-navbar" type="search" placeholder="Busca un producto"
-                            aria-label="Search">
-          <div class="input-group-append">
-              <button class="btn btn-navbar" type="submit">
-                 <i class="fas fa-search"></i>
-              </button>
-          </div>
-      </div>
-  </form>
-  @if($search)
-  <div class="alert alert-info">Resultados para tu busqueda <strong>"{{$search}}"</strong></div>
-  @endif
-  </div>
+    <div class="container" style="margin-top: 20px">
+        <div class="row">  
+            <form class="search-form">
+                <input name="search" type="text" class="textbox" placeholder="Buscar">
+                <button title="Search" value="" type="submit" class="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>       
+        </div>
+    </div>
+        
+        
+    @if($search)
+        <div class="alert alert-info">Resultados para tu busqueda <strong>"{{$search}}"</strong></div>
+    @endif
+        <!--.fin FORM busqueda-->
+
+        <hr>
   <!---....FIN FORMULARIO BUSQUEDA.....-->
 
 
