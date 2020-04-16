@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
         	'name' => 'Freddy Perez',
         	'email' => 'freddy@deliciasurbanas.cl',
         	'password' => '$2y$10$sVwwiepca5wECk9VKFHp4ODWhbXSqoTf9WNUVxEYaLF01HGTifEbS',
-        	'img' => 'avatar.png'
+        	'img' => 'avatar.png',
         	'role' => 'admin']);
     }
 }

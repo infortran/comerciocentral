@@ -311,7 +311,18 @@
                                     </li>
                                 </ul-->
                             </li>
-                            <li class="nav-item has-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{url('/admin/categorias')}}" class="nav-link">
+                                    <i class="nav-icon fa fa-copy"></i>
+                                    <p>
+                                        Categorias
+                                        <?php use App\Categoria; $categorias_count = Categoria::all()->count(); ?>
+                                        <span class="right badge badge-danger">{{ $categorias_count ?? '0' }}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{url('/admin/blog')}}" class="nav-link">
                                     <i class="nav-icon fa fa-file-alt"></i>
                                     <p>
@@ -321,6 +332,8 @@
                                     </p>
                                 </a>
                             </li>
+
+                            
 
                         </ul>
                     </nav>

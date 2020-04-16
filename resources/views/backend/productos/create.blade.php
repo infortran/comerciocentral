@@ -1,48 +1,67 @@
 @extends('backend.layout')
 
 @section('content')
-<div class="container">
-	<h2>Agregar un producto </h2>
-	<div class="container">
-		@if ($errors->any())
-		    <div class="alert alert-danger">
-		        <ul>
-		            @foreach ($errors->all() as $error)
-		                <li>{{ $error }}</li>
-		            @endforeach
-		        </ul>
-		    </div>
-		@endif
+<form class="container" action="{{url('admin/productos')}}" enctype="multipart/form-data" method="POST">
+	<h1>Agregar un producto <button type="submit" class="addButton float-right"><i class="fa fa-save"></i> Guardar</button></h1>
+	<div class="row">
+		<div class="col-6">
+			@if ($errors->any())
+			    <div class="alert alert-danger">
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			@endif
+		</div>
+		
 	</div>
-	<div class="container">
-		<form class="row" action="/admin/productos/" method="POST" enctype="multipart/form-data">
-		<div class="col-md-6">
+	<div style="margin-top: 20px" class="row">
+		
+		<div class="col-md-7">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+					    <label for="nombre">Nombre del producto</label>
+					    <input type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre descriptivo">
+				  	</div>
+					<div class="form-group">
+					    <label for="descripcion">Descripcion</label>
+					    <textarea style="height: 100px" type="text" class="form-control" name="descripcion" placeholder="Ingresa una descripcion del modelo como tallas disponibles, colores, variedades"></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="categoria"></label>
+						<select class="form-control" style="width: 200px" name="categoria" id="categoria">
+							@foreach($categorias as $categoria)
+								<option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+							@endforeach
+
+
+						</select>
+					</div>
+
+					<div class="form-group" style="width: 200px">
+					      <label for="precio">Precio</label>
+					      <div class="input-group mb-2">
+					        <div class="input-group-prepend">
+					          <div class="input-group-text">$</div>
+					        </div>
+					        <input type="text" class="form-control" name="precio" placeholder="0">
+					      </div>
+					    </div>
+					</div>
+				</div>
 			
 				@csrf
-			  <div class="form-group">
-			    <label for="nombre">Nombre del producto</label>
-			    <input type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre descriptivo">
-			  </div>
-			  <div class="form-group">
-			    <label for="descripcion">Descripcion</label>
-			    <input type="text" class="form-control" name="descripcion" placeholder="Ingresa una descripcion del modelo como tallas disponibles, colores, variedades">
-			  </div>
-
-				<div class="form-group">
-				      <label for="precio">Precio</label>
-				      <div class="input-group mb-2">
-				        <div class="input-group-prepend">
-				          <div class="input-group-text">$</div>
-				        </div>
-				        <input type="text" class="form-control" name="precio" placeholder="0">
-				      </div>
-				    </div>
+			  
 			  
 			  
 			
 		</div>
-		<div class="col-md-6">
-			<div class="card" style="width: 25rem;">
+		<div class="col-md-5">
+			<div class="card">
 			  
 			  <img id="img-create-producto" class="card-img-top" src="{{asset('images/semantic/image.png')}}" alt="Imagen producto">
 			  <div class="card-body">
@@ -57,9 +76,8 @@
 			</div>
 			
 		</div>
-		<button type="submit" class="addButton">Guardar</button>
-</form>
+
 	</div><!--.row-->
 
-</div>
+</form>
 @endsection

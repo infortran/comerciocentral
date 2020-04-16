@@ -6,6 +6,7 @@ use App\Http\Requests\ProductosFormRequest;
 use Illuminate\Http\Request;
 use App\Producto;
 use Illuminate\Support\Facades\File;
+use App\Categoria;
 
 class ProductoController extends Controller
 {
@@ -26,7 +27,8 @@ class ProductoController extends Controller
 
     //abre la vista crear producto
     public function create(){
-    	return view('backend.productos.create');
+        $categorias = Categoria::all();
+    	return view('backend.productos.create', ['categorias' => $categorias]);
     }
     //guarda el nuevo producto en db
     public function store(Request $request){
@@ -47,6 +49,9 @@ class ProductoController extends Controller
         $producto->descripcion = request('descripcion');
         $producto->precio = request('precio');
         $producto->img = $imageName;
+        if(request('categoria')){
+            $producto->id_categoria = request('categoria');
+        }
 
         $producto->save();
 
@@ -92,7 +97,11 @@ class ProductoController extends Controller
 
         $producto->nombre = $request->get('nombre');
         $producto->descripcion = $request->get('descripcion');
+        
         $producto->precio = $request->get('precio');
+        if($request->get('categoria')){
+            $producto->id_categoria = $request->get('categoria');
+        }
         
 
         $producto->update();
