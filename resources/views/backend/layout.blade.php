@@ -323,6 +323,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{url('/admin/marcas')}}" class="nav-link">
+                                    <i class="nav-icon fa fa-copyright"></i>
+                                    <p>
+                                        Marcas
+                                        <?php use App\Marca; $marcas_count = Marca::all()->count(); ?>
+                                        <span class="right badge badge-danger">{{ $marcas_count ?? '0' }}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{url('/admin/blog')}}" class="nav-link">
                                     <i class="nav-icon fa fa-file-alt"></i>
                                     <p>

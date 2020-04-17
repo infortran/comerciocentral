@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Categoria;
+use App\Marca;
 use Illuminate\Http\Request;
 use App\Producto;
-//use Illuminate\Support\Facades\File;
 
-class CategoriaController extends Controller
+class MarcaController extends Controller
 {
     public function __construct(){
         $this->middleware('admin');
@@ -20,12 +19,12 @@ class CategoriaController extends Controller
     public function index(Request $request)
     {
         $query = trim($request->get('search'));
-        $categorias = Categoria::all();
+        $marcas = Marca::all();
         if($request){
-            $categorias = Categoria::where('categoria', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+            $marcas = Marca::where('marca', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
         }
         
-        return view('backend.categorias.index',['categorias'=>$categorias,'search' => $query]);
+        return view('backend.marcas.index',['marcas'=>$marcas,'search' => $query]);
     }
 
     /**
@@ -47,25 +46,25 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'categoria' => 'required|max:50'
+            'marca' => 'required|max:50'
         ]);
 
-        $categoria = new Categoria();
+        $marca = new Marca();
 
-        $categoria->categoria = request('categoria');
+        $marca->marca = request('marca');
         
-        $categoria->save();
+        $marca->save();
 
-        return redirect('/admin/categorias');
+        return redirect('/admin/marcas');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Categoria  $categoria
+     * @param  \App\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show(Marca $marca)
     {
         //
     }
@@ -73,50 +72,50 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Categoria  $categoria
+     * @param  \App\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Marca $marca)
     {
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Categoria  $categoria
+     * @param  \App\Marca  $marca
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $marca = Marca::findOrFail($id);
         
         $request->validate([
-            'categoria' => 'required|max:50'
+            'marca' => 'required|max:50'
         ]);
             
-        $categoria->categoria = $request->get('categoria');    
+        $marca->marca = $request->get('marca');    
 
-        $categoria->update();
+        $marca->update();
 
-        return redirect('/admin/categorias');
+        return redirect('/admin/marcas');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Categoria  $categoria
+     * @param  \App\Marca  $marca
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Producto::whereIdCategoria($id)->update(['id_categoria' => 0]);
+        Producto::whereIdMarca($id)->update(['id_marca' => 0]);
 
-        $categoria = Categoria::findOrFail($id);
+        $marca = Marca::findOrFail($id);
         
-        $categoria->delete();
+        $marca->delete();
 
-        return redirect('/admin/categorias');
+        return redirect('/admin/marcas');
     }
 }

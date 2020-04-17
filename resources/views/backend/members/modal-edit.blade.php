@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-12">
                        
-                        <img style="width: 100%; max-width: 200px" class="img-responsive img-thumbnail mx-auto d-block" src="{{asset('images/uploads/members').'/'.$member->img_member}}" alt="">
+                        <img class="img-responsive img-thumbnail mx-auto d-block" src="{{asset('images/uploads/members').'/'.$member->img_member}}" alt="">
                             
                     </div>
                     <div class="col-12">

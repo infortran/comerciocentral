@@ -43,7 +43,7 @@
                         @csrf
                     </form>
 					
-					<a class="pull-right" href="/admin"><button style="margin: 10px" class="btn btn-default">Administracion</button></a>
+					<a class="pull-right" href="{{url('/admin')}}"><button style="margin: 10px" class="btn btn-default">Administracion</button></a>
 					
 					
 				</div>
@@ -59,8 +59,8 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="/contacto"><i class="fa fa-phone"></i> {{$header->telefono}}</a></li>
-								<li><a href="/contacto"><i class="fa fa-envelope"></i> {{$header->email}}</a></li>
+								<li><a href="{{url('/contacto')}}"><i class="fa fa-phone"></i> {{$header->telefono}}</a></li>
+								<li><a href="{{url('/contacto')}}"><i class="fa fa-envelope"></i> {{$header->email}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 							LOGOTIPO
 							===============-->
 						<div class="logo pull-left">
-							<a href="/"><img src="images/system/{{$header->img_header}}" alt="" /></a>
+							<a href="/"><img src="{{asset('images/system').'/'.$header->img_header}}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right clearfix">
 

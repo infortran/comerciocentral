@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-12">
                        
-                        <img style="width: 100%; max-width: 200px" class="img-responsive img-thumbnail mx-auto d-block" src="{{asset('images/semantic')}}/avatar.png" alt="" id="img_new_member">
+                        <img class="img-responsive img-thumbnail mx-auto d-block" src="{{asset('images/semantic').'/wide-user.jpg'}}" alt="" id="img_new_member">
                             
                     </div><!--col-12-->
                     <div class="col-12">

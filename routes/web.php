@@ -24,6 +24,7 @@ Route::get('/', 'InicioController@index');
 Route::get('/admin/productos', 'ProductoController@index');
 Route::get('/admin/blog', 'BlogAdminController@index');
 Route::get('/admin/categorias', 'CategoriaController@index');
+Route::get('/admin/marcas', 'MarcaController@index');
 
 
 
@@ -40,6 +41,8 @@ Route::resource('admin/teammember', 'TeamMemberController');
 Route::resource('admin/blog', 'BlogAdminController');
 
 Route::resource('admin/categorias', 'CategoriaController');
+
+Route::resource('admin/marcas', 'MarcaController');
 
 
 

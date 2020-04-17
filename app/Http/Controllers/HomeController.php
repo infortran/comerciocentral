@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TeamMember;
+use App\Categoria;
+use App\Marca;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $members = TeamMember::all();
-        return view('home', ['members' => $members]);
+        $categorias = Categoria::all();
+        $marcas = Marca::all();
+        return view('home', ['categorias' => $categorias, 'marcas' => $marcas]);
     }
 }

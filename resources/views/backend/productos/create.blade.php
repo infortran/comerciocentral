@@ -32,10 +32,21 @@
 					</div>
 
 					<div class="form-group">
-						<label for="categoria"></label>
+						<label for="categoria">Categoria</label>
 						<select class="form-control" style="width: 200px" name="categoria" id="categoria">
 							@foreach($categorias as $categoria)
 								<option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+							@endforeach
+
+
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="categoria">Marca</label>
+						<select class="form-control" style="width: 200px" name="marca" id="categoria">
+							@foreach($marcas as $marca)
+								<option value="{{$marca->id}}">{{$marca->marca}}</option>
 							@endforeach
 
 

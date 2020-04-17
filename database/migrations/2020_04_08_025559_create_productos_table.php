@@ -19,7 +19,8 @@ class CreateProductosTable extends Migration
             $table->string('descripcion');
             $table->integer('precio');
             $table->string('img');
-            $table->integer('id_categoria');
+            $table->integer('id_categoria')->default(0);
+            $table->integer('id_marca')->default(0);
             $table->timestamps();
         });
     }
