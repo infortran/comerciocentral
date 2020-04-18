@@ -34,7 +34,7 @@
 								<img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
 							</a>
 							<p class="block-ellipsis">{{$post->contenido}}</p>
-							<a  class="btn btn-primary" href="{{route('blogs.show', $post->id)}}">Leer mas</a>
+							<a  class="btn btn-primary" href="{{route('post', $post->id)}}">Leer mas</a>
 						</div>
                         @endforeach
 

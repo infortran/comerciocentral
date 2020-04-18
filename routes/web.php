@@ -16,8 +16,8 @@ Route::get('/', 'InicioController@index');
 
 Route::get('/contacto', 'ContactoController@index');
 Route::get('/blog', 'BlogController@index');
-Route::get('/blog/single', 'BlogController@single');
-Route::resource('/blog', 'BlogController', ['as' => 'blogs']);
+Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
+
 
 Auth::routes();
 
