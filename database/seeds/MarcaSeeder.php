@@ -14,7 +14,7 @@ class MarcaSeeder extends Seeder
         DB::table('marcas')->insert([
             ['marca'=>'Nike'],
             ['marca'=>'Adidas'],
-            ['marca'=>'Puma']
+            ['marca'=>'Puma:']
         ]);
     }
 }

@@ -25,7 +25,7 @@
                                 </button>
                               </h2>
                             </div><!--.card header-->
-                            
+
                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                               <div class="card-body">
   <!------------------------------>
@@ -42,14 +42,14 @@
                                       </div>
                                   @endif
 
-                                  
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="tel">Telefono</label>
                                                 <input name="telefono" type="text" class="form-control" id="tel" placeholder="ej. +56 9 12345678" value="{{$header->telefono}}">
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -116,9 +116,9 @@
                               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample"><!--COLLAPSE-->
                                 <div class="card-body">
 
-<!--------------------------->      <form action="{{route('footerinfo.update', 1)}}" 
+<!--------------------------->      <form action="{{route('footerinfo.update', 1)}}"
                                           class="container" method="POST">
-                                         
+
                                           @method('PATCH')
                                            @csrf
                                         <div class="row">
@@ -142,14 +142,14 @@
                                         </div>
                                     </form>
                                     <hr><!------------------------------------------------>
-                                  <h3 style="order: 1px solid red">Miembros del equipo <button class="infoButton float-right"  data-toggle="modal" data-target="#createMemberModal"><i class="fa fa-user-plus"></i> Agregar Miembro</button></h3>
+                                  <h3>Miembros del equipo <button class="infoButton float-right"  data-toggle="modal" data-target="#createMemberModal"><i class="fa fa-user-plus"></i> Agregar Miembro</button></h3>
 
                                   @include('backend.members.modal-create')
-                              
-                                  
-   
+
+
+
                                       <div class="container-fluid" style="margin-top: 60px">
-                                        
+
                                         <div class="row flex-row flex-nowrap" style="overflow-x: scroll; ">
                                           <!--FOREACH-->
                                           @foreach($members as $member)
@@ -191,25 +191,69 @@
 
 
                                 </div><!--CARD BODY COLLAPSE-->
-                                     
+
                               </div><!-- FIN COLLAPSE-->
                           </div><!--.card 2 pie de pagina-->
 
 
+                            @include('backend.slides.modal-create')
 
-                          <!--CARD 3-->
+                          <!--========================
+                                   CARD SLIDES
+                            =========================-->
                           <div class="card">
                             <div class="card-header" id="headingThree">
                               <h2 class="mb-0">
                                 <button style="font-size: 18px" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  <i class="fa fa-columns"></i>
-                                  Barra lateral
+                                  <i class="fa fa-images"></i>
+                                  Slides
                                 </button>
                               </h2>
                             </div>
                             <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                               <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                <button data-target="#modal-create-slide" data-toggle="modal" class="addButton float-right"><i class="fa fa-image"></i> Nuevo slide</button>
+                                  <br><br>
+                                  <hr>
+                                    <div class="container">
+                                        <div class="row flex-row flex-nowrap" style="overflow-x: scroll;">
+
+                                            @foreach($slides as $slide)
+                                                @include('backend.slides.modal-edit')
+                                                @include('backend.slides.modal-destroy')
+                                            <div class="col-6 col-lg-4">
+                                                <div class="card">
+                                                    <button  data-toggle="modal" data-target="#modal-destroy-slide{{$slide->id}}" type="button" style="cursor:pointer;position: absolute;top: 10px;right: 10px;z-index: 100" class="close"><i class="fa fa-times"></i></button>
+
+                                                    <div id="carouselExampleSlidesOnly" class="carousel slide card-img-top" data-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            <div class="carousel-item active">
+                                                                <img src="{{asset('images/uploads/slides').'/'.$slide->img}}" class="d-block w-100" alt="...">
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <img src="{{asset('images/uploads/slides').'/'.$slide->img_pricing}}" class="d-block w-100" alt="...">
+                                                            </div>
+                                                            <div class="carousel-item">
+                                                                <img src="{{asset('images/uploads/slides').'/'.$slide->logo}}" class="d-block w-100" alt="...">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body text-center">
+                                                        <h5>{{$slide->titulo}}</h5>
+                                                        <p class="card-text">{{$slide->texto}}</p>
+                                                        <button class="btn btn-primary"disabled>{{$slide->txt_boton}}</button>
+                                                        <hr>
+                                                        <button data-toggle="modal" data-target="#modal-edit-slide{{$slide->id}}" class="btn btn-warning"><i class="fa fa-edit"></i>
+                                                            Editar</button>
+
+                                                    </div>
+                                                </div><!--.card-->
+                                            </div><!--============.col-6 col-lg-4===========-->
+
+                                            @endforeach
+                                        </div><!--========.row=============-->
+                                    </div>
                               </div>
                             </div>
                           </div><!--.card3-->
@@ -246,15 +290,15 @@
 
 
                         </div><!--.accordion-->
-                        
-                    
 
-                   
+
+
+
                 </div><!--...card body-->
             </div><!--...card-->
         </div><!--...col-md-8-->
-        
-        
+
+
         <div class="col-md-4">
           {!!Form::open(['enctype' => 'multipart/form-data', 'method' => 'PATCH', 'action' =>['AdminController@update' , Auth::user()->id]])!!}
             <div class="card" >
@@ -275,7 +319,7 @@
                       </div>
                   @endif
                 </div>
-                
+
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
@@ -302,21 +346,21 @@
                   </div>
                 </div>
                 <br>
-                
+
                 <div style="display: none" id="div_cancel_edit_admin" class="row">
                   <div class="col text-center">
                     <button id="btn_cancel_edit_admin" type="button" class="btn btn-danger btn-block">Cancelar</button>
                   </div>
                 </div>
-                
 
-                
+
+
               </div>
-              
+
             </div><!--.card-->
             {!!Form::close()!!}
         </div><!--....col-md-4-->
-        
+
     </div><!--...row-->
 </div>
 @endsection

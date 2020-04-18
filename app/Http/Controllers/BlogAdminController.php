@@ -52,9 +52,9 @@ class BlogAdminController extends Controller
             'contenido' => 'required|max:500',
             'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
         $img = $request->file('img');
-        $imageName = time().'.'.$img->extension();  
+        $imageName = time().'.'.$img->extension();
         $imgResize = Image::make($img->path());
-        $imgResize->fit(960,720, function($constraint) {
+        $imgResize->fit(847,392, function($constraint) {
             $constraint->upsize();
         })->save(public_path('images/uploads/blog').'/'. $imageName);
         $post = new Post();
@@ -105,11 +105,11 @@ class BlogAdminController extends Controller
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
 
             $img = $request->file('img');
-      
-            $imageName = time().'.'.$img->extension();  
+
+            $imageName = time().'.'.$img->extension();
 
             $imgResize = Image::make($img->path());
-            $imgResize->fit(960,720, function($constraint) {
+            $imgResize->fit(847,392, function($constraint) {
                 $constraint->upsize();
             })->save(public_path('images/uploads/blog').'/'. $imageName);
              $post->img = $imageName;
@@ -118,7 +118,7 @@ class BlogAdminController extends Controller
                 'titulo' => 'required|max:50',
                 'contenido' => 'required|max:500']);
         }
-        
+
 
         $post->titulo = request('titulo');
         $post->contenido = request('contenido');

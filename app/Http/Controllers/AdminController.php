@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Slide;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\TeamMember;
@@ -18,14 +20,15 @@ class AdminController extends Controller
     }
 
     public function index(){
-    	$header = HeaderFrontend::findOrFail(1);
-    	$footer = FooterInfo::findOrFail(1);
-    	$members = TeamMember::all();
+        $data = [
+            'header' => HeaderFrontend::findOrFail(1),
+            'footer' => FooterInfo::findOrFail(1),
+            'members' => TeamMember::all(),
+            'slides' => Slide::all()
+        ];
 
-    	return view('backend.home', [
-    		'header' => $header,
-    		'footer' => $footer, 
-    		'members' => $members]);
+
+    	return view('backend.home', $data);
     }
 
     /*public function store(){
@@ -51,10 +54,10 @@ class AdminController extends Controller
 	                'email' => 'required|max:255|email|unique:users'
             	]);
     		}
-            
+
             $img = $request->file('img');
-  
-            $imageName = time().'.'.$img->extension();  
+
+            $imageName = time().'.'.$img->extension();
 
             $imgResize = Image::make($img->path());
             $imgResize->fit(300,300, function($constraint) {
@@ -77,7 +80,7 @@ class AdminController extends Controller
 	                'email' => 'required|max:255|email'
 	            ]);
         	}
-            
+
         }
 
     	$admin->name = $request->get('name');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\HeaderFrontend;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 
@@ -74,7 +75,7 @@ class HeaderFrontendController extends Controller
     public function update(Request $request, $id)
     {
         $header = HeaderFrontend::findOrFail($id);
-        
+
         if($request->img_header){
             $request->validate([
                 'img_header' => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -85,8 +86,8 @@ class HeaderFrontendController extends Controller
                 'instagram' => 'required|max:50',
                 'linkedin' => 'required|max:50'
             ]);
-            $imageName = time().'.'.$request->img_header->extension();  
-   
+            $imageName = time().'.'.$request->img_header->extension();
+
             $request->img_header->move(public_path('images/system'), $imageName);
 
             $img_delete = 'images/system/'. $producto->img_header;
@@ -111,7 +112,7 @@ class HeaderFrontendController extends Controller
         $header->twitter = $request->get('twitter');
         $header->instagram = $request->get('instagram');
         $header->linkedin = $request->get('linkedin');
-        
+
 
         $header->update();
 

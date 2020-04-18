@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Producto;
+use App\Slide;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\TeamMember;
@@ -28,6 +29,7 @@ class InicioController extends Controller
     		'categorias' => Categoria::all(),
     		'marcas' => Marca::all(),
             'productos' => $productos,
+            'slides' => Slide::all(),
             'search' => $query];
     	return view('frontend.inicio', $data);
     }

@@ -1,8 +1,10 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\TeamMember;
 use Image;
@@ -49,8 +51,8 @@ class TeamMemberController extends Controller
         ]);
 
         $img_member = $request->file('img_member');
-  
-        $imageName = time().'.'.$img_member->extension();  
+
+        $imageName = time().'.'.$img_member->extension();
 
         $img = Image::make($img_member->path());
         $img->fit(200,100, function($constraint) {
@@ -98,7 +100,7 @@ class TeamMemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {        
+    {
         $teamMember = TeamMember::findOrFail($id);
         if($request->img_member){
             $request->validate([
@@ -107,8 +109,8 @@ class TeamMemberController extends Controller
                 'cargo' => 'required|max:255'
             ]);
             $img_member = $request->file('img_member');
-  
-            $imageName = time().'.'.$img_member->extension();  
+
+            $imageName = time().'.'.$img_member->extension();
 
             $img = Image::make($img_member->path());
             $img->fit(200,100, function($constraint) {
@@ -128,7 +130,7 @@ class TeamMemberController extends Controller
         }
 
         $teamMember->nombre = $request->get('nombre');
-        $teamMember->cargo = $request->get('cargo');        
+        $teamMember->cargo = $request->get('cargo');
 
         $teamMember->update();
 

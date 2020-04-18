@@ -13,7 +13,7 @@ function readURL(input, selector) {
 $(document).ready(function(){
     $('#div_cancel_edit_admin').hide();
     $('#btn_update_admin').hide();
-    
+
 	$("#img-input-producto").change(function(){
         var selector = $('#img-create-producto');
         readURL(this, selector);
@@ -23,6 +23,23 @@ $(document).ready(function(){
         var selector = $('#img_admin');
         readURL(this, selector);
     });
+
+    $('#input-img-create-main-slide').change(function(){
+       var selector = $('#img-create-main-slide') ;
+       readURL(this, selector);
+    });
+
+    $('#input-img-create-pricing-slide').change(function(){
+        var selector = $('#img-create-pricing-slide') ;
+        readURL(this, selector);
+    });
+
+    $('#input-img-create-logo-slide').change(function(){
+        var selector = $('#img-create-logo-slide') ;
+        readURL(this, selector);
+    });
+
+
 
     $('#btn_edit_admin').click(function(e){
         e.preventDefault();

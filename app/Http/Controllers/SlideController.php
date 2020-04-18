@@ -55,9 +55,9 @@ class SlideController extends Controller
         $img_pricing = $request->file('img_pricing');
         $logo = $request->file('logo');
 
-        $imageName = $this->storeImgSlide($img, 400, 400);
-        $imgPricingName = $this->storeImgSlide($img_pricing, 200, 60);
-        $logoName = $this->storeImgSlide($logo, 200, 60);
+        $imageName = $this->storeImgSlide($img, 485, 440);
+        $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
+        $logoName = $this->storeImgSlide($logo, 200, 70);
 
         $slide = new Slide();
 
@@ -118,9 +118,12 @@ class SlideController extends Controller
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imageName = $this->storeImgSlide($img, 400, 400);
-            $imgPricingName = $this->storeImgSlide($img_pricing, 200, 60);
+            $imageName = $this->storeImgSlide($img, 485, 440);
+            $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
             $logoName = $this->storeImgSlide($logo, 200, 60);
+            $this->destroyImgSlide($slide->img);
+            $this->destroyImgSlide($slide->img_pricing);
+            $this->destroyImgSlide($slide->logo);
             $slide->img = $imageName;
             $slide->img_pricing = $imgPricingName;
             $slide->logo = $logoName;
@@ -132,8 +135,10 @@ class SlideController extends Controller
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imageName = $this->storeImgSlide($img, 400, 400);
-            $imgPricingName = $this->storeImgSlide($img_pricing, 200, 60);
+            $imageName = $this->storeImgSlide($img, 485, 440);
+            $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
+            $this->destroyImgSlide($slide->img);
+            $this->destroyImgSlide($slide->img_pricing);
             $slide->img = $imageName;
             $slide->img_pricing = $imgPricingName;
         }else if($request->img_pricing && $request->logo){
@@ -144,8 +149,10 @@ class SlideController extends Controller
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imgPricingName = $this->storeImgSlide($img_pricing, 200, 60);
+            $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
             $logoName = $this->storeImgSlide($logo, 200, 60);
+            $this->destroyImgSlide($slide->img_pricing);
+            $this->destroyImgSlide($slide->logo);
             $slide->img_pricing = $imgPricingName;
             $slide->logo = $logoName;
         }else if($request->img && $request->logo){
@@ -156,8 +163,10 @@ class SlideController extends Controller
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imageName = $this->storeImgSlide($img, 400, 400);
+            $imageName = $this->storeImgSlide($img, 485, 440);
             $logoName = $this->storeImgSlide($logo, 200, 60);
+            $this->destroyImgSlide($slide->img);
+            $this->destroyImgSlide($slide->logo);
             $slide->img = $imageName;
             $slide->logo = $logoName;
         }else if($request->img){
@@ -167,7 +176,8 @@ class SlideController extends Controller
                 'txt_boton' => 'required',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imageName = $this->storeImgSlide($img, 400, 400);
+            $imageName = $this->storeImgSlide($img, 485, 440);
+            $this->destroyImgSlide($slide->img);
             $slide->img = $imageName;
         }else if($request->img_pricing){
             $request->validate([
@@ -176,7 +186,8 @@ class SlideController extends Controller
                 'txt_boton' => 'required',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $imgPricingName = $this->storeImgSlide($img_pricing, 200, 60);
+            $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
+            $this->destroyImgSlide($slide->img_pricing);
             $slide->img_pricing = $imgPricingName;
         }else if($request->logo){
             $request->validate([
@@ -185,7 +196,8 @@ class SlideController extends Controller
                 'txt_boton' => 'required',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
-            $logoName = $this->storeImgSlide($logo, 200, 60);
+            $logoName = $this->storeImgSlide($logo, 190, 60);
+            $this->destroyImgSlide($slide->logo);
             $slide->logo = $logoName;
         }else{
             $request->validate([
@@ -229,11 +241,11 @@ class SlideController extends Controller
     }
 
     public function storeImgSlide($img, $width, $height){
-        $imageName = time().'.'.$img->extension();
+        $imageName = $img->getClientOriginalName(). time().'.'.$img->extension();
         $imgResize = Image::make($img->path());
         $imgResize->fit($width, $height, function($constraint) {
             $constraint->upsize();
-        })->save(public_path('images/uploads/slide').'/'. $imageName);
+        })->save(public_path('images/uploads/slides').'/'. $imageName);
         return $imageName;
     }
 }

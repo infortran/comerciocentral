@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
         	AdminSeeder::class,
         	FooterTableSeeder::class,
-        	HeaderFrontendTableSeeder::class]);
+        	HeaderFrontendTableSeeder::class,
+            MarcaSeeder::class,
+            CategoriaSeeder::class,
+            ProductosSeeder::class]);
     }
 }
