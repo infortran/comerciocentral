@@ -27,3 +27,4 @@ Route::resource('admin/categorias', 'CategoriaController');
 Route::resource('admin/marcas', 'MarcaController');
 
 Route::resource('admin/slides', 'SlideController');*/
+

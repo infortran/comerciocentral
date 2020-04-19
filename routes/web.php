@@ -18,6 +18,8 @@ Route::get('/contacto', 'ContactoController@index');
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
 
+Route::resource('comentario', 'ComentarioController');
+
 
 Auth::routes();
 
@@ -26,6 +28,7 @@ Route::get('/admin/productos', 'ProductoController@index');
 Route::get('/admin/blog', 'BlogAdminController@index');
 Route::get('/admin/categorias', 'CategoriaController@index');
 Route::get('/admin/marcas', 'MarcaController@index');
+Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
 
 
 
@@ -46,6 +49,8 @@ Route::resource('admin/categorias', 'CategoriaController');
 Route::resource('admin/marcas', 'MarcaController');
 
 Route::resource('admin/slides', 'SlideController');
+
+Route::resource('admin/comentarios', 'ComentarioAdminController');
 
 
 

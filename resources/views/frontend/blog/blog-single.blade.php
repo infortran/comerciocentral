@@ -7,48 +7,37 @@
 				<!--=============================
 								ASIDE
 				===============================-->
-				
+				@include('frontend.templates.aside-left')
 				<!--=============FIN ASIDE==================-->
 				<div class="col-sm-9">
 					<div class="blog-post-area">
-						<h2 class="title text-center">Latest From our Blog</h2>
+						<h2 class="title text-center">Post</h2>
 						<div class="single-blog-post">
-							<h3>Girls Pink T Shirt arrived in store</h3>
+							<h3>{{$post->titulo}}</h3>
 							<div class="post-meta">
 								<ul>
-									<li><i class="fa fa-user"></i> Mac Doe</li>
-									<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-									<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+									<!--li><i class="fa fa-user"></i> Mac Doe</li>
+									<li><i class="fa fa-clock-o"></i> 1:33 pm</li-->
+									<li><i class="fa fa-calendar"></i> {{$post->created_at->diffForHumans()}}</li>
 								</ul>
-								<span>
+								<!--span>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star-half-o"></i>
-								</span>
+								</span-->
 							</div>
 							<a href="">
-								<img src="{{asset('images/blog/blog-one.jpg')}}" alt="">
+								<img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
 							</a>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p> <br>
-
-							<p>
-								Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p> <br>
-
-							<p>
-								Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p> <br>
-
-							<p>
-								Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-							</p>
-							<div class="pager-area">
+							<p>{{$post->contenido}}</p>
+							<!--div class="pager-area">
 								<ul class="pager pull-right">
 									<li><a href="#">Pre</a></li>
 									<li><a href="#">Next</a></li>
 								</ul>
-							</div>
+							</div-->
 						</div>
 					</div><!--/blog-post-area-->
 
@@ -76,6 +65,10 @@
 						<a href=""><img src="{{asset('images/blog/socials.png')}}" alt=""></a>
 					</div><!--/socials-share-->
 
+
+                    <!--================================
+                                   AUTOR
+                    ====================================-->
 					<div class="media commnets">
 						<a class="pull-left" href="#">
 							<img class="media-object" src="{{asset('images/blog/man-one.jpg')}}" alt="">
@@ -93,26 +86,37 @@
 								<a class="btn btn-primary" href="">Other Posts</a>
 							</div>
 						</div>
-					</div><!--Comments-->
+					</div><!--/AUTOR-->
+
+
+                    <!--==================================================00
+                                COMENTARIOS
+                    ================================================-->
 					<div class="response-area">
-						<h2>3 RESPONSES</h2>
+						<h2>Comentarios ({{$comentarios->count()}})</h2>
 						<ul class="media-list">
+
+                            <?php use App\User; ?>
+                            @foreach($comentarios as $comentario)
+                                <?php $user_post = User::findOrFail($comentario->id_user) ?>
 							<li class="media">
-								
+
 								<a class="pull-left" href="#">
-									<img class="media-object" src="{{asset('images/blog/man-two.jpg')}}" alt="">
+									<img style="max-width: 200px" class="media-object" src="{{asset('images/uploads/users').'/'.$user_post->img}}" alt="">
 								</a>
 								<div class="media-body">
 									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
-										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
+										<li><i class="fa fa-user"></i>{{$user_post->name}}</li>
+										<li><i class="fa fa-clock-o"></i>{{$comentario->created_at->timezone('America/Santiago')->format('H:i')}}</li>
+										<li><i class="fa fa-calendar"></i>{{$comentario->created_at->timezone('America/Santiago')->format('d.m.Y')}}</li>
+                                        <li><i class="fa fa-calendar"></i>{{$comentario->created_at->diffForHumans()}}</li>
 									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+									<p>{{$comentario->comentario}}</p>
 									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
 								</div>
 							</li>
-							<li class="media second-media">
+                            @endforeach
+							<!--li class="media second-media">
 								<a class="pull-left" href="#">
 									<img class="media-object" src="{{asset('images/blog/man-three.jpg')}}" alt="">
 								</a>
@@ -125,45 +129,31 @@
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
 								</div>
-							</li>
-							<li class="media">
-								<a class="pull-left" href="#">
-									<img class="media-object" src="{{asset('images/blog/man-four.jpg')}}" alt="">
-								</a>
-								<div class="media-body">
-									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
-										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-								</div>
-							</li>
-						</ul>					
+							</li-->
+
+						</ul>
 					</div><!--/Response-area-->
 					<div class="replay-box">
 						<div class="row">
-							<div class="col-sm-4">
-								<h2>Leave a replay</h2>
-								<form>
-									<div class="blank-arrow">
-										<label>Your Name</label>
-									</div>
-									<span>*</span>
-									<input type="text" placeholder="write your name...">
-									<div class="blank-arrow">
-										<label>Email Address</label>
-									</div>
-									<span>*</span>
-									<input type="email" placeholder="your email address...">
-									<div class="blank-arrow">
-										<label>Web Site</label>
-									</div>
-									<input type="email" placeholder="current city...">
-								</form>
-							</div>
-							<div class="col-sm-8">
+							<form method="POST" action="{{url('comentario')}}" class="col-12">
+                                @csrf
+								<h2>Déjanos tu comentario</h2>
+                                @guest
+                                <div class="blank-arrow">
+                                    <label>Debes iniciar sesion</label>
+                                </div>
+                                @endif
+                                <textarea name="comentario" class="form-control"></textarea>
+                                <input name="id_user" type="hidden" value="{{Auth::user() ? Auth::user()->id : ''}}">
+                                <input name="id_post" type="hidden" value="{{$post->id}}">
+
+                                @guest
+                                <button class="btn btn-primary" disabled>Debes iniciar sesion</button>
+                                @else
+                                <button class="btn btn-primary" type="submit">Comentar</button>
+                                @endif
+							</form>
+							<!--div class="col-sm-8">
 								<div class="text-area">
 									<div class="blank-arrow">
 										<label>Your Name</label>
@@ -172,10 +162,10 @@
 									<textarea name="message" rows="11"></textarea>
 									<a class="btn btn-primary" href="">post comment</a>
 								</div>
-							</div>
+							</div-->
 						</div>
 					</div><!--/Repaly Box-->
-				</div>	
+				</div>
 			</div>
 		</div>
 	</section>

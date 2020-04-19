@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Categoria;
+use App\Comentario;
 use App\Marca;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\FooterInfo;
@@ -39,7 +41,8 @@ class BlogController extends Controller
             'members' => TeamMember::all(),
             'categorias' => Categoria::all(),
             'marcas' => Marca::all(),
-            'posts' => $post
+            'post' => $post,
+            'comentarios' => Comentario::all()
         ];
 
     	return view('frontend.blog.blog-single', $data);
