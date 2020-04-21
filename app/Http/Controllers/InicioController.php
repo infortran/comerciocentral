@@ -22,6 +22,12 @@ class InicioController extends Controller
         if($request){
             $productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
         }
+        if(request('categoria')){
+            $productos = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);
+        }
+        if(request('marca')){
+            $productos = Producto::where('id_marca', request('marca'))->orderBy('id', 'asc')->paginate(9);
+        }
     	$data = [
     		'header' => HeaderFrontend::findOrFail(1),
     		'footer' => FooterInfo::findOrFail(1),

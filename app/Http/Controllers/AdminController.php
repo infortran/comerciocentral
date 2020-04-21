@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Slide;
+use App\Social;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\TeamMember;
@@ -24,7 +25,8 @@ class AdminController extends Controller
             'header' => HeaderFrontend::findOrFail(1),
             'footer' => FooterInfo::findOrFail(1),
             'members' => TeamMember::all(),
-            'slides' => Slide::all()
+            'slides' => Slide::all(),
+            'socials' => Social::all()
         ];
 
 

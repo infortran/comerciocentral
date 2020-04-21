@@ -359,6 +359,165 @@
 
             </div><!--.card-->
             {!!Form::close()!!}
+
+            <!--div class="card">
+                <div class="card-header">
+                    Redes sociales del administrador
+                    <button title="Agregar " class="btn btn-primary float-right" style="padding:0;border-radius: 50%;width: 30px; height: 30px" >
+                        <i class="fa fa-plus-circle"></i>
+                    </button>
+
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+
+                </ul>
+
+            </div-->
+            <div class="accordion" id="accordionSocials">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <div class="row">
+                            <div class="col-10">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSocialUser" aria-expanded="false" aria-controls="collapseTwo">
+                                    Redes sociales de administrador
+
+                                </button>
+                            </div>
+                            <div class="col-2" style="display:flex;align-items: center">
+                                <span style="font-size: 14px" class="badge badge-pill badge-primary float-right">{{Auth::user()->socials->count()}}</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="collapseSocialUser" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionSocials">
+                        <ul class="list-group list-group-flush">
+                            <li id="btn-add-social-user" class="list-group-item text-center" style="color: #afafaf;cursor:pointer">
+                                <i class="fa fa-plus-circle"></i>
+                                Agregar red social a administrador
+                            </li>
+                            <li style="" class="list-group-item" id="form-agregar-social-user">
+
+                                {!! Form::open(['route' => ['social.user.add', Auth::user()->id]]) !!}
+                                <div class="row" style="margin-top: 10px">
+
+                                    <div class="col-10">
+                                        <select name="social_id" class="form-control">
+                                            @foreach($socials as $social)
+                                                <option value="{{$social->id}}">{{$social->nombre}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-2" style="display: flex; align-items: center">
+                                        <h2 id="btn-back-social-user" style="cursor: pointer"><i class="fa fa-angle-up"></i></h2>
+                                    </div>
+
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-10">
+                                        <input name="uri" type="text "class="form-control" placeholder="URL de tu red social">
+                                    </div>
+                                    <div class="col-2">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
+                            </li>
+
+                            @foreach(Auth::user()->socials as $social)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <i class="fab fa-{{$social->nombre}}"></i>
+                                            {{$social->pivot->uri }}
+                                        </div>
+                                        <div class="col-2" style="display: flex; align-items: center">
+                                            {!! Form::open([ 'route' => ['social.user.detach',Auth::user()->id, $social->id]]) !!}
+                                            <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
+                                                <i class="fa fa-minus-circle"></i>
+                                            </button>
+                                            {!! Form::close() !!}
+                                        </div>
+                                    </div>
+
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <div class="row">
+                            <div class="col-10">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSocials" aria-expanded="false" aria-controls="collapseTwo">
+                                    Redes sociales
+
+                                </button>
+                            </div>
+                            <div class="col-2" style="display:flex;align-items: center">
+                                <span style="font-size: 14px" class="badge badge-pill badge-primary float-right">{{$socials->count()}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="collapseSocials" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSocials">
+                        <ul class="list-group list-group-flush">
+                            <li id="btn-create-social" class="list-group-item text-center" style="color: #afafaf;cursor:pointer">
+                                <i class="fa fa-plus-circle"></i>
+                                Agregar nueva red social
+                            </li>
+                            {!! Form::open(['url' => 'admin/socials']) !!}
+                            <li style="display: none" class="list-group-item" id="form-agregar-social">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input name="nombre" type="text "class="form-control" placeholder="Nombre de la red">
+                                    </div>
+                                    <div class="col-2">
+                                        <h2 id="btn-back-social" style="cursor: pointer"><i class="fa fa-angle-up"></i></h2>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-10">
+                                        <input name="url" type="text" class="form-control" placeholder="URL de la red">
+                                    </div>
+                                    <div class="col-2" style="display: flex; align-items: center">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            {!! Form::close() !!}
+                            @foreach($socials as $social)
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <i class="fab fa-{{$social->nombre}}"></i>
+                                        {{$social->url}}
+                                    </div>
+                                    <div class="col-2" style="display: flex; align-items: center">
+                                        {!! Form::open(['method' => 'DELETE', 'route' => ['socials.destroy', $social->id]]) !!}
+                                        <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
+                                            <i class="fa fa-minus-circle"></i>
+                                        </button>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
         </div><!--....col-md-4-->
 
     </div><!--...row-->

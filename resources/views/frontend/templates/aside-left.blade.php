@@ -49,7 +49,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
@@ -71,11 +71,14 @@
 									</div>
 								</div>
 							</div-->
+
 							@foreach($categorias as $categoria)
 							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">{{$categoria->categoria}}</a></h4>
-								</div>
+								<form class="panel-heading" id="form_categoria{{$categoria->id}}">
+                                    <input name="search" type="hidden" value="{{strtolower($categoria->categoria)}}">
+                                    <input name="categoria" type="hidden" value="{{$categoria->id}}">
+									<h4 class="panel-title"><a href="#" onclick="document.getElementById('form_categoria{{$categoria->id}}').submit();">{{$categoria->categoria}}</a></h4>
+								</form>
 							</div>
 							@endforeach
 
@@ -110,18 +113,28 @@
 								</div>
 							</div-->
 						</div><!--/category-products-->
-					
+
 						<div class="brands_products"><!--brands_products-->
 							<h2>Marcas</h2>
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
+                                    <?php use App\Producto; ?>
 									@foreach($marcas as $marca)
-									<li><a href="#"> <span class="pull-right">(0)</span>{{$marca->marca}}</a></li>
+                                    <form style="margin-top: 10px" id="form-marca-{{$marca->id}}">
+                                        <input name="search" type="hidden" value="{{$marca->marca}}">
+                                        <input name="marca" type="hidden" value="{{$marca->id}}">
+									<li>
+                                        <a href="#"onclick="document.getElementById('form-marca-{{$marca->id}}').submit();">
+                                            <span class="pull-right">({{Producto::where('id_marca', $marca->id)->count()}})</span>
+                                            {{$marca->marca}}
+                                        </a>
+                                    </li>
+                                    </form>
 									@endforeach
 								</ul>
 							</div>
 						</div><!--/brands_products-->
-						
+
 						<div class="price-range"><!--price-range-->
 							<h2>Price Range</h2>
 							<div class="well text-center">
@@ -129,10 +142,10 @@
 								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
 							</div>
 						</div><!--/price-range-->
-						
+
 						<div class="shipping text-center"><!--shipping-->
 							<img src="images/home/shipping.jpg" alt="" />
 						</div><!--/shipping-->
-					
+
 					</div>
 				</div>

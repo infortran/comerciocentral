@@ -42,10 +42,11 @@ class BlogController extends Controller
             'categorias' => Categoria::all(),
             'marcas' => Marca::all(),
             'post' => $post,
-            'comentarios' => Comentario::all()
+            'user_post' => User::findOrFail($post->id_usuario),
+            'comentarios' => Comentario::where('id_post', $post->id)->get()
         ];
 
-    	return view('frontend.blog.blog-single', $data);
+    	return view('frontend.blog.blog-single',$data);
     }
 
 }

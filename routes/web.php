@@ -29,6 +29,8 @@ Route::get('/admin/blog', 'BlogAdminController@index');
 Route::get('/admin/categorias', 'CategoriaController@index');
 Route::get('/admin/marcas', 'MarcaController@index');
 Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
+Route::post('/admin/social/socialtouser/{id}', 'SocialController@addSocialToUser')->name('social.user.add');
+Route::post('/admin/social/detach/{user}/{social}', 'SocialController@detachSocialToUser')->name('social.user.detach');
 
 
 
@@ -51,6 +53,8 @@ Route::resource('admin/marcas', 'MarcaController');
 Route::resource('admin/slides', 'SlideController');
 
 Route::resource('admin/comentarios', 'ComentarioAdminController');
+
+Route::resource('admin/socials', 'SocialController');
 
 
 

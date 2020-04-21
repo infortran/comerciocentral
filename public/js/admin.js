@@ -13,6 +13,8 @@ function readURL(input, selector) {
 $(document).ready(function(){
     $('#div_cancel_edit_admin').hide();
     $('#btn_update_admin').hide();
+    $('#form-agregar-social').hide();
+    $('#form-agregar-social-user').hide();
 
 	$("#img-input-producto").change(function(){
         var selector = $('#img-create-producto');
@@ -61,5 +63,20 @@ $(document).ready(function(){
         $('#btn_edit_admin').fadeIn(2000);
     });
 
+
+    //BOTON AGREGAR SOCIALS
+    $('#btn-create-social').click(function(){
+        $('#form-agregar-social').fadeIn(2000);
+    });
+    $('#btn-back-social').click(function () {
+        $('#form-agregar-social').fadeOut(2000);
+    });
+
+    $('#btn-add-social-user').click(function(){
+        $('#form-agregar-social-user').fadeIn(2000);
+    });
+    $('#btn-back-social-user').click(function () {
+        $('#form-agregar-social-user').fadeOut(2000);
+    });
 });
 

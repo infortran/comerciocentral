@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\BlogAdmin;
+use App\Comentario;
+use App\User;
 use Illuminate\Http\Request;
 use App\Post;
 use Image;
@@ -72,9 +74,15 @@ class BlogAdminController extends Controller
      * @param  \App\BlogAdmin  $blogAdmin
      * @return \Illuminate\Http\Response
      */
-    public function show(BlogAdmin $blogAdmin)
+    public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $data = [
+            'post' => $post,
+            'user_post' => User::findOrFail($post->id_usuario),
+            'comentarios' => Comentario::where('id_post', $post->id)->get()
+        ];
+        return view('backend.blog.post', $data);
     }
 
     /**
