@@ -71,13 +71,13 @@
 											<img src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 											<h2>${{$producto->precio}}</h2>
 											<p>{{$producto->nombre}}</p>
-											<a onclick="snackbarAddCart()" href="{{route('cart.addtocart', ['id' => $producto->id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart btn-submit-add-cart" data-id="{{$producto->id}}"></i>Agregar al carrito</button>
 										</div>
 										<div class="product-overlay">
 											<div class="overlay-content">
 												<h2>$ {{$producto->precio}}</h2>
 												<p>{{$producto->nombre}}</p>
-												<a onclick="snackbarAddCart()" href="{{route('cart.addtocart', ['id' => $producto->id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+												<button type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</button>
 											</div>
 										</div>
 								</div>

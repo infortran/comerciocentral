@@ -45,7 +45,7 @@
                         <h2>Registrate!</h2>
                         <form method="POST" action="{{ route('register') }}">
                             <input placeholder="Ingresa tu nombre y apellido" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                            @csrf
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -109,13 +109,14 @@ class CartController extends Controller
         //
     }
 
-    public function addItemsToCart(Request $request, $id){
-        $producto = Producto::find($id);
+    public function addItemsToCart(Request $request){
+
+        $producto = Producto::find($request->get('id'));
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($producto, $producto->id);
 
         $request->session()->put('cart', $cart);
-        return redirect()->back();
+        return response()->json(['status'=>'ok', 'cantidad' => $cart->cantidadTotal]);
     }
 }

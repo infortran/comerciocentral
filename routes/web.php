@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'InicioController@index');
+Route::get('/', 'InicioController@index')->name('inicio.index');
+
+Route::get('/alexander/{nombre}', 'InicioController@alexander');
 
 Route::get('/contacto', 'ContactoController@index');
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
 Route::get('/carrito', 'CartController@index');
-Route::get('/add_to_cart/{id}', 'CartController@addItemsToCart')->name('cart.addtocart');
+Route::post('/add_to_cart', 'CartController@addItemsToCart');
 Route::get('/productos', 'ProductoController@show');
 Route::get('/producto/{id}', 'ProductoController@single')->name('producto.single');
 

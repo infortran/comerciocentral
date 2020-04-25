@@ -31,6 +31,12 @@ $(document).ready(function () {
     });
     resetColorStar();
     ratingStars();
+
+
+    $('.btn-submit-add-cart').click(function(){
+        var id = $(this).data('id');
+        addToCartFromAjax(id);
+    });
 });
 var ratedIndex = -1;
 
@@ -52,4 +58,30 @@ function ratingStars(){
 
 function resetColorStar() {
     $('.fa-star').css('color', '#afafaf');
+}
+
+function addToCartFromAjax(id) {
+    var data = new FormData();
+    data.append('id', id);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data:data,
+        url:'/add_to_cart',
+        method:'POST',
+        processData:false,
+        contentType:false,
+        cache:false,
+        dataType:'json',
+        success:function(data){
+            $('#badge-carrito').html(data.cantidad);
+            var x = document.getElementById("snackbar");
+            // Add the "show" class to DIV
+            x.className = "show";
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+    });
 }

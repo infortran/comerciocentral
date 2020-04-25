@@ -27,6 +27,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
 
 
@@ -81,7 +82,7 @@
        ===============================-->
 		@if(Auth::check() && Auth::user()->role=='admin')
 
-		<div class="header_top" style="background: #afafaf">
+		<!--div class="header_top" style="background: #afafaf">
 			<div class="container">
 				<div class="row">
 
@@ -99,7 +100,7 @@
 
 				</div>
 			</div>
-		</div>
+		</div-->
 		@endif<!--FIN BARRA ADMIN-->
 
 
@@ -180,19 +181,24 @@
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
 								<li><a href=""><i class="fa fa-user"></i> Cuenta</a></li>
-								<!--li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li-->
+
+                                @if(Auth::check() && Session::has('cart'))
+								<li><a href="{{url('/checkout')}}"><i class="fa fa-cash-register"></i> Checkout</a></li>
+                                @endif
 								<li>
                                     <a href="{{url('/carrito')}}">
                                         <i class="fa fa-shopping-cart"></i>
                                         Carrito
-                                        <span class="badge" style="background-color: red;">{{Session::has('cart') ? Session::get('cart')->cantidadTotal : ''}}</span>
+                                        <span id="badge-carrito" class="badge" style="background-color: red;">{{Session::has('cart') ? Session::get('cart')->cantidadTotal : ''}}</span>
                                     </a>
 
                                 </li>
 								@guest
 								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
+                                    @if(Auth::check() && Auth::user()->role=='admin')
+                                    <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Administracion</a></li>
+                                    @endif
 								<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a></li>
 
@@ -229,9 +235,9 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="/" class="active">Inicio</a></li>
-								<li><a href="/productos" class="">Productos</a></li>
-								<li><a href="/blog" class="">Blog</a></li>
+								<li><a href="/" class="{{ Request::segment(1) === '' ? 'active' : null }}">Inicio</a></li>
+								<li><a href="/productos" class="{{ Request::segment(1) === 'productos' || Request::segment(1) === 'producto' ? 'active' : null }}">Productos</a></li>
+								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Blog</a></li>
 								<!--li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.html">Productos</a></li>
@@ -248,7 +254,7 @@
                                     </ul>
                                 </li>
 								<li><a href="404.html">404</a></li-->
-								<li><a href="/contacto">Contacto</a></li>
+								<li><a href="/contacto" class="{{ Request::segment(1) === 'contacto' ? 'active' : null }}">Contacto</a></li>
 							</ul>
 						</div>
 					</div>
@@ -390,7 +396,7 @@
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2020 {{config('app.name')}}. Todos los derechos reservados.</p>
+					<p class="pull-left">Copyright © {{date("Y")}} {{config('app.name')}}. Todos los derechos reservados.</p>
 					<p class="pull-right">Diseñado por <span><a target="_blank" href="http://www.facebook.com/infortran">Infortran</a></span></p>
 				</div>
 			</div>

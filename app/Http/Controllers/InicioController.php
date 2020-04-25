@@ -40,4 +40,9 @@ class InicioController extends Controller
             'search' => $query];
     	return view('frontend.inicio', $data);
     }
+
+
+    public function alexander($nombre){
+        return view('frontend.servicios', ['nombre' => $nombre]);
+    }
 }
