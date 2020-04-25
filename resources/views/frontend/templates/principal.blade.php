@@ -8,32 +8,83 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home | {{ config('app.name') }}</title>
+
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
+
+    <link href="{{asset('plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('css/price-range.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
-    <![endif]-->       
+    <![endif]-->
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <style>
+
+
+        .card {
+            /* Add shadows to create the "card" effect */
+            background: #efefef;
+            border-radius: 3px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .card-cart{
+            background: #fbfbfb !important;
+            padding: 30px;
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        /* Add some padding inside the card container */
+        .card-body {
+            padding: 20px;
+        }
+
+        .borderless td, .borderless th {
+            border: none !important;
+        }
+    </style>
 </head><!--/head-->
 
 <body>
+
+<div id="snackbar">Producto añadido al carrito</div>
+<script>
+    function snackbarAddCart() {
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+</script>
 	<header id="header"><!--header-->
+
+        <!--=====================
+            BARRA DE ADMINISTRACION (lo mas probable que la termine quitando)
+       ===============================-->
 		@if(Auth::check() && Auth::user()->role=='admin')
 
 		<div class="header_top" style="background: #afafaf">
 			<div class="container">
 				<div class="row">
-					
+
 					<a class="pull-right" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form-nav').submit();">
                     	<button style="margin: 10px" class="btn btn-warning">Salir</button>
@@ -42,17 +93,19 @@
                         style="display: none;">
                         @csrf
                     </form>
-					
+
 					<a class="pull-right" href="{{url('/admin')}}"><button style="margin: 10px" class="btn btn-default">Administracion</button></a>
-					
-					
+
+
 				</div>
 			</div>
 		</div>
-		@endif
+		@endif<!--FIN BARRA ADMIN-->
 
 
-
+        <!--=====================================
+                    PRIMERA BARRA NAVBAR (sociales, telefono y email)
+        ==========================================-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
@@ -67,18 +120,23 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="http://{{$header->facebook}}"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="http://{{$header->twitter}}"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="http://{{$header->instagram}}"><i class="fa fa-instagram"></i></a></li>
-								<li><a href="http://{{$header->linkedin}}"><i class="fa fa-linkedin"></i></a></li>
-								
+								<li><a href="http://{{$header->facebook}}"><i class="fab fa-facebook"></i></a></li>
+								<li><a href="http://{{$header->twitter}}"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="http://{{$header->instagram}}"><i class="fab fa-instagram"></i></a></li>
+								<li><a href="http://{{$header->linkedin}}"><i class="fab fa-linkedin"></i></a></li>
+
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--/header_top-->
-		
+        <!--FIN PRIMERA BARRA NAVBAR-->
+
+        <!--====================================
+                SEGUNDA BARRA NAVBAR (Logotipo, moneda_deshabilitado, carrito, login, logout)
+        ===========================================-->
+
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
@@ -93,7 +151,7 @@
 						<div class="btn-group pull-right clearfix">
 
 							<!--===========================
-								FUNCIONALIDAD DE PAGO
+								SELECTOR DE MONEDA
 								======================-->
 							<!--div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
@@ -105,7 +163,7 @@
 									<li><a href="">UK</a></li>
 								</ul>
 							</div-->
-							
+
 							<!--div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									DOLLAR
@@ -123,15 +181,22 @@
 							<ul class="nav navbar-nav">
 								<li><a href=""><i class="fa fa-user"></i> Cuenta</a></li>
 								<!--li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li-->
+								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li-->
+								<li>
+                                    <a href="{{url('/carrito')}}">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Carrito
+                                        <span class="badge" style="background-color: red;">{{Session::has('cart') ? Session::get('cart')->cantidadTotal : ''}}</span>
+                                    </a>
+
+                                </li>
 								@guest
 								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
 								<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a></li>
 
-								
+
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
@@ -144,11 +209,16 @@
 				</div>
 			</div>
 		</div><!--/header-middle-->
-	
+        <!--FIN SEGUNDA BARRA NAVBAR-->
+
+        <!--=================================
+                NAVBAR PRINCIPAL (inicio, productos, blog, contacto)
+        =======================================-->
+
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-9">
+					<div class="col-sm-8">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
@@ -165,35 +235,53 @@
 								<!--li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.html">Productos</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
+										<li><a href="product-details.html">Product Details</a></li>
+										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="cart.html">Cart</a></li>
+										<li><a href="login.html">Login</a></li>
                                     </ul>
-                                </li> 
+                                </li>
 								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="blog.html">Blog List</a></li>
 										<li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
-                                </li> 
-								<!--li><a href="404.html">404</a></li-->
+                                </li>
+								<li><a href="404.html">404</a></li-->
 								<li><a href="/contacto">Contacto</a></li>
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Buscar"/>
-						</div>
-					</div>
+                    <!-- ============================
+                         FORMULARIO DE BUSQUEDA
+                    ================================= -->
+                    @if(isset($search))
+                    <div class="col-sm-4" style="margin-top: 20px">
+                        <form class="search-form">
+                            <input name="search" type="text" class="textbox" placeholder="Buscar">
+                            <button title="Search" value="" type="submit" class="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    @endif
+
+
+                <!--.fin FORM busqueda-->
 				</div>
 			</div>
 		</div><!--/header-bottom-->
+        <!--FIN NAVBAR PRINCIPAL-->
+
+        @if(isset($search) && $search)
+            <div class="container">
+                <div class="alert alert-info">Resultados para tu busqueda <strong>"{{$search}}"</strong></div>
+            </div>
+        @endif
 	</header><!--/header-->
 
 	@yield('content')
-	
+
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
@@ -221,10 +309,10 @@
 								<h2>{{$member->cargo}}</h2>
 							</div>
 						</div>
-						
+
 						@endforeach
-						
-						
+
+
 					</div>
 					<div class="col-sm-3">
 						<div class="address">
@@ -235,7 +323,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="footer-widget">
 			<div class="container">
 				<div class="row">
@@ -251,7 +339,7 @@
 							</ul>
 						</div>
 					</div>
-					
+
 					<div class="col-sm-2">
 						<div class="single-widget">
 							<h2>Redes sociales</h2>
@@ -274,7 +362,7 @@
 								<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
 								document.getElementById('logout-form-footer').submit();"> Logout</a></li>
 
-								
+
 
                                 <form id="logout-form-footer" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
@@ -294,11 +382,11 @@
 							</form>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
@@ -307,13 +395,13 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</footer><!--/Footer-->
 	@if(Auth::check() && Auth::user()->role=='admin')
 	<!--script type="text/javascript" src="{{asset('js/app.js')}}"></script-->
 	@endif
 
-  
+
     <script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}"></script>
 	@if(Request::segment(1) == 'contacto')

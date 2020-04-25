@@ -39,4 +39,8 @@ class User extends Authenticatable
     public function socials(){
         return $this->belongsToMany(Social::class)->withPivot('uri');
     }
+
+    public function ratings(){
+        return $this->belongsToMany('App\Rating', 'ratings')->withPivot('voto');
+    }
 }

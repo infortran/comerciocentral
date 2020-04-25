@@ -20,7 +20,8 @@ class InicioController extends Controller
         $query = trim($request->get('search'));
         $productos = Producto::all();
         if($request){
-            $productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
+            $productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')
+                ->orWhere('descripcion', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
         }
         if(request('categoria')){
             $productos = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);

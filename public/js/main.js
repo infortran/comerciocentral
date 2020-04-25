@@ -29,4 +29,27 @@ $(document).ready(function () {
             zIndex: 2147483647 // Z-Index for the overlay
         });
     });
+    resetColorStar();
+    ratingStars();
 });
+var ratedIndex = -1;
+
+function ratingStars(){
+    $('.fa-star').mouseover(function(){
+        resetColorStar();
+        var currentIndex = parseInt($(this).data('index'));
+        for(var i = 0; i <= currentIndex; i++)
+            $('.fa-star:eq('+i+')').css('color', '#ff621d');
+    });
+    $('.fa-star').mouseleave(function(){
+        resetColorStar();
+        if(ratedIndex =! -1)
+            for(var i = 0; i <= ratedIndex; i++)
+                $('.fa-star:eq('+i+')').css('color', '#ff621d');
+
+    });
+}
+
+function resetColorStar() {
+    $('.fa-star').css('color', '#afafaf');
+}

@@ -74,7 +74,7 @@
 
 							@foreach($categorias as $categoria)
 							<div class="panel panel-default">
-								<form class="panel-heading" id="form_categoria{{$categoria->id}}">
+								<form action="{{url('productos')}}" class="panel-heading" id="form_categoria{{$categoria->id}}">
                                     <input name="search" type="hidden" value="{{strtolower($categoria->categoria)}}">
                                     <input name="categoria" type="hidden" value="{{$categoria->id}}">
 									<h4 class="panel-title"><a href="#" onclick="document.getElementById('form_categoria{{$categoria->id}}').submit();">{{$categoria->categoria}}</a></h4>
@@ -120,7 +120,7 @@
 								<ul class="nav nav-pills nav-stacked">
                                     <?php use App\Producto; ?>
 									@foreach($marcas as $marca)
-                                    <form style="margin-top: 10px" id="form-marca-{{$marca->id}}">
+                                    <form action="{{url('/productos')}}" style="margin-top: 10px" id="form-marca-{{$marca->id}}">
                                         <input name="search" type="hidden" value="{{$marca->marca}}">
                                         <input name="marca" type="hidden" value="{{$marca->id}}">
 									<li>

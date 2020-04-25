@@ -79,7 +79,7 @@
 							<div class="blog-socials">
 								<ul>
                                     @foreach($user_post->socials as $social)
-									<li><a href="http://{{$social->url.$social->pivot->uri}}"><i class="fa fa-{{strtolower($social->nombre)}}"></i></a></li>
+									<li><a href="http://{{$social->url.$social->pivot->uri}}"><i class="fab fa-{{strtolower($social->nombre)}}"></i></a></li>
 									@endforeach
 								</ul>
 								<a class="btn btn-primary" href="">Other Posts</a>
@@ -106,7 +106,7 @@
 								<div class="media-body">
 									<ul class="sinlge-post-meta">
 										<li><i class="fa fa-user"></i>{{$user_post->name}}</li>
-										<li><i class="fa fa-clock-o"></i>{{$comentario->created_at->timezone('America/Santiago')->format('H:i')}}</li>
+										<li><i class="fa fa-clock"></i>{{$comentario->created_at->timezone('America/Santiago')->format('H:i')}}</li>
 										<li><i class="fa fa-calendar"></i>{{$comentario->created_at->timezone('America/Santiago')->format('d.m.Y')}}</li>
                                         <li><i class="fa fa-calendar"></i>{{$comentario->created_at->diffForHumans()}}</li>
 									</ul>

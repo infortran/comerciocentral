@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\FooterInfo;
+use App\HeaderFrontend;
+use App\Producto;
+use App\TeamMember;
 use Illuminate\Http\Request;
+use Session;
 
 class CartController extends Controller
 {
@@ -14,7 +19,28 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        if(!Session::has('cart')){
+            $data = [
+                'header' => HeaderFrontend::find(1),
+                'footer' => FooterInfo::find(1),
+                'members' => TeamMember::all(),
+                'cart_productos' => null,
+                'precio_total' => 0
+            ];
+
+            return view('frontend.cart', $data);
+        }
+
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $data = [
+            'header' => HeaderFrontend::find(1),
+            'footer' => FooterInfo::find(1),
+            'members' => TeamMember::all(),
+            'cart_productos' => $cart->items,
+            'precio_total' => $cart->precioTotal
+        ];
+        return view('frontend.cart', $data);
     }
 
     /**
@@ -81,5 +107,15 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         //
+    }
+
+    public function addItemsToCart(Request $request, $id){
+        $producto = Producto::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($producto, $producto->id);
+
+        $request->session()->put('cart', $cart);
+        return redirect()->back();
     }
 }

@@ -2,36 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
+use App\FooterInfo;
+use App\HeaderFrontend;
 use App\Http\Requests\ProductosFormRequest;
+use App\TeamMember;
 use Illuminate\Http\Request;
 use App\Producto;
 use Illuminate\Support\Facades\File;
 use App\Categoria;
 use App\Marca;
 use Image;
+use Session;
 
 class ProductoController extends Controller
 {
+    private $categorias;
+    private $marcas;
+    private $productos;
+
+
     public function __construct()
     {
         $this->middleware('admin');
+        $this->categorias = Categoria::all();
+        $this->marcas = Marca::all();
+        $this->productos = Producto::all();
     }
 
     public function index(Request $request){
         $query = trim($request->get('search'));
-        $productos = Producto::all();
         if($request){
-            $productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
+            $this->productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
         }
 
-    	return view('backend.productos.index',['productos'=>$productos,'search' => $query]);
+    	return view('backend.productos.index',['productos'=>$this->productos,'search' => $query]);
     }
 
     //abre la vista crear producto
     public function create(){
-        $categorias = Categoria::all();
-        $marcas = Marca::all();
-    	return view('backend.productos.create', ['categorias' => $categorias, 'marcas' => $marcas]);
+    	return view('backend.productos.create', ['categorias' => $this->categorias, 'marcas' => $this->marcas]);
     }
 
     //guarda el nuevo producto en db
@@ -68,19 +78,49 @@ class ProductoController extends Controller
         return redirect('/admin/productos');
     }
 
-    //muestra un producto
-    public function show(){
+    //muestra la vista FRONTEND PRODUCTOS
+    public function show(Request $request){
+        $query = trim($request->get('search'));
+        if($request){
+            $this->productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')
+                ->orWhere('descripcion', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
+        }
+        if(request('categoria')){
+            $this->productos = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);
+        }
+        if(request('marca')){
+            $this->productos = Producto::where('id_marca', request('marca'))->orderBy('id', 'asc')->paginate(9);
+        }
+        $data = [
+            'header' => HeaderFrontend::find(1),
+            'footer' => FooterInfo::find(1),
+            'members' => TeamMember::all(),
+            'categorias' => $this->categorias,
+            'marcas' => $this->marcas,
+            'productos' => $this->productos,
+            'search' => $query
+        ];
+        return view('frontend.productos', $data);
+    }
 
+    public function single(Request $request, $id){
+        $data = [
+            'header' => HeaderFrontend::find(1),
+            'footer' => FooterInfo::find(1),
+            'members' => TeamMember::all(),
+            'categorias' => $this->categorias,
+            'marcas' => $this->marcas,
+            'producto' => Producto::find($id),
+        ];
+        return view('frontend.producto-detalle', $data);
     }
 
     //muestra la vista editar
     public function edit($id){
-        $categorias = Categoria::all();
-        $marcas = Marca::all();
         return view('backend.productos.edit', [
             'producto' => Producto::findOrFail($id),
-            'categorias' => $categorias,
-            'marcas' => $marcas]);
+            'categorias' => $this->categorias,
+            'marcas' => $this->marcas]);
     }
     //edita y guarda el registro en db
     public function update(Request $request, $id){
@@ -99,7 +139,9 @@ class ProductoController extends Controller
 
             $img_delete = 'images/uploads/productos/'. $producto->img;
             if(File::exists(public_path($img_delete))) {
-                File::delete($img_delete);
+                if(!$producto->img == 'image.png'){
+                    File::delete($img_delete);
+                }
             }
             $producto->img = $imageName;
         }else{
@@ -135,14 +177,16 @@ class ProductoController extends Controller
         $producto = Producto::findOrFail($id);
         $img_delete = 'images/uploads/productos/'. $producto->img;
         if(File::exists(public_path($img_delete))) {
-            File::delete($img_delete);
+            if($producto->img != 'image.png'){
+                File::delete($img_delete);
+            }
         }
         $producto->delete();
 
         return redirect('/admin/productos');
-    }
 
-    public function uploadImageProducto(){
 
     }
+
+
 }
