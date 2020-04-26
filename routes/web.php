@@ -21,7 +21,7 @@ Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
 Route::get('/carrito', 'CartController@index');
 Route::post('/add_to_cart', 'CartController@addItemsToCart');
-Route::get('/productos', 'ProductoController@show');
+Route::get('/productos', 'ProductoFrontController@index');
 Route::get('/producto/{id}', 'ProductoController@single')->name('producto.single');
 
 Route::resource('comentario', 'ComentarioController');
