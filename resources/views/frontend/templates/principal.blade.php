@@ -235,7 +235,7 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="/" class="{{ Request::segment(1) === '' ? 'active' : null }}">Inicio</a></li>
+								<li><a href="/" class="{{ url()->current() === url('/') ? 'active' : null }}">Inicio</a></li>
 								<li><a href="/productos" class="{{ Request::segment(1) === 'productos' || Request::segment(1) === 'producto' ? 'active' : null }}">Productos</a></li>
 								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Blog</a></li>
 								<li><a href="/contacto" class="{{ Request::segment(1) === 'contacto' ? 'active' : null }}">Contacto</a></li>

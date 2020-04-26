@@ -103,17 +103,7 @@ class ProductoController extends Controller
         return view('frontend.productos', $data);
     }
 
-    public function single(Request $request, $id){
-        $data = [
-            'header' => HeaderFrontend::find(1),
-            'footer' => FooterInfo::find(1),
-            'members' => TeamMember::all(),
-            'categorias' => $this->categorias,
-            'marcas' => $this->marcas,
-            'producto' => Producto::find($id),
-        ];
-        return view('frontend.producto-detalle', $data);
-    }
+
 
     //muestra la vista editar
     public function edit($id){
