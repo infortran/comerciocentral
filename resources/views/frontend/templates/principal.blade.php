@@ -180,13 +180,13 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Cuenta</a></li>
+								<li><a class="{{ Request::segment(1) === 'cuenta' ? 'active' : null }}" href="{{url('/cuenta')}}"><i class="fa fa-user"></i> Cuenta</a></li>
 
                                 @if(Auth::check() && Session::has('cart'))
-								<li><a href="{{url('/checkout')}}"><i class="fa fa-cash-register"></i> Checkout</a></li>
+								<li><a class="{{ Request::segment(1) === 'checkout' ? 'active' : null }}"  href="{{url('/checkout')}}"><i class="fa fa-cash-register"></i> Checkout</a></li>
                                 @endif
 								<li>
-                                    <a href="{{url('/carrito')}}">
+                                    <a class="{{ Request::segment(1) === 'carrito' ? 'active' : null }}"  href="{{url('/carrito')}}">
                                         <i class="fa fa-shopping-cart"></i>
                                         Carrito
                                         <span id="badge-carrito" class="badge" style="background-color: red;">{{Session::has('cart') ? Session::get('cart')->cantidadTotal : ''}}</span>
@@ -238,22 +238,6 @@
 								<li><a href="/" class="{{ Request::segment(1) === '' ? 'active' : null }}">Inicio</a></li>
 								<li><a href="/productos" class="{{ Request::segment(1) === 'productos' || Request::segment(1) === 'producto' ? 'active' : null }}">Productos</a></li>
 								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Blog</a></li>
-								<!--li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Productos</a></li>
-										<li><a href="product-details.html">Product Details</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="login.html">Login</a></li>
-                                    </ul>
-                                </li>
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li>
-								<li><a href="404.html">404</a></li-->
 								<li><a href="/contacto" class="{{ Request::segment(1) === 'contacto' ? 'active' : null }}">Contacto</a></li>
 							</ul>
 						</div>

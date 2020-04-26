@@ -1,7 +1,7 @@
 @extends('frontend.templates.principal')
 
 @section('content')
-    <section id="cart_items" style="margin-bottom: 20px">
+    <section id="cart_items" style="margin-bottom: 200px">
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 @else
-                    <div class="alert alert-info">
+                    <div class="alert alert-info" style="margin-bottom: 300px">
                         <h5> <i class="fas fa-cart-arrow-down"></i>
                             No hay Items en el Carrito
                         </h5>

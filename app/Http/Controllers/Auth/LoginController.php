@@ -33,6 +33,12 @@ class LoginController extends Controller
     //protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo = '/admin';
 
+
+    public function authenticated($request,$user)
+    {
+        return redirect(session()->pull('from',$this->redirectTo));
+    }
+
     /**
      * Create a new controller instance.
      *
@@ -47,6 +53,9 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        if(!session()->has('from')){
+            session()->put('from', url()->previous());
+        }
         $data = [
           'header' => HeaderFrontend::find(1),
           'footer' => FooterInfo::find(1),
