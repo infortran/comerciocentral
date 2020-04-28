@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
 use App\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -43,6 +44,7 @@ class SlideController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'producto_id' => 'required',
             'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048',
             'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
@@ -60,6 +62,7 @@ class SlideController extends Controller
         $logoName = $this->storeImgSlide($logo, 200, 70);
 
         $slide = new Slide();
+        $producto = Producto::find(request('producto_id'));
 
         $slide->titulo = request('titulo');
         $slide->subtitulo = request('subtitulo');
@@ -67,7 +70,7 @@ class SlideController extends Controller
         $slide->img = $imageName;
         $slide->img_pricing = $imgPricingName;
         $slide->logo = $logoName;
-
+        $producto->slides()->save($slide);
         $slide->save();
 
         return redirect('/admin');
@@ -111,6 +114,7 @@ class SlideController extends Controller
 
         if($request->img && $request->img_pricing && $request->logo){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -129,6 +133,7 @@ class SlideController extends Controller
             $slide->logo = $logoName;
         }else if($request->img && $request->img_pricing){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -143,6 +148,7 @@ class SlideController extends Controller
             $slide->img_pricing = $imgPricingName;
         }else if($request->img_pricing && $request->logo){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -157,6 +163,7 @@ class SlideController extends Controller
             $slide->logo = $logoName;
         }else if($request->img && $request->logo){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -171,6 +178,7 @@ class SlideController extends Controller
             $slide->logo = $logoName;
         }else if($request->img){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -181,6 +189,7 @@ class SlideController extends Controller
             $slide->img = $imageName;
         }else if($request->img_pricing){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -191,6 +200,7 @@ class SlideController extends Controller
             $slide->img_pricing = $imgPricingName;
         }else if($request->logo){
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
@@ -201,16 +211,17 @@ class SlideController extends Controller
             $slide->logo = $logoName;
         }else{
             $request->validate([
+                'producto_id' => 'required',
                 'titulo' => 'required|max:255',
                 'subtitulo' => 'required|max:255',
                 'txt_boton' => 'required',
             ]);
         }
-
+        $producto = Producto::find($request->get('producto_id'));
         $slide->titulo = $request->get('titulo');
         $slide->subtitulo = $request->get('subtitulo');
         $slide->txt_boton = $request->get('txt_boton');
-
+        $producto->slides()->save($slide);
         $slide->update();
 
         return redirect('/admin');

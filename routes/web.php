@@ -24,6 +24,7 @@ Route::post('/add_to_cart', 'CartController@addItemsToCart');
 Route::get('/productos', 'ProductoFrontController@index');
 Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
 Route::get('/cuenta', 'UserController@index');
+Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
 
 Route::resource('comentario', 'ComentarioController');
 
@@ -62,6 +63,8 @@ Route::resource('admin/slides', 'SlideController');
 Route::resource('admin/comentarios', 'ComentarioAdminController');
 
 Route::resource('admin/socials', 'SocialController');
+
+
 
 
 

@@ -10,7 +10,17 @@ function readURL(input, selector) {
     }
 }
 
+
+
 $(document).ready(function(){
+
+    jQuery('.productos-list-slide-create').select2({
+        placeholder:'Seleccione un producto',
+        allowClear:true
+    });
+
+
+
     $('#div_cancel_edit_admin').hide();
     $('#btn_update_admin').hide();
     $('#form-agregar-social').hide();
@@ -78,5 +88,7 @@ $(document).ready(function(){
     $('#btn-back-social-user').click(function () {
         $('#form-agregar-social-user').fadeOut(2000);
     });
+
+
 });
 

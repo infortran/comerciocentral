@@ -11,7 +11,8 @@
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
-    <link href="{{asset('plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
+    <!--link href="{{asset('plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet"-->
+    <script src="https://kit.fontawesome.com/fe859275e0.js" crossorigin="anonymous"></script>
     <link href="{{asset('css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('css/price-range.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
@@ -237,7 +238,7 @@
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="/" class="{{ url()->current() === url('/') ? 'active' : null }}">Inicio</a></li>
 								<li><a href="/productos" class="{{ Request::segment(1) === 'productos' || Request::segment(1) === 'producto' ? 'active' : null }}">Productos</a></li>
-								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Blog</a></li>
+								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Noticias</a></li>
 								<li><a href="/contacto" class="{{ Request::segment(1) === 'contacto' ? 'active' : null }}">Contacto</a></li>
 							</ul>
 						</div>
@@ -367,7 +368,7 @@
 							<h2>Déjanos tu correo</h2>
 							<form action="#" class="searchform">
 								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right" ></i></button>
 								<p>Get the most recent updates from <br />our site and be updated your self...</p>
 							</form>
 						</div>

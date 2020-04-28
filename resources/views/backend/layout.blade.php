@@ -26,9 +26,12 @@
     <!-- Styles -->
     <link href="{{ asset('dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
- 
-  
+
+    <!-- Select2 dependencies -->
+    <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css')}}" rel="stylesheet" />
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js')}}" defer></script>
+
+
 
     <style>
             .search-form {
@@ -90,7 +93,7 @@
   max-width: 100%;
   height: 86px;
   margin: 0 auto;
- 
+
   line-height: 2;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -113,11 +116,11 @@
                     </li>
                 </ul>
 
-                
+
 
                 <!-- Right navbar links ->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Messages Dropdown Menu ->
+                    <!- Messages Dropdown Menu ->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-comments"></i>
@@ -125,7 +128,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start ->
+                                <!- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 mr-3 img-circle">
@@ -139,11 +142,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End ->
+                                <!- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start ->
+                                <!- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 img-circle mr-3">
@@ -157,11 +160,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End ->
+                                <!- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start ->
+                                <!- Message Start ->
                                 <div class="media">
                                     <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
                                         class="img-size-50 img-circle mr-3">
@@ -175,13 +178,13 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End ->
+                                <- Message End ->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                         </div>
                     </li>
-                    <!-- Notifications Dropdown Menu ->
+                    <- Notifications Dropdown Menu ->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
@@ -343,7 +346,7 @@
                                 </a>
                             </li>
 
-                            
+
 
                         </ul>
                     </nav>
@@ -382,10 +385,12 @@
             <!-- /.control-sidebar -->
         </div>
     </div>
-    <!--script src="{{asset('js/jquery.js')}}"></script-->
-    <script src="{{asset('js/admin.js')}}"></script>
-     
-    
+
+
+    <script src="{{asset('js/admin.js')}}" defer></script>
+    <!-- Select2 Dependencies js -->
+
+
 </body>
 
 </html>

@@ -65,16 +65,16 @@
 								<!--img src="{{asset('images/product-details/rating.png')}}" alt="" /-->
 								<span>
 									<span>$ {{number_format($producto->precio, 0, '','.')}}</span>
-									<label>Quantity:</label>
-									<input type="text" value="3" />
+									<label>Cantidad:</label>
+									<input type="text" value="{{ Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) ? Session::get('cart')->items[$producto->id]['cantidad'] : '0' }}" id="input-cantidad-producto-{{$producto->id}}"/>
 									<button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}">
 										<i class="fa fa-shopping-cart"></i>
-										Add to cart
+										Agregar al carrito
 									</button>
 								</span>
 								<p><b>Availability:</b> In Stock</p>
-								<p><b>Condition:</b> New</p>
-								<p><b>Brand:</b> E-SHOPPER</p>
+								<!--p><b>Condition:</b> New</p-->
+								<p><b>Marca:</b> {{$producto->marcas->marca}}</p>
 								<a href=""><img src="{{asset('images/product-details/share.png')}}" class="share img-responsive"  alt="" /></a>
 							</div><!--/product-information-->
 						</div>

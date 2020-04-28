@@ -11,6 +11,7 @@ var RGBChange = function () {
 /*scroll to top*/
 
 $(document).ready(function () {
+
     $(function () {
         $.scrollUp({
             scrollName: 'scrollUp', // Element ID
@@ -37,6 +38,8 @@ $(document).ready(function () {
         var id = $(this).data('id');
         addToCartFromAjax(id);
     });
+
+
 });
 var ratedIndex = -1;
 
@@ -76,12 +79,17 @@ function addToCartFromAjax(id) {
         cache:false,
         dataType:'json',
         success:function(data){
-            $('#badge-carrito').html(data.cantidad);
-            var x = document.getElementById("snackbar");
+            $('#badge-carrito').html(data.cantidad_total);
+            addCantidadProducto(data.id_producto, data.cantidad_producto);
+            var snackbar = document.getElementById("snackbar");
             // Add the "show" class to DIV
-            x.className = "show";
+            snackbar.className = "show";
             // After 3 seconds, remove the show class from DIV
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
         }
     });
+}
+
+function addCantidadProducto(id, cantidad){
+    $('#input-cantidad-producto-' + id).val(cantidad);
 }

@@ -66,17 +66,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="slide-input">Titulo</label>
                                 <input name="titulo" type="text" class="form-control">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="slide-input">Texto del boton</label>
                                 <input name="txt_boton" type="text" class="form-control">
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="input-search-producto-slide">Seleccione producto a mostrar.</label>
+                            <!--input list="productos-list" class="form-control" type="text" id="input-search-producto-slide" placeholder="buscar producto"-->
+                            <select class="form-control productos-list-slide-create" name="producto_id" id="productos-list-slide-create" style="width: 220px">
+                                <option></option>
+                                @foreach(App\Producto::all() as $producto)
+                                <option value="{{$producto->id}}">{{$producto->nombre}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -104,4 +114,5 @@
         </div>
     </div>
 </div>
+
 {!! Form::close() !!}

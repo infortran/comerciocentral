@@ -3,15 +3,17 @@
 @section('content')
 
 <div id="contact-page" class="container">
+    <h1 class="titulo-principal">Contacto</h1>
+    <hr>
     	<div class="bg">
-	    	<div class="row">    		
-	    		<div class="col-sm-12">    			   			
-					<h2 class="title text-center"> <strong>Contáctanos</strong></h2>    			    				    				
+	    	<div class="row">
+	    		<div class="col-sm-12">
+					<h2 class="title text-center"> <strong>Contáctanos</strong></h2>
 					<div id="gmap" class="contact-map">
 					</div>
-				</div>			 		
-			</div>    	
-    		<div class="row">  	
+				</div>
+			</div>
+    		<div class="row">
 	    		<div class="col-sm-8">
 	    			<div class="contact-form">
 	    				<h2 class="title text-center">Get In Touch</h2>
@@ -28,7 +30,7 @@
 				            </div>
 				            <div class="form-group col-md-12">
 				                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
-				            </div>                        
+				            </div>
 				            <div class="form-group col-md-12">
 				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
 				            </div>
@@ -64,9 +66,9 @@
 							</ul>
 	    				</div>
 	    			</div>
-    			</div>    			
-	    	</div>  
-    	</div>	
+    			</div>
+	    	</div>
+    	</div>
     </div><!--/#contact-page-->
-	
+
     @endsection

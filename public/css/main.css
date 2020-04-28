@@ -8,6 +8,37 @@
 .mx-auto{
     margin:0 auto;
 }
+
+.btn{
+    padding:10px !important;
+    border-radius: 50px !important;
+}
+
+.btn-primary{
+    padding: 20px 30px !important;
+}
+
+.btn-primary:hover{
+    background: #ff7200 !important;
+}
+
+.btn-primary:active{
+    background: #c45a00 !important;
+}
+
+.btn-slide{
+    padding: 20px 30px !important;
+    border-radius: 50px !important;
+}
+
+.titulo-principal{
+    color:#FE980F;
+    text-shadow: 1px 1px 3px #a03920;
+}
+
+.titl{
+    text-shadow: 1px 1px 3px #8d5429;
+}
 .infoButton {
     background-color: #ffb473;
     border-radius:28px;

@@ -117,6 +117,10 @@ class CartController extends Controller
         $cart->add($producto, $producto->id);
 
         $request->session()->put('cart', $cart);
-        return response()->json(['status'=>'ok', 'cantidad' => $cart->cantidadTotal]);
+        return response()->json([
+            'status'=>'ok',
+            'cantidad_total' => $cart->cantidadTotal,
+            'id_producto' => $request->get('id'),
+            'cantidad_producto' => $cart->items[$request->get('id')]['cantidad']]);
     }
 }

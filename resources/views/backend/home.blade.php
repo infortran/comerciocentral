@@ -46,14 +46,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="tel">Telefono</label>
+                                                <label for="tel">Telefono del sitio</label>
                                                 <input name="telefono" type="text" class="form-control" id="tel" placeholder="ej. +56 9 12345678" value="{{$header->telefono}}">
                                             </div>
 
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="correo">Email</label>
+                                                <label for="correo">Email del sitio</label>
                                                 <input name="email" type="text" class="form-control" id="correo" placeholder="ej. +contacto@dominio.cl" value="{{$header->email}}">
                                             </div>
                                         </div>
@@ -210,7 +210,7 @@
                                 </button>
                               </h2>
                             </div>
-                            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                               <div class="card-body">
                                 <button data-target="#modal-create-slide" data-toggle="modal" class="addButton float-right"><i class="fa fa-image"></i> Nuevo slide</button>
                                   <br><br>

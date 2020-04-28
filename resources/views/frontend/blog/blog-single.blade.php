@@ -3,6 +3,8 @@
 
 <section>
 		<div class="container">
+            <h1 class="titulo-principal">Noticias y novedades</h1>
+            <hr>
 			<div class="row">
 				<!--=============================
 								ASIDE
@@ -11,9 +13,9 @@
 				<!--=============FIN ASIDE==================-->
 				<div class="col-sm-9">
 					<div class="blog-post-area">
-						<h2 class="title text-center">Post</h2>
+						<h2 class="title text-center" style="font-size: 25px">{{$post->titulo}}</h2>
 						<div class="single-blog-post">
-							<h3>{{$post->titulo}}</h3>
+							<h3></h3>
 							<div class="post-meta">
 								<ul>
 									<!--li><i class="fa fa-user"></i> Mac Doe</li>

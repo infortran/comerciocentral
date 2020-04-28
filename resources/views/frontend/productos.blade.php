@@ -5,7 +5,8 @@
 <section>
 
     <div class="container">
-
+        <h1 class="titulo-principal">Productos</h1>
+        <hr>
         <div class="row">
             <!--===========================================
                              ASIDE

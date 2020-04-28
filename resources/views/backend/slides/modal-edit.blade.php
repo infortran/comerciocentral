@@ -1,4 +1,5 @@
 {!!Form::open(['action' => ['SlideController@update', $slide->id], 'method' => 'PATCH', 'enctype' => 'multipart/form-data'])!!}
+
 <div class="modal fade" id="modal-edit-slide{{$slide->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -65,17 +66,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="slide-input">Titulo</label>
-                                <input name="titulo" value="{{$slide->titulo}}" type="text" class="form-control" id="categoria-input" >
+                                <input name="titulo" value="{{$slide->titulo}}" type="text" class="form-control">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="slide-input">Texto del boton</label>
-                                <input value="{{$slide->txt_boton}}" name="txt_boton" type="text" class="form-control" id="categoria-input" >
+                                <input value="{{$slide->txt_boton}}" name="txt_boton" type="text" class="form-control" >
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="input-search-producto-slide">Seleccione producto a mostrar.</label>
+
+                            <select class="form-control productos-list-slide-create" name="producto_id" id="" style="width: 220px">
+                                <option value="{{$slide->productos->id}}">{{$slide->productos->nombre}}</option>
+                                @foreach(App\Producto::all() as $producto)
+                                    <option value="{{$producto->id}}">{{$producto->nombre}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">

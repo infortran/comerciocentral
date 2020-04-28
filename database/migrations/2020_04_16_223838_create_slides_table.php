@@ -15,6 +15,7 @@ class CreateSlidesTable extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->id();
+            $table->integer('producto_id')->unsigned();
             $table->string('titulo', 50);
             $table->string('subtitulo', 50);
             $table->string('txt_boton');

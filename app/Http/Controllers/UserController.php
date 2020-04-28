@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Direccion;
 use App\FooterInfo;
 use App\HeaderFrontend;
 use App\TeamMember;
@@ -50,32 +51,53 @@ class UserController extends Controller
             $imgResize = Image::make($img->path());
             $imgResize->fit(300,300, function($constraint) {
                 $constraint->upsize();
-            })->save(public_path('images/uploads/admin').'/'. $imageName);
+            })->save(public_path('images/uploads/users').'/'. $imageName);
 
-            $img_delete = 'images/uploads/admin/'. $admin->img;
+            $img_delete = 'images/uploads/users/'. $user->img;
             if(File::exists(public_path($img_delete))) {
                 File::delete($img_delete);
             }
-            $admin->img = $imageName;
+            $user->img = $imageName;
         }else{
-            if($request->get('email') == $admin->email){
+            if($request->get('email') == $user->email){
                 $request->validate([
                     'name' => 'required|max:255',
                 ]);
             }else{
                 $request->validate([
                     'name' => 'required|max:255',
-                    'email' => 'required|max:255|email'
+                    'email' => 'required|max:255|email|unique:users'
                 ]);
             }
 
         }
 
-        $admin->name = $request->get('name');
-        $admin->email = $request->get('email');
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
 
-        $admin->update();
+        $user->update();
 
-        return redirect('/admin');
+        return redirect('/cuenta');
+    }
+
+    public function addDireccion(Request $request){
+        $user = Auth::user();
+        $request->validate([
+            'calle' => 'required',
+            'numero' => 'required',
+            'poblacion' => 'required',
+            'ciudad' => 'required'
+        ]);
+
+        $direccion = new Direccion();
+        $direccion->calle = $request->get('calle');
+        $direccion->numero = $request->get('numero');
+        $direccion->departamento = $request->get('departamento');
+        $direccion->poblacion = $request->get('poblacion');
+        $direccion->ciudad = $request->get('ciudad');
+
+        $user->direccions()->save($direccion);
+
+        return redirect('/cuenta');
     }
 }

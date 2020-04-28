@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'lastname', 'email', 'telefono', 'password',
     ];
 
     /**
@@ -42,5 +42,13 @@ class User extends Authenticatable
 
     public function ratings(){
         return $this->belongsToMany('App\Rating', 'ratings')->withPivot('voto');
+    }
+
+    public function direccions(){
+        return $this->hasMany('App\Direccion');
+    }
+
+    public function comentarios(){
+        return $this->hasMany('App\Comentario', 'id_user');
     }
 }

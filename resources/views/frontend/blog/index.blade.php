@@ -1,7 +1,10 @@
 @extends('frontend.templates.principal')
 @section('content')
 <section>
+
 		<div class="container">
+            <h1 class="titulo-principal">Noticias y novedades</h1>
+            <hr>
 			<div class="row">
 
 				<!--=================================
@@ -12,7 +15,7 @@
 
 				<div class="col-sm-9">
 					<div class="blog-post-area">
-						<h2 class="title text-center">BLOG</h2>
+						<h2 class="title text-center">LO MAS RECIENTE</h2>
                         @foreach($posts as $post)
 						<div class="single-blog-post">
 							<h3>{{$post->titulo}}</h3>
@@ -36,20 +39,21 @@
 							<p class="block-ellipsis">{{$post->contenido}}</p>
 							<a  class="btn btn-primary" href="{{route('post', $post->id)}}">Leer mas</a>
 						</div>
+                            <hr>
                         @endforeach
+                        {{$posts->links()}}
 
 
 
 
-
-						<div class="pagination-area">
+						<!--div class="pagination-area">
 							<ul class="pagination">
 								<li><a href="" class="active">1</a></li>
 								<li><a href="">2</a></li>
 								<li><a href="">3</a></li>
 								<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
 							</ul>
-						</div>
+						</div-->
 					</div>
 				</div>
 			</div>

@@ -79,7 +79,7 @@ class AdminController extends Controller
         	}else{
         		$request->validate([
 	                'name' => 'required|max:255',
-	                'email' => 'required|max:255|email'
+	                'email' => 'required|max:255|email|unique:users'
 	            ]);
         	}
 
