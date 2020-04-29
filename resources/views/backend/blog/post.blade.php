@@ -53,9 +53,17 @@
                                 <p>{{$comentario->comentario}}</p>
                             </div>
                             <div class="col-3">
-                                {!! Form::open(['route' => ['comentario.ban', $comentario->id], 'method' => 'PUT']) !!}
-                                <button class="btn btn-default" type="submit">Banear</button>
-                                {!! Form::close() !!}
+                                @if($comentario->banned)
+                                    {!! Form::open(['route' => ['comentario.unlock', $comentario->id], 'method' => 'PUT']) !!}
+                                    <button class="btn btn-success" type="submit">Desbloquear</button>
+                                    {!! Form::close() !!}
+                                @else
+                                    {!! Form::open(['route' => ['comentario.ban', $comentario->id], 'method' => 'PUT']) !!}
+                                    <button class="btn btn-danger" type="submit">Banear</button>
+                                    {!! Form::close() !!}
+                                @endif
+
+
                             </div>
                         </div>
                     </div>

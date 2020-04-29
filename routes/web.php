@@ -34,14 +34,24 @@ Auth::routes();
 Route::get('/admin/productos', 'ProductoController@index');
 
 Route::get('/admin/blog', 'BlogAdminController@index');
+
 Route::get('/admin/categorias', 'CategoriaController@index');
+
 Route::get('/admin/marcas', 'MarcaController@index');
+
 Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
 Route::put('/admin/comentarios/ban/{id}', 'ComentarioController@ban')->name('comentario.ban');
+Route::put('/admin/comentarios/unlock/{id}', 'ComentarioController@unlock')->name('comentario.unlock');
+
 Route::post('/admin/social/socialtouser/{id}', 'SocialController@addSocialToUser')->name('social.user.add');
 Route::post('/admin/social/detach/{user}/{social}', 'SocialController@detachSocialToUser')->name('social.user.detach');
 Route::post('/admin/social/socialtosite', 'SocialController@addSocialToSite')->name('social.site.add');
 Route::post('/admin/social/deletesocialsite/{id}', 'SocialController@deleteSocialToSite')->name('social.site.delete');
+
+Route::get('/admin/password/view', 'AdminController@changePassword')->name('user.view.changepass');
+Route::post('/admin/password/check', 'AdminController@checkPassword')->name('user.check.pass');
+Route::post('admin/password/update', 'AdminController@updatePassword')->name('user.changepass');
+Route::get('/admin/password/reset', 'AdminController@resetCheckPassword');
 
 
 

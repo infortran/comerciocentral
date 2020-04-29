@@ -224,9 +224,9 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
                 <a href="{{ url('/admin') }}" class="brand-link">
-                    <img src="{{ asset('/images/azeda-images/azeda-logo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                    <img src="{{ asset('/images/system').'/'.$header->img_header }}" alt="AdminLTE Logo" class="brand-image "
                         style="opacity: .8">
-                    <span class="brand-text font-weight-light">Administración</span>
+                    <span class="brand-text font-weight-light">Admin</span>
                 </a>
 
                 <!-- Sidebar -->

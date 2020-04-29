@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BlogAdmin;
 use App\Comentario;
+use App\HeaderFrontend;
 use App\User;
 use Illuminate\Http\Request;
 use App\Post;
@@ -28,7 +29,7 @@ class BlogAdminController extends Controller
         if($request){
             $posts = Post::where('titulo', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(3);
         }
-        return view('backend.blog.index', ['posts' => $posts, 'search' => $query]);
+        return view('backend.blog.index', ['posts' => $posts, 'search' => $query,'header' => HeaderFrontend::find(1)]);
     }
 
     /**
@@ -80,7 +81,8 @@ class BlogAdminController extends Controller
         $data = [
             'post' => $post,
             'user_post' => User::findOrFail($post->id_usuario),
-            'comentarios' => Comentario::where('id_post', $post->id)->get()
+            'comentarios' => Comentario::where('id_post', $post->id)->get(),
+            'header' => HeaderFrontend::find(1)
         ];
         return view('backend.blog.post', $data);
     }

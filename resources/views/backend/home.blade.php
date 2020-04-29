@@ -368,6 +368,10 @@
                             </div>
                         </div><!--.card4-->
 
+
+                        <!--========================
+                               CARD 5
+                        =========================-->
                           <div class="card">
                             <div class="card-header" id="headingFive">
                               <h2 class="mb-0">
@@ -396,6 +400,7 @@
         <!--===================================
             DATOS DEL ADMINISTRADOR
         ==================================-->
+        @include('backend.templates.modal-confirmar-password')
         <div class="col-md-4">
           {!!Form::open(['enctype' => 'multipart/form-data', 'method' => 'PATCH', 'action' =>['AdminController@update' , Auth::user()->id]])!!}
             <div class="card" >
@@ -431,7 +436,7 @@
                 </div>
                 <br>
                 <input accept="image/x-png,image/gif,image/jpeg" name="img" id="input_edit_img_admin" type="file" disabled>
-                <small>El archivo no debe superar los 300x300 pixeles.</small>
+                <small>Tamaño ideal 300x300 pixeles.</small>
                 <hr>
                 <div style="margin-top: 20px" class="row">
                   <div class="col-6">
@@ -439,7 +444,7 @@
                     <button style="display:none" type="submit" id="btn_update_admin" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
                   </div>
                   <div style="padding-left: 0" class="col-6">
-                    <button type="button" id="btn_edit_pass_admin" class="btn btn-danger btn-block"><i class="fa fa-user-lock"></i> Contraseña</button>
+                    <button type="button" data-toggle="modal" data-target="#modal-confirmar-password" class="btn btn-danger btn-block"><i class="fa fa-user-lock"></i> Contraseña</button>
                   </div>
                 </div>
                 <br>

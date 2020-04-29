@@ -74,6 +74,10 @@ $(document).ready(function(){
         $('#btn_edit_admin').fadeIn(2000);
     });
 
+    $('#btn_edit_pass_confirm').click(function(e){
+
+    });
+
 
     //BOTON AGREGAR SOCIALS
     $('#btn-create-social').click(function(){

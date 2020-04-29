@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\deleteCheckPassword;
 use App\SiteSocial;
 use App\Slide;
 use App\Social;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\TeamMember;
 use App\FooterInfo;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Image;
 use Illuminate\Support\Facades\File;
+use Session;
 
 
 class AdminController extends Controller
@@ -21,7 +26,7 @@ class AdminController extends Controller
     	$this->middleware('admin');
     }
 
-    public function index(){
+    public function index(Request $request){
         $data = [
             'header' => HeaderFrontend::findOrFail(1),
             'footer' => FooterInfo::findOrFail(1),
@@ -31,7 +36,9 @@ class AdminController extends Controller
             'site_socials' => SiteSocial::all()
         ];
 
-
+        if(Session::has('auth_change_pass')){
+            Session::remove('auth_change_pass');
+        }
     	return view('backend.home', $data);
     }
 
@@ -93,6 +100,51 @@ class AdminController extends Controller
     	$admin->update();
 
     	return redirect('/admin');
+    }
+
+    public function changePassword(Request $request){
+        if(Session::has('auth_change_pass') && Session::get('auth_change_pass')){
+            $data = [
+                'header' => HeaderFrontend::findOrFail(1),
+                'footer' => FooterInfo::findOrFail(1),
+                'members' => TeamMember::all(),
+                'slides' => Slide::all(),
+                'socials' => Social::all(),
+                'site_socials' => SiteSocial::all()
+            ];
+            return view('backend.templates.change-password', $data);
+        }else{
+            return redirect('/admin')->withErrors('Error al cambiar la contraseña');
+        }
+
+    }
+
+    public function checkPassword(Request $request){
+        if(Hash::check($request->get('oldpass'), Auth::user()->password)){
+            $request->session()->put('auth_change_pass', true);
+
+        }
+        return redirect(route('user.view.changepass'));
+    }
+
+    public function resetCheckPassword(Request $request){
+        if(Session::has('auth_change_pass')){
+            $request->session()->remove('auth_change_pass');
+        }
+    }
+
+    public function updatePassword(Request $request){
+        $request->validate([
+            'oldpass' => 'required',
+            'newpass' => 'required|min:8',
+            'repeatpass' => 'required|same:newpass'
+        ]);
+
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->get('newpass'));
+        $user->save();
+        return redirect('/admin');
     }
 
     public function destroy(){
