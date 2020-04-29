@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\SiteSocial;
+use App\Social;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\FooterInfo;
@@ -17,6 +19,7 @@ class ContactoController extends Controller
     	return view('frontend.contacto',[
     		'header'=> $header,
     		'footer' => $footer,
-    		'members' => $members]);
+    		'members' => $members,
+            'siteSocials' => SiteSocial::all()]);
     }
 }

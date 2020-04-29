@@ -100,6 +100,17 @@
                             <?php use App\User; ?>
                             @foreach($comentarios as $comentario)
                                 <?php $user_post = User::findOrFail($comentario->id_user) ?>
+                                @if($comentario->banned)
+                                    <li class="media">
+                                        <a class="pull-left" href="#">
+                                            <i class="fa fa-times fa-5x" style="color: red"></i>
+                                        </a>
+                                        <div class="media-body">
+                                            <strong>Este comentario ha sido bloqueado por el administrador</strong>
+                                            <p>El usuario no ha respetado las <a href="#">Normas de la comunidad</a></p>
+                                        </div>
+                                    </li>
+                                    @else
 							<li class="media">
 
 								<a class="pull-left" href="#">
@@ -116,6 +127,7 @@
 									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
 								</div>
 							</li>
+                                    @endif
                             @endforeach
 							<!--li class="media second-media">
 								<a class="pull-left" href="#">

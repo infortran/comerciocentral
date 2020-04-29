@@ -11,4 +11,8 @@ class Social extends Model
     public function users(){
         return $this->belongsToMany(User::class)->withPivot('uri');
     }
+
+    public function siteSocials(){
+        return $this->hasMany('App\SiteSocial');
+    }
 }

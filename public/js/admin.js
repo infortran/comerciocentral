@@ -25,6 +25,7 @@ $(document).ready(function(){
     $('#btn_update_admin').hide();
     $('#form-agregar-social').hide();
     $('#form-agregar-social-user').hide();
+    $('#form-agregar-social-site').hide();
 
 	$("#img-input-producto").change(function(){
         var selector = $('#img-create-producto');
@@ -87,6 +88,13 @@ $(document).ready(function(){
     });
     $('#btn-back-social-user').click(function () {
         $('#form-agregar-social-user').fadeOut(2000);
+    });
+
+    $('#btn-add-social-site').click(function(){
+        $('#form-agregar-social-site').fadeIn(2000);
+    });
+    $('#btn-back-social-site').click(function () {
+        $('#form-agregar-social-site').fadeOut(2000);
     });
 
 

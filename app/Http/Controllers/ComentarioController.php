@@ -95,4 +95,12 @@ class ComentarioController extends Controller
     {
         //
     }
+
+    public function ban($id){
+        $comentario = Comentario::find($id);
+
+        $comentario->banned = true;
+        $comentario->update();
+        return redirect('/admin/blog');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SiteSocial;
 use App\Social;
 use App\User;
 use Illuminate\Http\Request;
@@ -112,6 +113,24 @@ class SocialController extends Controller
     public function detachSocialToUser(Request $request, $user_id, $social){
         $user = User::findOrFail($user_id);
         $user->socials()->detach($social);
+        return redirect('/admin');
+    }
+
+    public function addSocialToSite(Request $request){
+        $request->validate([
+            'uri' => 'required'
+        ]);
+
+        $siteSocial = new SiteSocial();
+        $siteSocial->uri = request('uri');
+        $siteSocial->id_social = request('social_id');
+        $siteSocial->save();
+        return redirect('/admin');
+    }
+
+    public function deleteSocialToSite(Request $request, $id){
+        $siteSocial = SiteSocial::find($id);
+        $siteSocial->delete();
         return redirect('/admin');
     }
 }

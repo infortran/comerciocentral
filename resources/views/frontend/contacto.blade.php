@@ -49,20 +49,14 @@
 							<p>Email: info@e-shopper.com</p>
 	    				</address>
 	    				<div class="social-networks">
-	    					<h2 class="title text-center">Social Networking</h2>
+	    					<h2 class="title text-center">Redes Sociales</h2>
 							<ul>
+                                @foreach($siteSocials as $social)
 								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="http://{{$social->socials->url.'/'.$social->uri}}"><i class="fa fa-{{strtolower($social->socials->nombre)}}"></i></a>
 								</li>
-								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-google-plus"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-youtube"></i></a>
-								</li>
+                                @endforeach
+
 							</ul>
 	    				</div>
 	    			</div>

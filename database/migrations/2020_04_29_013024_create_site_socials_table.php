@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHeaderFrontendsTable extends Migration
+class CreateSiteSocialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateHeaderFrontendsTable extends Migration
      */
     public function up()
     {
-        Schema::create('header_frontends', function (Blueprint $table) {
+        Schema::create('site_socials', function (Blueprint $table) {
             $table->id();
-            $table->string('telefono');
-            $table->string('email');
-            $table->string('img_header');
+            $table->integer('id_social')->unsigned();
+            $table->string('uri');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateHeaderFrontendsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('header_frontends');
+        Schema::dropIfExists('site_socials');
     }
 }

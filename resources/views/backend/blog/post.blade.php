@@ -52,6 +52,11 @@
                                 <h4>{{$user_coment->name}}</h4>
                                 <p>{{$comentario->comentario}}</p>
                             </div>
+                            <div class="col-3">
+                                {!! Form::open(['route' => ['comentario.ban', $comentario->id], 'method' => 'PUT']) !!}
+                                <button class="btn btn-default" type="submit">Banear</button>
+                                {!! Form::close() !!}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\SiteSocial;
 use App\Slide;
 use App\Social;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class AdminController extends Controller
             'footer' => FooterInfo::findOrFail(1),
             'members' => TeamMember::all(),
             'slides' => Slide::all(),
-            'socials' => Social::all()
+            'socials' => Social::all(),
+            'site_socials' => SiteSocial::all()
         ];
 
 

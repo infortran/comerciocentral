@@ -6,6 +6,7 @@ use App\Categoria;
 use App\Comentario;
 use App\Marca;
 use App\Post;
+use App\SiteSocial;
 use App\User;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
@@ -27,7 +28,8 @@ class BlogController extends Controller
             'categorias' => Categoria::all(),
             'marcas' => Marca::all(),
             'search' => $query,
-            'posts' => $posts
+            'posts' => $posts,
+            'siteSocials' => SiteSocial::all()
         ];
 
     	return view('frontend.blog.index',$data);
@@ -42,6 +44,7 @@ class BlogController extends Controller
             'categorias' => Categoria::all(),
             'marcas' => Marca::all(),
             'post' => $post,
+            'siteSocials' => SiteSocial::all(),
             'user_post' => User::findOrFail($post->id_usuario),
             'comentarios' => Comentario::where('id_post', $post->id)->get()
         ];

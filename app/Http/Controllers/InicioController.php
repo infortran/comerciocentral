@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Producto;
+use App\SiteSocial;
 use App\Slide;
 use Illuminate\Http\Request;
 use App\HeaderFrontend;
@@ -37,6 +38,7 @@ class InicioController extends Controller
     		'marcas' => Marca::all(),
             'productos' => $productos,
             'slides' => Slide::all(),
+            'siteSocials' => SiteSocial::all(),
             'search' => $query];
     	return view('frontend.inicio', $data);
     }

@@ -122,11 +122,9 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="http://{{$header->facebook}}"><i class="fab fa-facebook"></i></a></li>
-								<li><a href="http://{{$header->twitter}}"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="http://{{$header->instagram}}"><i class="fab fa-instagram"></i></a></li>
-								<li><a href="http://{{$header->linkedin}}"><i class="fab fa-linkedin"></i></a></li>
-
+                                @foreach($siteSocials as $social)
+								<li><a href="http://{{$social->socials->url.'/'.$social->uri}}"><i class="fab fa-{{strtolower($social->socials->nombre)}}"></i></a></li>
+                                @endforeach
 							</ul>
 						</div>
 					</div>
@@ -335,10 +333,9 @@
 						<div class="single-widget">
 							<h2>Redes sociales</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="http://{{$header->facebook}}">Facebook</a></li>
-								<li><a href="http://{{$header->twitter}}">Twitter</a></li>
-								<li><a href="http://{{$header->instagram}}">Instagram</a></li>
-								<li><a href="http://{{$header->linkedin}}">LinkedIn</a></li>
+                                @foreach($siteSocials as $social)
+								<li><a href="http://{{$social->socials->url.'/'.$social->uri}}">{{$social->socials->nombre}}</a></li>
+                                @endforeach
 							</ul>
 						</div>
 					</div>
