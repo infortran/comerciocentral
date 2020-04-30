@@ -4,24 +4,37 @@
     <section>
         <div class="container">
             <h1 class="titulo-principal">Perfil del usuario</h1>
+
             <div class="row" style="margin:20px 5px 120px 5px">
+
 
                 <div class="col-sm-10 col-sm-offset-1">
 
                     <hr>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="card" style="margin:0;padding:0;position:relative">
+                        {!!Form::open(['enctype' => 'multipart/form-data', 'method' => 'PATCH', 'action' =>['UserController@update' , Auth::user()->id]])!!}
                         <div class="row" style="margin:0;padding:0">
                             <div class="col-sm-4 text-center" style="max-width:450px;min-height:300px;background: linear-gradient(#e2e2e2, #b6b6b6); padding:20px">
-                                <img id="img-user img-thumbnail" class="img-responsive img-circle" style="
-                                max-width:200px;
-                                max-height: 300px;
+                                <img id="img-user" class="img-responsive img-circle  img-thumbnail" style="
+                                width:200px;
+                                height: 200px;
                                 position:relative;
                                 margin: 0 auto;" src="{{asset('images/uploads/users').'/'.Auth::user()->img}}" alt="">
 
                                 <label style="display:inline-block" class="infoButton">
                                     <i class="fa fa-image"></i>
                                    <small style="font-size: 12px">Cambiar mi imagen de perfil</small>
-                                    <input style="display: none" type="file">
+                                    <input style="display: none" type="file" name="img" id="input-img-user">
                                 </label>
 
 
@@ -34,6 +47,8 @@
                                         Comentarios
                                     </li>
                                 </ul>
+
+
                             </div>
                             <div class="col-sm-8 form-user">
                                 <div class="row">
@@ -43,7 +58,7 @@
                                         <span class="input-group-addon" id="basic-addon1">
                                             <span class="fa fa-user"></span>
                                         </span>
-                                            <input id="input-nombre" value="{{Auth::user()->name}}" type="text" class="form-control" placeholder="Nombre de usuario" aria-describedby="basic-addon1">
+                                            <input name="name" id="input-nombre" value="{{Auth::user()->name}}" type="text" class="form-control" placeholder="Su nombre " aria-describedby="basic-addon1">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -52,7 +67,7 @@
                                         <span class="input-group-addon" id="basic-addon1">
                                             <span class="fa fa-user"></span>
                                         </span>
-                                            <input id="input-apellido" value="{{Auth::user()->lastname}}" type="text" class="form-control" placeholder="Nombre de usuario" aria-describedby="basic-addon1">
+                                            <input name="lastname" id="input-apellido" value="{{Auth::user()->lastname}}" type="text" class="form-control" placeholder="Su apellido" aria-describedby="basic-addon1">
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +82,7 @@
                                         <span class="input-group-addon" id="basic-addon1">
                                             <span class="fa fa-envelope"></span>
                                         </span>
-                                            <input value="{{Auth::user()->email}}" type="text" class="form-control" placeholder="Correo electronico" aria-describedby="basic-addon1">
+                                            <input name="email" value="{{Auth::user()->email}}" type="text" class="form-control" placeholder="Correo electronico" aria-describedby="basic-addon1">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -76,7 +91,7 @@
                                         <span class="input-group-addon" id="basic-addon1">
                                             <span class="fa fa-phone"></span>
                                         </span>
-                                            <input value="{{Auth::user()->telefono}}" type="text" class="form-control" placeholder="Correo electronico" aria-describedby="basic-addon1">
+                                            <input name="telefono" value="{{Auth::user()->telefono}}" type="text" class="form-control" placeholder="Telefono ej. +569 12345678" aria-describedby="basic-addon1">
                                         </div>
                                     </div>
                                 </div>
@@ -96,40 +111,37 @@
                                                         @endif
                                                     {{$direccion->poblacion}},
                                                     {{$direccion->ciudad}}</option>
-                                                @endforeach
+                                            @endforeach
                                         </select>
                                     </div>
                                     <button class="btn-link" data-target="#modal-add-direccion" data-toggle="modal">
                                         <i class="fa fa-plus"></i>
                                         Agregar nueva direccion</button>
 
+
+
                                 <hr style="border-color: #d2d2d2">
-                                    <button type="submit" class="btn btn-primary pull-right">
+                                <button style="padding:20px 10px !important;margin-top: 15px" class="btn btn-danger" data-toggle="modal" data-target="#modal-confirmar-password">
+                                    <i class="fa fa-user-lock"></i>
+                                    Cambiar contraseña</button>
+
+                                    <button style="padding:20px 10px !important" type="submit" class="btn btn-primary pull-right">
                                         <i class="fa fa-save"></i>
                                         Guardar cambios
                                     </button>
 
                             </div>
 
-                            <div class="row">
-                                <div class="col-6">
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
                         </div>
+                        {!! Form::close() !!}
+                        @include('frontend.templates.modals.modal-confirmar-password')
 
 
                     </div>
                 </div>
+
             </div>
+
         </div>
     </section>
 

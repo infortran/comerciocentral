@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6 mx-auto">
-                <form method="POST" action="{{route('user.changepass')}}" class="card">
+                <form method="POST" action="{{route('admin.changepass')}}" class="card">
                     @csrf
                     <div class="card-header">
                         Cambio de contraseña

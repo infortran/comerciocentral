@@ -55,39 +55,43 @@ class AdminController extends Controller
     	if($request->img){
     		if($request->get('email') == $admin->email){
     			$request->validate([
-	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:max_width=300,max_height=300',
-	                'name' => 'required|max:255'
+	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
+	                'name' => 'required|max:50'
             	]);
     		}else{
     			$request->validate([
-	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:max_width=300,max_height=300',
+	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
 	                'name' => 'required|max:255',
 	                'email' => 'required|max:255|email|unique:users'
             	]);
     		}
-
+            //get image file
             $img = $request->file('img');
-
-            $imageName = time().'.'.$img->extension();
+            //get only filename
+            $img_filename = pathinfo($img->getClientOriginalName())['filename'];
+            //rename with date
+            $imageName = $img_filename.time().'.'.$img->extension();
 
             $imgResize = Image::make($img->path());
             $imgResize->fit(300,300, function($constraint) {
                 $constraint->upsize();
-            })->save(public_path('images/uploads/admin').'/'. $imageName);
+            })->save(public_path('images/uploads/users').'/'. $imageName);
 
-            $img_delete = 'images/uploads/admin/'. $admin->img;
+            $img_delete = 'images/uploads/users/'. $admin->img;
             if(File::exists(public_path($img_delete))) {
-                File::delete($img_delete);
+                if($admin->img != 'avatar.png'){
+                    File::delete($img_delete);
+                }
             }
             $admin->img = $imageName;
         }else{
         	if($request->get('email') == $admin->email){
         		$request->validate([
-                	'name' => 'required|max:255',
+                	'name' => 'required|max:50'
             	]);
         	}else{
         		$request->validate([
-	                'name' => 'required|max:255',
+	                'name' => 'required|max:50',
 	                'email' => 'required|max:255|email|unique:users'
 	            ]);
         	}
@@ -124,7 +128,7 @@ class AdminController extends Controller
             $request->session()->put('auth_change_pass', true);
 
         }
-        return redirect(route('user.view.changepass'));
+        return redirect(route('admin.view.changepass'));
     }
 
     public function resetCheckPassword(Request $request){

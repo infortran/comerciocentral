@@ -7,6 +7,7 @@ use App\FooterInfo;
 use App\HeaderFrontend;
 use App\Marca;
 use App\Producto;
+use App\SiteSocial;
 use App\TeamMember;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,7 @@ class ProductoFrontController extends Controller
             'header' => HeaderFrontend::find(1),
             'footer' => FooterInfo::find(1),
             'members' => TeamMember::all(),
+            'siteSocials' => SiteSocial::all(),
             'categorias' => $this->categorias,
             'marcas' => $this->marcas,
             'productos' => $this->productos,
@@ -46,6 +48,7 @@ class ProductoFrontController extends Controller
             'header' => HeaderFrontend::find(1),
             'footer' => FooterInfo::find(1),
             'members' => TeamMember::all(),
+            'siteSocials' => SiteSocial::all(),
             'categorias' => $this->categorias,
             'marcas' => $this->marcas,
             'producto' => Producto::find($id),

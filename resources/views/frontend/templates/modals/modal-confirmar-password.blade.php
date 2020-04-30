@@ -1,5 +1,5 @@
 <!-- Modal -->
-{!! Form::open(['route' => 'admin.check.pass']) !!}
+{!! Form::open(['route' => 'user.check.pass']) !!}
 <div class="modal fade" id="modal-confirmar-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

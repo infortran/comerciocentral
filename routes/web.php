@@ -28,6 +28,8 @@ Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccio
 
 Route::resource('comentario', 'ComentarioController');
 
+Route::resource('user', 'UserController');
+
 
 Auth::routes();
 
@@ -48,10 +50,15 @@ Route::post('/admin/social/detach/{user}/{social}', 'SocialController@detachSoci
 Route::post('/admin/social/socialtosite', 'SocialController@addSocialToSite')->name('social.site.add');
 Route::post('/admin/social/deletesocialsite/{id}', 'SocialController@deleteSocialToSite')->name('social.site.delete');
 
-Route::get('/admin/password/view', 'AdminController@changePassword')->name('user.view.changepass');
-Route::post('/admin/password/check', 'AdminController@checkPassword')->name('user.check.pass');
-Route::post('admin/password/update', 'AdminController@updatePassword')->name('user.changepass');
+Route::get('/admin/password/view', 'AdminController@changePassword')->name('admin.view.changepass');
+Route::post('/admin/password/check', 'AdminController@checkPassword')->name('admin.check.pass');
+Route::post('admin/password/update', 'AdminController@updatePassword')->name('admin.changepass');
 Route::get('/admin/password/reset', 'AdminController@resetCheckPassword');
+
+Route::get('/cuenta/password/view', 'UserController@changePassword')->name('user.view.changepass');
+Route::post('/cuenta/password/check', 'UserController@checkPassword')->name('user.check.pass');
+Route::post('/cuenta/password/update', 'UserController@updatePassword')->name('user.changepass');
+Route::get('/cuenta/password/reset', 'UserController@resetCheckPassword');
 
 
 

@@ -11,9 +11,13 @@ use App\TeamMember;
 use App\FooterInfo;
 use App\Categoria;
 use App\Marca;
+use Session;
 
 class InicioController extends Controller
 {
+    public function __construct(){
+
+    }
 	/*================================
 			HOME FRONTEND
 	==================================*/

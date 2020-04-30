@@ -407,7 +407,7 @@
               <div class="card-header">
                 <strong><i class="fa fa-user-cog"></i> Datos del Administrador</strong>
               </div><!--.card-header-->
-              <img id="img_admin" style="max-height: 300px;-o-object-fit: contain;object-fit: contain;" src="{{asset('images/uploads/admin') .'/'. Auth::user()->img}}" class="card-img-top img-thumbnail" alt="...">
+              <img id="img_admin" style="max-height: 300px;-o-object-fit: contain;object-fit: contain;" src="{{asset('images/uploads/users') .'/'. Auth::user()->img}}" class="card-img-top img-thumbnail" alt="...">
               <div class="card-body">
 
                 <div class="container">
@@ -500,7 +500,7 @@
                                 <i class="fa fa-plus-circle"></i>
                                 Agregar red social a administrador
                             </li>
-                            <li style="" class="list-group-item" id="form-agregar-social-user">
+                            <li style="display: none" class="list-group-item" id="form-agregar-social-user">
 
                                 {!! Form::open(['route' => ['social.user.add', Auth::user()->id]]) !!}
                                 <div class="row" style="margin-top: 10px">

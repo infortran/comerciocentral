@@ -114,7 +114,7 @@
 							<li class="media">
 
 								<a class="pull-left" href="#">
-									<img style="max-width: 150px" class="media-object" src="{{asset('images/uploads/users').'/'.$user_post->img}}" alt="">
+									<img style="max-width: 150px; min-height: 150px" class="media-object " src="{{asset('images/uploads/users').'/'.$user_post->img}}" alt="">
 								</a>
 								<div class="media-body">
 									<ul class="sinlge-post-meta">

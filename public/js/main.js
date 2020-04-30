@@ -12,6 +12,11 @@ var RGBChange = function () {
 
 $(document).ready(function () {
 
+    $("#input-img-user").change(function(){
+        var selector = $('#img-user');
+        readURL(this, selector);
+    });
+
     $(function () {
         $.scrollUp({
             scrollName: 'scrollUp', // Element ID
@@ -92,4 +97,16 @@ function addToCartFromAjax(id) {
 
 function addCantidadProducto(id, cantidad){
     $('#input-cantidad-producto-' + id).val(cantidad);
+}
+
+function readURL(input, selector) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(selector).attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
