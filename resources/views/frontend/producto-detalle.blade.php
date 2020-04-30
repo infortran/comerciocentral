@@ -72,7 +72,13 @@
 										Agregar al carrito
 									</button>
 								</span>
-								<p><b>Availability:</b> In Stock</p>
+								<p><b>Disponibilidad:</b>
+                                @if($producto->is_available)
+                                    <span class="badge" style="background: #69c700">Disponible</span>
+                                @else
+                                    <span class="badge" style="background: #ff5858">Agotado</span>
+                                @endif
+                                </p>
 								<!--p><b>Condition:</b> New</p-->
 								<p><b>Marca:</b> {{$producto->marcas->marca}}</p>
 								<a href=""><img src="{{asset('images/product-details/share.png')}}" class="share img-responsive"  alt="" /></a>

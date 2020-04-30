@@ -263,14 +263,14 @@
                             data-accordion="false">
 
                             <li class="nav-item">
-                                <a href="/admin" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="{{url('/admin')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>Inicio</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/admin"
+                                <a href="{{url('admin/users')}}"
                                     class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>

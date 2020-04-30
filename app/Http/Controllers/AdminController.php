@@ -22,6 +22,8 @@ use Session;
 
 class AdminController extends Controller
 {
+    private $users;
+
     public function __construct(){
     	$this->middleware('admin');
     }
@@ -46,10 +48,38 @@ class AdminController extends Controller
 
     }*/
 
-    public function show(){
-
+    public function show(Request $request){
+        $query = trim($request->get('search'));
+        if($request){
+            $this->users = User::where('name', 'LIKE', '%' . $query . '%')
+                ->orWhere('lastname', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+        }
+        $data = [
+            'header' => HeaderFrontend::findOrFail(1),
+            'footer' => FooterInfo::findOrFail(1),
+            'socials' => Social::all(),
+            'siteSocials' => SiteSocial::all(),
+            'search' => $query,
+            'users' => $this->users
+        ];
+        return view('backend.users.index', $data);
     }
 
+    public function banUser($id){
+        $user = User::find($id);
+        $user->is_banned = true;
+        $user->save();
+        return redirect()->back();
+    }
+
+    public function unlockUser($id){
+        $user = User::find($id);
+        $user->is_banned = false;
+        $user->save();
+        return redirect()->back();
+    }
+
+    //UPDATE DATA ADMIN
     public function update(Request $request, $id){
     	$admin = User::findOrFail($id);
     	if($request->img){

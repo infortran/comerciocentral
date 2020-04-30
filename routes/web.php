@@ -60,6 +60,12 @@ Route::post('/cuenta/password/check', 'UserController@checkPassword')->name('use
 Route::post('/cuenta/password/update', 'UserController@updatePassword')->name('user.changepass');
 Route::get('/cuenta/password/reset', 'UserController@resetCheckPassword');
 
+Route::get('admin/users', 'AdminController@show');
+Route::post('admin/users/ban/{id}', 'AdminController@banUser');
+Route::post('admin/users/unlock/{id}', 'AdminController@unlockUser');
+
+Route::post('admin/productos/set_available/{id}', 'ProductoController@setAvailable');
+Route::post('admin/productos/set_not_available/{id}', 'ProductoController@setNotAvailable');
 
 
 Route::resource('/admin', 'AdminController');

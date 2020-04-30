@@ -22,6 +22,7 @@ class CreateProductosTable extends Migration
             $table->integer('id_categoria')->default(0);
             $table->integer('id_marca')->default(0);
             $table->timestamps();
+            $table->boolean('is_available')->default(true);
         });
     }
 

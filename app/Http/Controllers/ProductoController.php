@@ -36,7 +36,7 @@ class ProductoController extends Controller
             $this->productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
         }
 
-    	return view('backend.productos.index',['productos'=>$this->productos,'search' => $query]);
+    	return view('backend.productos.index',['productos'=>$this->productos,'search' => $query, 'header' => HeaderFrontend::find(1)]);
     }
 
     //abre la vista crear producto
@@ -176,6 +176,20 @@ class ProductoController extends Controller
         return redirect('/admin/productos');
 
 
+    }
+
+    public function setNotAvailable($id){
+        $producto = Producto::find($id);
+        $producto->is_available = false;
+        $producto->save();
+        return redirect('admin/productos');
+    }
+
+    public function setAvailable($id){
+        $producto = Producto::find($id);
+        $producto->is_available = true;
+        $producto->save();
+        return redirect('admin/productos');
     }
 
 
