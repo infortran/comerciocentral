@@ -31,4 +31,21 @@ class Cart
         $this->cantidadTotal++;
         $this->precioTotal += $item->precio;
     }
+
+    public function removeItem($id){
+        $this->items[$id]['cantidad']--;
+        $this->items[$id]['precio'] -= $this->items[$id]['item']['precio'];
+        $this->cantidadTotal--;
+        $this->precioTotal -= $this->items[$id]['item']['precio'];
+
+        if($this->items[$id]['cantidad'] <= 0){
+            unset($this->items[$id]);
+        }
+    }
+
+    public function resetItem($id){
+        $this->cantidadTotal -= $this->items[$id]['cantidad'];
+        $this->precioTotal -= $this->items[$id]['precio'];
+        unset($this->items[$id]);
+    }
 }

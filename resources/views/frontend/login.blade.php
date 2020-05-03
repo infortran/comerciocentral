@@ -28,7 +28,10 @@
 								<input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 								Mantener mi sesion iniciada.
 							</span>
-                            <button type="submit" class="btn btn-default">Ingresar</button>
+                            <button type="submit" class="btn btn-default">
+                                <i class="fa fa-sign-in-alt"></i>
+                                Ingresar
+                            </button>
                             @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Olvidaste tu contraseña?') }}
@@ -69,7 +72,9 @@
 
                             <input placeholder="Repite contraseña" id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
 
-                            <button type="submit" class="btn btn-default">Registrarse</button>
+                            <button type="submit" class="btn btn-default">
+                                <i class="fa fa-user-plus"></i>
+                                Registrarse</button>
                         </form>
                     </div><!--/sign up form-->
                 </div>

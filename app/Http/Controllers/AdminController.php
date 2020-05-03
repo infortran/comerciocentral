@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Envio;
 use App\Http\Controllers\Controller;
 use App\Jobs\deleteCheckPassword;
 use App\SiteSocial;
@@ -35,7 +36,8 @@ class AdminController extends Controller
             'members' => TeamMember::all(),
             'slides' => Slide::all(),
             'socials' => Social::all(),
-            'site_socials' => SiteSocial::all()
+            'site_socials' => SiteSocial::all(),
+            'envios' => Envio::all()
         ];
 
         if(Session::has('auth_change_pass')){

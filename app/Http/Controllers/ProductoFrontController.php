@@ -7,6 +7,7 @@ use App\FooterInfo;
 use App\HeaderFrontend;
 use App\Marca;
 use App\Producto;
+use App\Rating;
 use App\SiteSocial;
 use App\TeamMember;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class ProductoFrontController extends Controller
     }
 
     public function single(Request $request, $id){
+        $producto = Producto::findOrFail($id);
+
         $data = [
             'header' => HeaderFrontend::find(1),
             'footer' => FooterInfo::find(1),
@@ -51,8 +54,23 @@ class ProductoFrontController extends Controller
             'siteSocials' => SiteSocial::all(),
             'categorias' => $this->categorias,
             'marcas' => $this->marcas,
-            'producto' => Producto::find($id),
+            'producto' => $producto,
+            'rating' => $this->getPuntaje($id)
         ];
         return view('frontend.producto-detalle', $data);
+    }
+
+    public function getPuntaje($id){
+        $puntajes = Rating::where('id_producto', $id)->get();
+        $count = $puntajes->count();
+        $suma = 0;
+        $promedio = 0;
+        foreach ($puntajes as $puntaje){
+            $suma += $puntaje->voto;
+        }
+        if($suma > 0){
+            $promedio = $suma / $count;
+        }
+        return $promedio;
     }
 }

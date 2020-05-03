@@ -67,17 +67,18 @@
                                     </div>
                                     <button style="margin-top:20px" class="addButton" type="submit"><i class="fa fa-save"></i> Guardar</button>
                                 </form><!--.container-->
-                                  <div class="row">
-                                      <div class="col-8">
-                                          <div class="card">
-                                              <div class="card-header">
-                                                  Redes sociales del sitio
-                                              </div>
+
+                                  <div class="row card">
+
+
+                                                <div class="card-header">
+                                                    Redes sociales del sitio
+                                                </div>
 
                                                   <ul class="list-group list-group-flush">
                                                       <li id="btn-add-social-site" class="list-group-item text-center" style="color: #afafaf;cursor:pointer">
                                                           <i class="fa fa-plus-circle"></i>
-                                                          Agregar red social a administrador
+                                                          Agregar red social al sitio
                                                       </li>
                                                       <li class="list-group-item" id="form-agregar-social-site">
                                                           {!! Form::open(['route' => ['social.site.add']]) !!}
@@ -127,8 +128,8 @@
                                                       @endforeach
                                                   </ul>
 
-                                          </div>
-                                      </div><!--=====SOCIAL SITE FIN==========-->
+
+                                      <!--=====SOCIAL SITE FIN==========-->
                                   </div>
                               </div><!--.card body-->
                             </div><!--.collapse-->
@@ -301,7 +302,7 @@
                         <!--========================
                                CARD SOCIALS
                         =========================-->
-   <!--.card4-->               <div class="card">
+   <!--.card4-->          <div class="card">
                             <div class="card-header" id="headingTwo">
                                 <div class="row">
                                     <div class="col-10">
@@ -370,19 +371,105 @@
 
 
                         <!--========================
-                               CARD 5
+                               CARD Envio
                         =========================-->
                           <div class="card">
                             <div class="card-header" id="headingFive">
                               <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                  Pie de pagina
+                                <button  style="font-size: 18px" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    <i class="fa fa-shipping-fast"></i>
+                                    Envio y transporte
                                 </button>
                               </h2>
                             </div>
                             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                               <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                  <ul class="list-group list-group-flush">
+                                      <li id="btn-create-envio" class="list-group-item text-center" style="color: #afafaf;cursor:pointer">
+                                          <i class="fa fa-plus-circle"></i>
+                                          Agregar nuevo medio de envio
+                                      </li>
+                                      {!! Form::open(['route' => 'envios.store']) !!}
+                                      <li style="display: none" class="list-group-item" id="form-agregar-envio">
+                                          <div class="row">
+                                              <div class="col-8">
+
+                                                  <textarea name="descripcion" class="form-control" id="" placeholder="Descripcion del envio"></textarea>
+                                              </div>
+                                              <div class="col-2">
+                                                  <button type="submit" class="btn btn-primary">
+                                                      <i class="fa fa-plus"></i>
+                                                  </button>
+                                              </div>
+                                              <div class="col-2">
+                                                  <h2 id="btn-back-envio" style="cursor: pointer"><i class="fa fa-angle-up"></i></h2>
+                                              </div>
+                                          </div>
+                                          <div class="row" style="margin-top: 10px">
+                                              <div class="col-4">
+                                                  <input name="precio" type="number" class="form-control" placeholder="Coste del envio">
+                                              </div>
+                                              <div class="col-4" style="display: flex; align-items: center">
+                                                  <input class="form-control" type="number" name="min_price" placeholder="Desde">
+                                              </div>
+                                              <div class="col-4" style="display: flex; align-items: center">
+                                                  <input class="form-control" type="number" name="max_price" placeholder="Hasta">
+                                              </div>
+                                          </div>
+
+
+                                      </li>
+                                      {!! Form::close() !!}
+                                      <li class="list-group-item">
+                                          <table class="table table-striped">
+                                              <thead>
+                                                    <tr>
+                                                        <th>Descripcion</th>
+                                                        <th>Coste de envio</th>
+                                                        <th class="d-none d-sm-table-cell">Desde</th>
+                                                        <th class="d-none d-sm-table-cell">Hasta</th>
+                                                        <th></th>
+                                                    </tr>
+                                              </thead>
+                                              <tbody>
+                                              @foreach($envios as $envio)
+                                                    <tr>
+                                                        <td>{{$envio->descripcion}}</td>
+                                                        <td>$ {{number_format($envio->precio)}}</td>
+                                                        <td class="d-none d-sm-table-cell">$ {{number_format($envio->min_price)}}</td>
+                                                        <td class="d-none d-sm-table-cell">$ {{number_format($envio->max_price)}}</td>
+                                                        <td>
+                                                            {!! Form::open(['id' => '','method' => 'DELETE', 'route' => ['envios.destroy', $envio]]) !!}
+                                                            <button type="submit" style="background: transparent; border-color: transparent">
+                                                                <i class="fa fa-window-close" style="color: red" ></i>
+                                                            </button>
+
+                                                            {!! Form::close() !!}
+                                                        </td>
+                                                    </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                      </li>
+
+                                          <!--li class="list-group-item">
+                                              <div class="row">
+                                                  <div class="col-4">
+                                                      <i class="fab fa-"></i>
+
+                                                  </div>
+                                                  <div class="col-2" style="display: flex; align-items: center">
+                                                      {!! Form::open(['method' => 'DELETE', 'route' => ['envios.destroy', 1]]) !!}
+                                                      <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
+                                                          <i class="fa fa-minus-circle"></i>
+                                                      </button>
+                                                      {!! Form::close() !!}
+                                                  </div>
+                                              </div>
+
+                                          </li-->
+
+                                  </ul>
                               </div>
                             </div>
                           </div><!--.card5-->

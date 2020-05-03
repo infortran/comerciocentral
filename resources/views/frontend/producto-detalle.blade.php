@@ -15,7 +15,7 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+								<img  style="max-height: 300px"  src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -54,23 +54,31 @@
 							<div class="product-information"><!--/product-information-->
 								<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
 								<h2>{{$producto->nombre}}</h2>
-								<p>Web ID: 1089772</p>
-                                <div class="rating">
-                                    <i class="fa fa-star fa-2x" data-index="0"></i>
-                                    <i class="fa fa-star fa-2x" data-index="1"></i>
-                                    <i class="fa fa-star fa-2x" data-index="2"></i>
-                                    <i class="fa fa-star fa-2x" data-index="3"></i>
-                                    <i class="fa fa-star fa-2x" data-index="4"></i>
+								<p>{{$producto->descripcion}}</p>
+                                <div class="rating-bar">
+
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fa fa-star fa-2x" style="color: {{$i <= round($rating) ? '#fd7600': '#3e3e3e'}}"></i>
+                                    @endfor
+
+
+
                                 </div>
 								<!--img src="{{asset('images/product-details/rating.png')}}" alt="" /-->
 								<span>
 									<span>$ {{number_format($producto->precio, 0, '','.')}}</span>
 									<label>Cantidad:</label>
 									<input type="text" value="{{ Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) ? Session::get('cart')->items[$producto->id]['cantidad'] : '0' }}" id="input-cantidad-producto-{{$producto->id}}"/>
-									<button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}">
+									<button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
 										<i class="fa fa-shopping-cart"></i>
 										Agregar al carrito
 									</button>
+
+                                    <button type="button" class="btn btn-danger cart btn-submit-remove-on-cart" title="Quitar 1 item"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}
+                                    {{Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) && Session::get('cart')->items[$producto->id] > 0 ? '' : 'disabled'}}>
+                                        <i class="fa fa-minus-circle"></i>
+                                    </button>
+
 								</span>
 								<p><b>Disponibilidad:</b>
                                 @if($producto->is_available)

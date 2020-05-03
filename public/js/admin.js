@@ -24,6 +24,7 @@ $(document).ready(function(){
     $('#div_cancel_edit_admin').hide();
     $('#btn_update_admin').hide();
     $('#form-agregar-social').hide();
+    $('#form-agregar-envio').hide();
     $('#form-agregar-social-user').hide();
     $('#form-agregar-social-site').hide();
 
@@ -53,7 +54,7 @@ $(document).ready(function(){
     });
 
 
-
+    //EDITAR ADMINISTRADOR
     $('#btn_edit_admin').click(function(e){
         e.preventDefault();
         $('#input_edit_name_admin').prop("disabled", false);
@@ -74,31 +75,36 @@ $(document).ready(function(){
         $('#btn_edit_admin').fadeIn(2000);
     });
 
-    $('#btn_edit_pass_confirm').click(function(e){
+    //BOTONES ENVIO
+    $('#btn-create-envio').click(function(){
+        $('#form-agregar-envio').fadeIn(1000);
+    });
 
+    $('#btn-back-envio').click(function(){
+        $('#form-agregar-envio').fadeOut(500);
     });
 
 
     //BOTON AGREGAR SOCIALS
     $('#btn-create-social').click(function(){
-        $('#form-agregar-social').fadeIn(2000);
+        $('#form-agregar-social').fadeIn(1000);
     });
     $('#btn-back-social').click(function () {
-        $('#form-agregar-social').fadeOut(2000);
+        $('#form-agregar-social').fadeOut(500);
     });
 
     $('#btn-add-social-user').click(function(){
-        $('#form-agregar-social-user').fadeIn(2000);
+        $('#form-agregar-social-user').fadeIn(1000);
     });
     $('#btn-back-social-user').click(function () {
-        $('#form-agregar-social-user').fadeOut(2000);
+        $('#form-agregar-social-user').fadeOut(500);
     });
 
     $('#btn-add-social-site').click(function(){
-        $('#form-agregar-social-site').fadeIn(2000);
+        $('#form-agregar-social-site').fadeIn(1000);
     });
     $('#btn-back-social-site').click(function () {
-        $('#form-agregar-social-site').fadeOut(2000);
+        $('#form-agregar-social-site').fadeOut(500);
     });
 
 

@@ -14,13 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', 'InicioController@index')->name('inicio.index');
 
-Route::get('/alexander/{nombre}', 'InicioController@alexander');
-
 Route::get('/contacto', 'ContactoController@index');
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
+
 Route::get('/carrito', 'CartController@index');
 Route::post('/add_to_cart', 'CartController@addItemsToCart');
+Route::get('/remove_on_cart/{id}', 'CartController@removeItemOnCart');
+Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
+
+
 Route::get('/productos', 'ProductoFrontController@index');
 Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
 Route::get('/cuenta', 'UserController@index');
@@ -89,6 +92,8 @@ Route::resource('admin/slides', 'SlideController');
 Route::resource('admin/comentarios', 'ComentarioAdminController');
 
 Route::resource('admin/socials', 'SocialController');
+
+Route::resource('admin/envios', 'EnvioController');
 
 
 

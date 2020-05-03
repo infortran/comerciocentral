@@ -17,6 +17,8 @@ $(document).ready(function () {
         readURL(this, selector);
     });
 
+
+
     $(function () {
         $.scrollUp({
             scrollName: 'scrollUp', // Element ID
@@ -35,8 +37,8 @@ $(document).ready(function () {
             zIndex: 2147483647 // Z-Index for the overlay
         });
     });
-    resetColorStar();
-    ratingStars();
+    //resetColorStar();
+    //ratingStars();
 
 
     $('.btn-submit-add-cart').click(function(){
@@ -44,9 +46,17 @@ $(document).ready(function () {
         addToCartFromAjax(id);
     });
 
+    $('.btn-submit-remove-on-cart').click(function(){
+        var id = $(this).data('id');
+        removeOnCartFromAjax(id);
+    });
 
+    $('.btn-submit-reset-on-cart').click(function(){
+        var id = $(this).data('id');
+        resetOnCartFromAjax(id);
+    });
 });
-var ratedIndex = -1;
+/*var ratedIndex = -1;
 
 function ratingStars(){
     $('.fa-star').mouseover(function(){
@@ -66,7 +76,7 @@ function ratingStars(){
 
 function resetColorStar() {
     $('.fa-star').css('color', '#afafaf');
-}
+}*/
 
 function addToCartFromAjax(id) {
     var data = new FormData();
@@ -86,7 +96,56 @@ function addToCartFromAjax(id) {
         success:function(data){
             $('#badge-carrito').html(data.cantidad_total);
             addCantidadProducto(data.id_producto, data.cantidad_producto);
+            disableRemoveBtn(data.cantidad_producto);
             var snackbar = document.getElementById("snackbar");
+            // Add the "show" class to DIV
+            snackbar.className = "show";
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+        }
+    });
+}
+
+function removeOnCartFromAjax(id) {
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url:'/remove_on_cart/' + id,
+        processData:false,
+        contentType:false,
+        cache:false,
+        dataType:'json',
+        success:function(data){
+            $('#badge-carrito').html(data.cantidad_total);
+            addCantidadProducto(data.id_producto, data.cantidad_producto);
+            disableRemoveBtn(data.cantidad_producto);
+            var snackbar = document.getElementById("snackbar-remove");
+            // Add the "show" class to DIV
+            snackbar.className = "show";
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+        }
+    });
+}
+
+function resetOnCartFromAjax(id) {
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url:'/reset_on_cart/' + id,
+        processData:false,
+        contentType:false,
+        cache:false,
+        dataType:'json',
+        success:function(data){
+            $('#badge-carrito').html(data.cantidad_total);
+            addCantidadProducto(data.id_producto, data.cantidad_producto);
+            disableRemoveBtn(data.cantidad_producto);
+            var snackbar = document.getElementById("snackbar-reset");
             // Add the "show" class to DIV
             snackbar.className = "show";
             // After 3 seconds, remove the show class from DIV
@@ -98,15 +157,21 @@ function addToCartFromAjax(id) {
 function addCantidadProducto(id, cantidad){
     $('#input-cantidad-producto-' + id).val(cantidad);
 }
-
+//FUNCION PARA MOSTRAR FOTO EN LOS INPUTS FILE IMG
 function readURL(input, selector) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
             $(selector).attr('src', e.target.result);
         }
-
         reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function disableRemoveBtn(count){
+    if(count <= 0){
+        $('.btn-submit-remove-on-cart').prop('disabled', true);
+    }else{
+        $('.btn-submit-remove-on-cart').prop('disabled', false);
     }
 }

@@ -5,14 +5,38 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);
-.mx-auto{
-    margin:0 auto;
+.table > tbody > tr > td{
+    vertical-align: middle;
+}
+.input-number-to-text{
+    -moz-appearance: textfield;
+}
+
+.input-number-to-text::-webkit-outer-spin-button,
+.input-number-to-text::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0
 }
 
 .btn{
     padding:10px !important;
     border-radius: 50px !important;
 }
+
+.btn-plus-minus-cart{
+    padding:5px !important;
+    border: 1px solid transparent !important;
+    background: #ff7400 !important;
+    color:#FFFFFF !important;
+    border-radius: 3px !important;
+    float:left !important;
+
+}
+.mx-auto{
+    margin:0 auto;
+}
+
+
 
 .btn-primary{
     padding: 20px 30px !important;

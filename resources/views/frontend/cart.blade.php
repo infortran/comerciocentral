@@ -57,12 +57,12 @@
                             </table>
                         </div> */ ?>
 
-                        <hr>
-                        <div class="row ">
+                        <!--hr>
+                        <div class="row hidden-xs">
                             <div class="col-sm-5">
                                 <strong class="uppercase">Caracteristicas del producto</strong>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2 text-center">
                                 <strong class="uppercase">Cantidad</strong>
                             </div>
                             <div class="col-sm-2">
@@ -72,29 +72,78 @@
                                 <strong class="uppercase">Total</strong>
                             </div>
                         </div>
-                        <hr>
-                       @foreach($cart_productos as $producto)
-                        <div style="min-height: 100px; margin-top: 10px" class="row card card-cart center-vertical">
+                        <hr-->
+
+                        <!--div style="min-height: 100px; margin-top: 10px" class="row card card-cart center-vertical">
                             <div class="col-sm-2">
-                                <img style="max-height: 70px" class="img-responsive" src="{{asset('images/uploads/productos').'/'.$producto['item']['img']}}" alt="">
+                                <img style="max-height: 70px" class="img-responsive" src="" alt="">
                             </div>
                             <div class="col-sm-3">
-                                {{$producto['item']['nombre']}}
+                                <strong></strong>
+
                             </div>
-                            <div class="col-sm-2">
-                                <input style="max-width: 70px" class="form-control" type="number" value="{{$producto['cantidad']}}" autocomplete="off">
+                            <div class="col-sm-2 btn-group">
+                                <button class="btn btn-plus-minus-cart" style="margin-right: 5px">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+
+                                <input style="max-width: 45px;display: inline-block;float:left !important" class="form-control text-center input-number-to-text" type="number" min="0" data-id="" value="" autocomplete="off">
+
+                                <button class="btn btn-plus-minus-cart"  style="margin-left: 5px">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </div>
                             <div class="col-sm-2" >
-                                $ {{number_format($producto['item']['precio'], 0, '', '.')}}
+                                $
                             </div>
                             <div class="col-sm-2" style="padding-left: 25px">
-                                <strong>$ {{number_format($producto['precio'], 0, '', '.')}}</strong>
+                                <strong>$</strong>
                             </div>
                             <div class="col-sm-1">
-                                <i class="fa fa-window-close fa-lg"></i>
+                                <i class="fa fa-window-close fa-lg" style="color: red"></i>
                             </div>
-                        </div>
-                        @endforeach
+                        </div-->
+                           <table class="table table-striped">
+                               <thead>
+                                   <tr>
+                                       <th colspan="2">Caracteristicas</th>
+                                       <th class="hidden-xs">Precio</th>
+                                       <th>Cantidad</th>
+                                       <th class="hidden-xs">Total</th>
+                                   </tr>
+
+                               </thead>
+                               <tbody>
+                               @foreach($cart_productos as $producto)
+                                    <tr>
+                                        <td><img style="max-height: 70px" src="{{asset('images/uploads/productos').'/'.$producto['item']['img']}}" alt=""></td>
+                                        <td>
+                                            <div>{{$producto['item']['nombre']}}</div>
+                                            <div style="font-size: 20px" class="visible-sm visible-xs">
+                                                <strong>{{$producto['cantidad']}}</strong> x
+                                                $ {{number_format($producto['item']['precio'], 0, '', '.')}}
+                                            </div>
+                                        </td>
+                                        <td class="hidden-xs">$ {{number_format($producto['item']['precio'], 0, '', '.')}}</td>
+                                        <td width="30%">
+                                            <button class="btn btn-plus-minus-cart" style="margin-right: 5px">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+
+                                            <input style="max-width: 45px;display: inline-block;float:left !important" class="form-control text-center input-number-to-text" type="number" min="0" data-id="{{$producto['item']['id']}}" value="{{$producto['cantidad']}}" autocomplete="off">
+
+                                            <button class="btn btn-plus-minus-cart"  style="margin-left: 5px">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </td>
+                                        <td class="hidden-xs" style="font-size: 18px">
+                                            <strong>$ {{number_format($producto['precio'], 0, '', '.')}}</strong>
+                                        </td>
+                                    </tr>
+                               @endforeach
+                               </tbody>
+                           </table>
+
 
                 </div>
 

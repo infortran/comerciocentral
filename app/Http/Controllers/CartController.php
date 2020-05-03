@@ -6,6 +6,7 @@ use App\Cart;
 use App\FooterInfo;
 use App\HeaderFrontend;
 use App\Producto;
+use App\SiteSocial;
 use App\TeamMember;
 use Illuminate\Http\Request;
 use Session;
@@ -24,6 +25,7 @@ class CartController extends Controller
                 'header' => HeaderFrontend::find(1),
                 'footer' => FooterInfo::find(1),
                 'members' => TeamMember::all(),
+                'siteSocials' => SiteSocial::all(),
                 'cart_productos' => null,
                 'precio_total' => 0
             ];
@@ -37,6 +39,7 @@ class CartController extends Controller
             'header' => HeaderFrontend::find(1),
             'footer' => FooterInfo::find(1),
             'members' => TeamMember::all(),
+            'siteSocials' => SiteSocial::all(),
             'cart_productos' => $cart->items,
             'precio_total' => $cart->precioTotal
         ];
@@ -122,5 +125,44 @@ class CartController extends Controller
             'cantidad_total' => $cart->cantidadTotal,
             'id_producto' => $request->get('id'),
             'cantidad_producto' => $cart->items[$request->get('id')]['cantidad']]);
+    }
+
+    public function removeItemOnCart(Request $request, $id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        if(count($cart->items) > 0){
+            Session::put('cart', $cart);
+        }else{
+            Session::forget('cart');
+        }
+        $cantidadProducto = 0;
+
+        if(isset($cart->items[$id]) && $cart->items[$id] != null){
+            $cantidadProducto = $cart->items[$id]['cantidad'];
+        }
+        return response()->json([
+            'status'=>'ok',
+            'cantidad_total' => $cart->cantidadTotal,
+            'id_producto' => $id,
+            'cantidad_producto' => $cantidadProducto]);
+    }
+
+    public function resetItemOnCart(Request $request, $id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+
+        $cart->resetItem($id);
+        $cantidadProducto = 0;
+
+        if($cart->items[$id] != null){
+            $cantidadProducto = $cart->items[$id]['cantidad'];
+        }
+        Session::put('cart', $cart);
+        return response()->json([
+            'status'=>'ok',
+            'cantidad_total' => $cart->cantidadTotal,
+            'id_producto' => $id,
+            'cantidad_producto' => $cantidadProducto]);
     }
 }

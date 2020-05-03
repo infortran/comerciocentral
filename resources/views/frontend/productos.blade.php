@@ -22,6 +22,7 @@
                 <div class="features_items"><!--features_items-->
                     <h2 class="title text-center">Nuestros productos</h2>
                     @foreach($productos as $producto)
+                        @if($producto->is_available)
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
@@ -46,6 +47,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endforeach
 
 
@@ -61,7 +63,7 @@
                         </h4>
                     </div>
                 </div>
-                @endif
+            @endif
         </div>
     </div>
 </section>
