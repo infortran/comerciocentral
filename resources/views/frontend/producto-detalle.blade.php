@@ -69,22 +69,28 @@
 									<span>$ {{number_format($producto->precio, 0, '','.')}}</span>
 									<label>Cantidad:</label>
 									<input type="text" value="{{ Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) ? Session::get('cart')->items[$producto->id]['cantidad'] : '0' }}" id="input-cantidad-producto-{{$producto->id}}"/>
-									<button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
+									<!--button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
 										<i class="fa fa-shopping-cart"></i>
 										Agregar al carrito
-									</button>
+									</button-->
+                                    <hr>
+                                    <button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
+                                            <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+                                            <i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
+                                            <i id="btn-text-cart-{{$producto->id}}"  style="display: inline-block">Agregar al carrito</i>
+                                    </button>
 
-                                    <button type="button" class="btn btn-danger cart btn-submit-remove-on-cart" title="Quitar 1 item"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}
+                                    <button style="min-width: 50px" type="button" class="btn add-to-cart btn-default btn-submit-remove-on-cart" title="Quitar 1 item"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}
                                     {{Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) && Session::get('cart')->items[$producto->id] > 0 ? '' : 'disabled'}}>
-                                        <i class="fa fa-minus-circle"></i>
+                                        <i class="fa fa-times"></i>
                                     </button>
 
 								</span>
 								<p><b>Disponibilidad:</b>
                                 @if($producto->is_available)
-                                    <span class="badge" style="background: #69c700">Disponible</span>
+                                    <i class="badge" style="background: #69c700">Disponible</i>
                                 @else
-                                    <span class="badge" style="background: #ff5858">Agotado</span>
+                                    <i class="badge" style="background: #ff5858">Agotado</i>
                                 @endif
                                 </p>
 								<!--p><b>Condition:</b> New</p-->

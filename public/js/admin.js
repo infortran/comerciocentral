@@ -1,25 +1,9 @@
-function readURL(input, selector) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $(selector).attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-
-
 $(document).ready(function(){
 
     jQuery('.productos-list-slide-create').select2({
         placeholder:'Seleccione un producto',
         allowClear:true
     });
-
-
 
     $('#div_cancel_edit_admin').hide();
     $('#btn_update_admin').hide();
@@ -109,4 +93,16 @@ $(document).ready(function(){
 
 
 });
+
+function readURL(input, selector) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(selector).attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 

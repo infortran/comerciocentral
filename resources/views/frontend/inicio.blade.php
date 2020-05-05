@@ -73,13 +73,21 @@
 											<img style="max-width:255px;max-height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 											<h2>${{$producto->precio}}</h2>
 											<p>{{$producto->nombre}}</p>
-											<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart btn-submit-add-cart" data-id="{{$producto->id}}"></i>Agregar al carrito</button>
+											<button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
+                                                <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+                                                <i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
+                                                <span id="btn-text-cart-{{$producto->id}}"  style="display: inline-block">Agregar al carrito</span>
+                                            </button>
 										</div>
 										<div class="product-overlay">
 											<div class="overlay-content">
 												<h2>$ {{$producto->precio}}</h2>
 												<p>{{$producto->nombre}}</p>
-												<button type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" ><i class="fa fa-shopping-cart"></i>Agregar al carrito</button>
+												<button id="btn-cart-{{$producto->id}}" type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" >
+                                                    <i id="check1-{{$producto->id}}" class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+                                                    <i id="icon-cart1-{{$producto->id}}" class="fa fa-shopping-cart"></i>
+                                                    <span id="btn-text-cart1-{{$producto->id}}" style="display: inline-block">Agregar al carrito</span>
+                                                </button>
 											</div>
 										</div>
 								</div>

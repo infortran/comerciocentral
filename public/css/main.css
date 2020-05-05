@@ -5,6 +5,61 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Abel);
+
+.d-none{
+    display: none;
+}
+
+.borde{
+    border:1px solid black;
+}
+
+.borde-r{
+    border:1px solid red;
+}
+
+.add-to-cart{
+
+    transition: all ease 0.5s;
+    min-height: 50px;
+}
+
+.loading-cart{
+    border:3px solid #FE980F !important;
+    background: transparent !important;
+    font-size:0 !important;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    border-left-color: transparent !important;
+    animation: rotate 1.4s ease 0.5s infinite;
+}
+@keyframes rotate {
+    0%{
+        transform: rotate(360deg);
+    }
+}
+
+.success-add-cart{
+    position: relative;
+    background-color: #F5F5ED !important;
+    animation: bounce .3s ease-in;
+    border:1px solid transparent !important;
+    font-size: 20px !important;
+}
+
+@keyframes bounce {
+    0%{
+        transform: scale(0.9);
+    }
+}
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+.success-add-cart:before{
+    color: #77cb00;
+}
+
+
+/*****************************************/
 .table > tbody > tr > td{
     vertical-align: middle;
 }
@@ -238,12 +293,50 @@ CENTER VERTICAL
     font-size: initial
 }
 
+/*************************
+
+**************************** */
+
+.loading-item-cart{
+    display:none;
+    background: rgba(0,0,0,.2);
+    z-index: 100;
+    text-align: center;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.loading-item-cart > div{
+    position: absolute;
+    top:48%;
+    left:48%;
+}
+
+.loading-aside-cart{
+    display:none;
+    background: rgba(0,0,0,.2);
+    z-index: 100;
+    text-align: center;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+.loading-aside-cart > div{
+    position: absolute;
+    top:48%;
+    left:40%;
+}
 
 /*********************************
             SNACKBAR
 ********************************* */
 /* The snackbar - position it at the bottom and in the middle of the screen */
-#snackbar {
+.snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */
     min-width: 250px; /* Set a default minimum width */
     margin-left: -125px; /* Divide value of min-width by 2 */
@@ -259,7 +352,7 @@ CENTER VERTICAL
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+.show-snackbar {
     visibility: visible; /* Show the snackbar */
     /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
     However, delay the fade out process for 2.5 seconds */

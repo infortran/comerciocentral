@@ -22,6 +22,7 @@ Route::get('/carrito', 'CartController@index');
 Route::post('/add_to_cart', 'CartController@addItemsToCart');
 Route::get('/remove_on_cart/{id}', 'CartController@removeItemOnCart');
 Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
+Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 
 Route::get('/productos', 'ProductoFrontController@index');

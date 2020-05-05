@@ -32,6 +32,27 @@ class Cart
         $this->precioTotal += $item->precio;
     }
 
+    public function addByQty($item, $id, $qty){
+        $storedItem = ['cantidad' => 0, 'precio' => $item->precio, 'item' => $item];
+        if($this->items){
+            if(array_key_exists($id, $this->items)){
+                $storedItem = $this->items[$id];
+            }
+        }
+
+        $prevQty = $storedItem['cantidad'];
+        $prevPrice = $storedItem['precio'];
+
+        $storedItem['cantidad'] = $qty;
+        $storedItem['precio'] = $item->precio * $storedItem['cantidad'];
+        $this->items[$id] = $storedItem;
+
+        $this->cantidadTotal -= $prevQty;
+        $this->cantidadTotal += $storedItem['cantidad'];
+        $this->precioTotal -= $prevPrice;
+        $this->precioTotal += $storedItem['precio'];
+    }
+
     public function removeItem($id){
         $this->items[$id]['cantidad']--;
         $this->items[$id]['precio'] -= $this->items[$id]['item']['precio'];

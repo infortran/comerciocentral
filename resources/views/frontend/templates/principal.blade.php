@@ -63,19 +63,12 @@
 
 <body>
 
-<div id="snackbar">Producto añadido al carrito</div>
-<script>
-    function snackbarAddCart() {
-        // Get the snackbar DIV
-        var x = document.getElementById("snackbar");
+<div class="snackbar" id="snackbar">Producto añadido al carrito</div>
 
-        // Add the "show" class to DIV
-        x.className = "show";
+<div class="snackbar" id="snackbar-remove">Producto eliminado</div>
 
-        // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-    }
-</script>
+<div class="snackbar" id="snackbar-reset">Producto eliminado del carrito</div>
+
 	<header id="header"><!--header-->
 
         <!--=====================

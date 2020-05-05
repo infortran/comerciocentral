@@ -55,6 +55,34 @@ $(document).ready(function () {
         var id = $(this).data('id');
         resetOnCartFromAjax(id);
     });
+
+    $('.btn-plus-cart').click(function(){
+        var id = $(this).data('id');
+        $('#input-item-cart-' + id).val(parseInt($('#input-item-cart-' + id).val()) + 1).change();
+    });
+
+    $('.btn-minus-cart').click(function(){
+        var id = $(this).data('id');
+        var value = $('#input-item-cart-' + id).val();
+        if(value > 1){
+            $('#input-item-cart-' + id).val(parseInt(value) - 1).change();
+        }
+    });
+
+    $('.reset-item-cart').click(function(){
+        var id = $(this).data('id');
+
+    });
+
+    $('.input-item-cart').change(function(){
+       var id = $(this).data('id');
+       var cant = $(this).val();
+       if(cant > 0){
+           addToCartByQty(id, cant);
+       }
+
+    });
+
 });
 /*var ratedIndex = -1;
 
@@ -78,6 +106,7 @@ function resetColorStar() {
     $('.fa-star').css('color', '#afafaf');
 }*/
 
+//ADD CART BUTTON FN
 function addToCartFromAjax(id) {
     var data = new FormData();
     data.append('id', id);
@@ -93,19 +122,65 @@ function addToCartFromAjax(id) {
         contentType:false,
         cache:false,
         dataType:'json',
+        beforeSend:function(){
+            $('#btn-cart-' + id).addClass("loading-cart");
+            $('#btn-cart-2-' + id).addClass("loading-cart");
+            $('.btn-default').prop('disabled', true);
+        },
         success:function(data){
+
             $('#badge-carrito').html(data.cantidad_total);
             addCantidadProducto(data.id_producto, data.cantidad_producto);
-            disableRemoveBtn(data.cantidad_producto);
-            var snackbar = document.getElementById("snackbar");
+
+
             // Add the "show" class to DIV
-            snackbar.className = "show";
+
             // After 3 seconds, remove the show class from DIV
-            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+            setTimeout(function(){
+                //DESACTIVAR TODOS LOS BOTONES ADD-CART
+                $('.btn-default').prop('disabled', false);
+                disableRemoveBtn(data.cantidad_producto);
+                //Agregar clase SUCCESS para animacion de btn
+                $('#btn-cart-' + data.id_producto).addClass("success-add-cart");
+                $('#btn-cart-2-' + data.id_producto).addClass("success-add-cart");
+
+                //MOSTRAR el check y ocultar texto
+                $('#check-' + data.id_producto).fadeIn(2000);
+                $('#icon-cart-' + data.id_producto).hide();
+                $('#btn-text-cart-' + data.id_producto).hide();
+                //lo mismo en overlay
+                $('#check1-' + data.id_producto).fadeIn(2000);
+                $('#icon-cart1-' + data.id_producto).hide();
+                $('#btn-text-cart1-' + data.id_producto).hide();
+                //Mostrar el SNACKBAR
+                $('#snackbar').addClass('show-snackbar');
+                }, 1000);
+
+            setTimeout(function(){
+                //Ocultar el SNACKBAR
+                $('#snackbar').removeClass('show-snackbar');
+
+                //Remover el LOADING y el SUCCESS
+                $('#btn-cart-2-' + data.id_producto).removeClass("loading-cart")
+                    .removeClass("success-add-cart");
+                $('#btn-cart-' + data.id_producto).removeClass("loading-cart")
+                    .removeClass("success-add-cart");
+
+                //OCULTAR check y MOSTRAR texto
+                $('#check-' + data.id_producto).hide();
+                $('#icon-cart-' + data.id_producto).show();
+                $('#btn-text-cart-' + data.id_producto).show();
+                //overlay
+                $('#check1-' + data.id_producto).hide();
+                $('#icon-cart1-' + data.id_producto).show();
+                $('#btn-text-cart1-' + data.id_producto).show();
+
+            },3000);
         }
     });
 }
 
+//REMOVE CART BUTTON FN
 function removeOnCartFromAjax(id) {
 
     $.ajax({
@@ -117,16 +192,81 @@ function removeOnCartFromAjax(id) {
         contentType:false,
         cache:false,
         dataType:'json',
+        beforeSend:function(){
+            $('.btn-default').prop('disabled', true);
+        },
         success:function(data){
             $('#badge-carrito').html(data.cantidad_total);
             addCantidadProducto(data.id_producto, data.cantidad_producto);
-            disableRemoveBtn(data.cantidad_producto);
-            var snackbar = document.getElementById("snackbar-remove");
-            // Add the "show" class to DIV
-            snackbar.className = "show";
+
+            $('#snackbar-remove').addClass('show-snackbar');
+
             // After 3 seconds, remove the show class from DIV
-            setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+            setTimeout(function(){
+                $('#snackbar-remove').removeClass('show-snackbar');
+                //snackbar.className = snackbar.className.replace("show-snackbar", "");
+                $('.btn-default').prop('disabled', false);
+                disableRemoveBtn(data.cantidad_producto);
+            }, 3000);
         }
+    });
+}
+
+//ADD CART BY QUANTITY
+function addToCartByQty(idProd, cant){
+    var data = new FormData();
+    data.append('id', idProd);
+    data.append('cantidad', cant);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data:data,
+        url:'/add_cart_qty',
+        type:'POST',
+        contentType:false,
+        processData:false,
+        cache:false,
+        dataType:'json',
+        beforeSend:function(){
+            $('.loading-item-cart').fadeIn(500);
+            $('.loading-aside-cart').fadeIn(500);
+        },
+        success:function(json){
+
+            setTimeout(function(){
+                $('#badge-carrito').html(json.cantidad_total);
+                $('.loading-item-cart').fadeOut(500);
+                $('.loading-aside-cart').fadeOut(500);
+                $('#cart-cantidad-total').html(json.cantidad_total);
+                $('#cart-subtotal').html('$ ' + json.precio_total);
+                $('#total-mas-envio').html('$ ' + json.total_mas_envio);
+                $('#total-producto-' + json.id_producto).html('$ ' + json.total_producto);
+                $('#descripcion-envio').html(json.descripcion_envio);
+
+                if(json.envio){
+                    $('#panel-envio').fadeIn(500);
+                }else{
+                    $('#panel-envio').fadeOut(500);
+                }
+
+                if(json.precio_envio == 0){
+                    $('#precio-envio').html("Envio Sin Costo");
+                }else{
+                    $('#precio-envio').html("$ " + json.precio_envio);
+                }
+
+            },1000);
+            //buscar un loader para el form
+            //actualizar la cifra del total + envio
+            //actualizar la cifra del producto y su precio total
+        },
+        error:function (xhr, ajaxOptions, thrownError) {
+            console.log('Mostrando el error de ajax');
+            console.log(xhr.responseText);
+        }
+
     });
 }
 
@@ -143,6 +283,7 @@ function resetOnCartFromAjax(id) {
         dataType:'json',
         success:function(data){
             $('#badge-carrito').html(data.cantidad_total);
+            //agregar la cantidad al input del single item
             addCantidadProducto(data.id_producto, data.cantidad_producto);
             disableRemoveBtn(data.cantidad_producto);
             var snackbar = document.getElementById("snackbar-reset");
@@ -175,3 +316,5 @@ function disableRemoveBtn(count){
         $('.btn-submit-remove-on-cart').prop('disabled', false);
     }
 }
+
+
