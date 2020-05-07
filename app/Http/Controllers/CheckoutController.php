@@ -19,9 +19,27 @@ class CheckoutController extends Controller
     }
 
     public function index(Request $request){
-        $cart = null;
-        $envio = 0;
-        $total = 0;
+
+        if(Session::has('cart')){
+            $envio = null;
+
+            $cart = Session::get('cart');
+            $total = $cart->precioTotal;
+            if(Session::has('precio_envio')){
+                $envio = Session::get('precio_envio');
+                $total = $cart->precioTotal + $envio;
+            }
+
+            $this->data['cart'] = $cart;
+            $this->data['precio_envio'] = $envio;
+            $this->data['total_final'] = $total;
+            return view('frontend.checkout', $this->data);
+        }else{
+            return redirect('/carrito');
+        }
+    }
+
+    public function getPaymentProcess(Request $request){
         if(Session::has('cart')){
             $cart = Session::get('cart');
             $total = $cart->precioTotal;
@@ -29,35 +47,34 @@ class CheckoutController extends Controller
                 $envio = Session::get('precio_envio');
                 $total = $cart->precioTotal + $envio;
             }
+            $this->data['amount'] = $total;
+            return view('frontend.templates.payment_process', $this->data);
+        }else{
+            return redirect('/carrito');
         }
-        $this->data['cart'] = $cart;
-        $this->data['precio_envio'] = $envio;
-        $this->data['total_final'] = $total;
-        return view('frontend.checkout', $this->data);
-    }
-
-    public function getPaymentProcess(Request $request){
 
     }
 
-    public function getWebpay($amount, $sessionId, $buyOrder){
+    public function getWebpay($amount, $buyOrder){
         $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))
             ->getNormalTransaction();
         $returnUrl = url('/payment_process');
         $finalUrl = url('/final');
+        $sessionId = Session::getId();
         $initResult = $transaction->initTransaction(
             $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
         //dd($initResult->url);
         $formAction = $initResult->url;
         $tokenWs = $initResult->token;
         if($formAction && $tokenWs){
-            $this->formAction = $formAction;
-            $this->tokenWs = $tokenWs;
+            $this->data['form_action'] = $formAction;
+            $this->data['token_ws'] = $tokenWs;
             return true;
         }else{
             return false;
         }
     }
+
     public function paymentProcess(Request $request){
         $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))
             ->getNormalTransaction();
@@ -67,12 +84,12 @@ class CheckoutController extends Controller
         $output = $result->detailOutput;
 
         if($output->responseCode == 0){
-            $session_data = [
+            $payment_data = [
                 'auth_code' => $output->authorizationCode,
                 'amount' => $output->amount,
                 'response_code' => $output->responseCode
             ];
-            Session::put('payment_data', $session_data);
+            Session::put('payment_data', $payment_data);
             //dd($result->urlRedirection);
             $data = [
                 'url_redirection' => $result->urlRedirection,
@@ -83,5 +100,9 @@ class CheckoutController extends Controller
         return redirect('/');
     }
 
-
+    public function finalProcess(){
+        $payment_data = Session::has('payment_data') ? Session::get('payment_data') : null;
+        $this->data['payment_data'] = $payment_data;
+        return view('frontend.final', $this->data);
+    }
 }

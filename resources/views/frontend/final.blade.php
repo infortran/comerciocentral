@@ -1,11 +1,9 @@
-@extends('frontend.templates.payment_process')
+@extends('frontend.templates.principal')
 
 @section('content')
     <section>
         <div class="container">
-            <div class="row">
-
-            </div>
+            <h2></h2>
         </div>
     </section>
 @endsection

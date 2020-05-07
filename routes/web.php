@@ -27,6 +27,7 @@ Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 Route::get('/checkout', 'CheckoutController@index');
 Route::post('/payment_process', 'CheckoutController@paymentProcess');
+Route::post('/pagar', 'CheckoutController@getPaymentProcess');
 
 
 Route::get('/productos', 'ProductoFrontController@index');

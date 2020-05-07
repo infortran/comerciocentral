@@ -182,8 +182,8 @@
                                                 </div>
                                                 <div>
                                                     {{$producto['cantidad']}}
-                                                    <span class="badge" style="background: #ff6300;font-size: 14px">
-                                                         x
+                                                    <span style="color: #ff6300;font-size: 18px">
+                                                       x
                                                     </span>
                                                     $ {{number_format($producto['item']['precio'], 0,'','.')}}
                                                 </div>
@@ -214,7 +214,7 @@
                                             </div>
                                             <div class="td-checkout">
                                                 @if($precio_envio > 0)
-                                                <strong>{{number_format($precio_envio, 0, '', '.')}}</strong>
+                                                <strong>$ {{number_format($precio_envio, 0, '', '.')}}</strong>
                                                 @else
                                                     <strong style="color: green">GRATIS</strong>
                                                 @endif
