@@ -58,14 +58,18 @@
                                             <strong id="total-producto-{{$producto['item']['id']}}">$ {{number_format($producto['precio'], 0, '', '.')}}</strong>
                                         </td>
                                         <td>
-                                            <i data-id="{{$producto['item']['id']}}" class="reset-item-cart fa fa-window-close fa-2x" style="color: red"></i>
+                                            <i onclick="resetOnCartFromAjax({{$producto['item']['id']}})" class="reset-item-cart fa fa-window-close fa-2x" style="color: red;cursor:pointer"></i>
                                         </td>
                                     </tr>
                                @endforeach
                                </tbody>
                            </table>
-
-
+                        <a href="{{url('/productos')}}">
+                        <button class="btn-seguir-comprando">
+                            <i class="fa fa-angle-double-left"></i>
+                            Seguir comprando
+                        </button>
+                        </a>
                 </div>
 
                 <div class="col-md-3" style="position: relative">
@@ -75,56 +79,60 @@
                     <div class="card" style="margin-top: 20px">
                         <div class="card-body">
                             <strong>RESUMEN DE SU COMPRA</strong>
-                            <hr style="border-color: #afafaf">
+                            <hr style="border-color: #d5d5d5">
                             <table class="table borderless">
                                 <tr>
                                     <td>Total de productos:</td>
-                                    <td class="text-center " id="cart-cantidad-total">{{$cart->cantidadTotal}}</td>
+                                    <td class="text-center " id="cart-cantidad-total"><strong>{{$cart->cantidadTotal}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Subtotal:</td>
-                                    <td id="cart-subtotal">${{number_format($precio_total, 0, '','.')}}</td>
+                                    <td id="cart-subtotal"><strong>$ {{number_format($precio_total, 0, '','.')}}</strong></td>
                                 </tr>
                             </table>
 
-
-
-
-                                    <div id="panel-envio" class="panel panel-default {{$envio ? '':' d-none'}}">
-                                        <div class="panel-heading">
-                                            <i class="fa fa-shipping-fast"></i>
-                                            Coste de envio
-                                        </div>
-                                        <div class="panel-body text-center">
-                                            @if(isset($envio->precio) && $envio->precio == 0)
-                                                <div id="precio-envio" style="font-size: 18px;font-weight: bold">ENVIO SIN COSTO</div>
-                                            @else
-                                                <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{$envio->precio ?? ''}}</div>
-                                            @endif
-
+                            <div id="panel-envio" class="panel panel-default {{$envio ? '':' d-none'}}">
+                                 <div class="panel-heading">
+                                      <i class="fa fa-shipping-fast"></i>
+                                      Coste de envio
+                                 </div>
+                                 <div class="panel-body text-center">
+                                      @if(isset($envio->precio) && $envio->precio == 0)
+                                           <div id="precio-envio" style="font-size: 18px;font-weight: bold">Envio Sin Costo</div>
+                                      @else
+                                           <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{$envio->precio ?? ''}}</div>
+                                      @endif
                                             <div id="descripcion-envio">{{$envio->descripcion ?? ''}}</div>
-                                        </div>
-                                    </div>
+                                 </div>
+                            </div>
 
+                            <div id="panel-sin-envio" class="panel panel-default {{$envio ? ' d-none':''}}">
+                                <div class="panel-heading">
+                                    <i class="fa fa-store-alt"></i>
+                                    Retiro en tienda
+                                </div>
+                                <div class="panel-body text-center">
+                                    <div id="precio-envio">
 
-                            <hr style="border-color: #afafaf">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <table class="table borderless" style="margin:0">
-                                        <tr>
-                                            <td><h4>Total:</h4></td>
-                                            <td><h4 id="total-mas-envio">$ {{number_format($total_mas_envio, 0, '', '.')}}</h4></td>
-                                        </tr>
-                                    </table>
+                                        No hay envio disponible</div>
                                 </div>
                             </div>
 
+
+                            <hr style="border-color: #d5d5d5">
+                            <div class="panel panel-default text-center">
+                                <div class="panel-heading" style="font-size: 17px">TOTAL</div>
+                                <div class="panel-body " style="font-size: 22px">
+                                    <strong id="total-mas-envio">$ {{number_format($total_mas_envio, 0, '', '.')}}</strong>
+                                </div>
+                            </div>
+                            <a href="{{url('/checkout')}}">
                             <div class="btn-checkout btn-block text-center">
                                 Comprar
                                 <div></div>
                                 <i class="fa fa-money-bill-wave"></i>
                             </div>
-
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -138,5 +146,7 @@
             </div><!--/.row-->
 
         </div>
+
+
     </section> <!--/#cart_items-->
 @endsection

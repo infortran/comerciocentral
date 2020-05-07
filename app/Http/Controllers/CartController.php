@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Cart;
 use App\Envio;
 use App\FooterInfo;
 use App\HeaderFrontend;
+use App\Loader;
 use App\Producto;
 use App\SiteSocial;
 use App\TeamMember;
 use Illuminate\Http\Request;
 use Session;
+use Transbank\Webpay\Configuration;
+use Transbank\Webpay\Webpay;
+use Illuminate\Support\Facades\Auth;
+
 
 class CartController extends Controller
 {
+    private $data;
+
+    public function __construct(){
+        $loader = new Loader();
+        $this->data =  $loader->getData();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,17 +35,12 @@ class CartController extends Controller
     public function index()
     {
         if(!Session::has('cart')){
-            $data = [
-                'header' => HeaderFrontend::find(1),
-                'footer' => FooterInfo::find(1),
-                'members' => TeamMember::all(),
-                'siteSocials' => SiteSocial::all(),
-                'cart_productos' => null,
-                'precio_total' => 0,
-                'envios' => Envio::all()
-            ];
 
-            return view('frontend.cart', $data);
+            $this->data['cart_productos'] = null;
+            $this->data['precio_total'] = 0;
+            $this->data['envios'] = Envio::all();
+
+            return view('frontend.cart', $this->data);
         }
 
         $oldCart = Session::get('cart');
@@ -40,20 +48,19 @@ class CartController extends Controller
 
         $envio = $this->calcularEnvio($cart->precioTotal);
         $total_mas_envio = $envio != null ? $cart->precioTotal + $envio->precio : $cart->precioTotal;
+        if($envio){
+            Session::put('precio_envio', $envio->precio);
+        }else{
+            Session::forget('precio_envio');
+        }
 
-        //dd($envio);
-        $data = [
-            'header' => HeaderFrontend::find(1),
-            'footer' => FooterInfo::find(1),
-            'members' => TeamMember::all(),
-            'siteSocials' => SiteSocial::all(),
-            'cart' => $cart,
-            'cart_productos' => $cart->items,
-            'precio_total' => $cart->precioTotal,
-            'total_mas_envio' => $total_mas_envio,
-            'envio' => $this->calcularEnvio($cart->precioTotal) != null ? $this->calcularEnvio($cart->precioTotal) : null,
-        ];
-        return view('frontend.cart', $data);
+        $this->data['cart'] = $cart;
+        $this->data['cart_productos'] = $cart->items;
+        $this->data['precio_total'] = $cart->precioTotal;
+        $this->data['total_mas_envio'] = $total_mas_envio;
+        $this->data['envio'] = $this->calcularEnvio($cart->precioTotal) != null ? $this->calcularEnvio($cart->precioTotal) : null;
+
+        return view('frontend.cart', $this->data);
     }
 
     public function isMax($envios){
@@ -128,17 +135,38 @@ class CartController extends Controller
         $cart = new Cart($oldCart);
 
         $cart->resetItem($id);
+
+        if(count($cart->items) > 0){
+            Session::put('cart', $cart);
+        }else{
+            Session::forget('cart');
+        }
         $cantidadProducto = 0;
 
-        if($cart->items[$id] != null){
-            $cantidadProducto = $cart->items[$id]['cantidad'];
+
+
+        $envio = $this->calcularEnvio($cart->precioTotal);
+        $total_mas_envio = $envio != null ? $cart->precioTotal + $envio->precio : $cart->precioTotal;
+        //dd($total_mas_envio);
+        if($envio){
+            Session::put('precio_envio', $envio->precio);
+        }else{
+            Session::forget('precio_envio');
         }
-        Session::put('cart', $cart);
+
+        $data = [
+            'cart' => $cart,
+            'cart_productos' => $cart->items,
+            'precio_total' => $cart->precioTotal,
+            'total_mas_envio' => $total_mas_envio,
+            'envio' => $this->calcularEnvio($cart->precioTotal) != null ? $this->calcularEnvio($cart->precioTotal) : null,
+        ];
+
+
         return response()->json([
-            'status'=>'ok',
-            'cantidad_total' => $cart->cantidadTotal,
-            'id_producto' => $id,
-            'cantidad_producto' => $cantidadProducto]);
+            'html' => view('frontend.templates.cart-ajax', $data)->render(),
+            'cantidad_total' => $cart->cantidadTotal
+        ]);
     }
 
     public function processItemByQty(Request $request){
@@ -165,7 +193,11 @@ class CartController extends Controller
         $envio = $this->calcularEnvio($cart->precioTotal);
         $total_mas_envio = $envio != null ? $cart->precioTotal + $envio->precio : $cart->precioTotal;
         //dd($total_mas_envio);
-
+        if($envio){
+            Session::put('precio_envio', $envio->precio);
+        }else{
+            Session::forget('precio_envio');
+        }
         return response()->json([
             'status'=>'ok',
             'cantidad_total' => $cart->cantidadTotal,

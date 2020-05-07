@@ -11,8 +11,8 @@
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
-    <!--link href="{{asset('plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet"-->
-    <script src="https://kit.fontawesome.com/fe859275e0.js" crossorigin="anonymous"></script>
+    <link href="{{asset('css/all.css')}}" rel="stylesheet">
+    <!--script src="https://kit.fontawesome.com/fe859275e0.js" crossorigin="anonymous"></script-->
     <link href="{{asset('css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('css/price-range.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
@@ -29,36 +29,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
 
-
-        .card {
-            /* Add shadows to create the "card" effect */
-            background: #efefef;
-            border-radius: 3px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-
-        .card-cart{
-            background: #fbfbfb !important;
-            padding: 30px;
-        }
-
-        /* On mouse-over, add a deeper shadow */
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Add some padding inside the card container */
-        .card-body {
-            padding: 20px;
-        }
-
-        .borderless td, .borderless th {
-            border: none !important;
-        }
-    </style>
 </head><!--/head-->
 
 <body>

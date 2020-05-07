@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83c34e58fae765f61eb9881324f2e3c6",
+    "content-hash": "79dbd6cf1eb57ad484ad1d62835bd571",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -186,6 +186,43 @@
                 "math"
             ],
             "time": "2020-02-17T13:57:43+00:00"
+        },
+        {
+            "name": "ctala/transaccion-default",
+            "version": "V0.1.12.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NAITUSEIRL/PagoFacil.org-PHP-SDK.git",
+                "reference": "d7031130ddd4960c36cfa09d4874888a09686c5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NAITUSEIRL/PagoFacil.org-PHP-SDK/zipball/d7031130ddd4960c36cfa09d4874888a09686c5e",
+                "reference": "d7031130ddd4960c36cfa09d4874888a09686c5e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ctala\\transaccion\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Tala Sanchez",
+                    "email": "yomismo@cristiantala.cl"
+                }
+            ],
+            "description": "Libreria base para generar transacciones con TBKAAS",
+            "keywords": [
+                " libreria",
+                "extension"
+            ],
+            "time": "2016-12-07T12:57:39+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -4033,6 +4070,118 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2019-10-24T08:53:34+00:00"
+        },
+        {
+            "name": "transbank/transbank-sdk",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TransbankDevelopers/transbank-sdk-php.git",
+                "reference": "d68ebb592505bf9edc7b57592e8fcfc634cd3168"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TransbankDevelopers/transbank-sdk-php/zipball/d68ebb592505bf9edc7b57592e8fcfc634cd3168",
+                "reference": "d68ebb592505bf9edc7b57592e8fcfc634cd3168",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^6.3.3",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6.1",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Transbank\\": [
+                        "lib/"
+                    ],
+                    "Transbank\\Onepay\\": [
+                        "lib/onepay",
+                        "lib/onepay/utils"
+                    ],
+                    "Transbank\\Onepay\\Exceptions\\": [
+                        "lib/onepay/exceptions"
+                    ],
+                    "Transbank\\Webpay\\": [
+                        "lib/webpay",
+                        "lib/webpay/soap",
+                        "lib/webpay_rest",
+                        "lib/webpay_rest/webpay_plus"
+                    ],
+                    "Transbank\\Webpay\\Exceptions\\": [
+                        "lib/webpay_rest/exceptions"
+                    ],
+                    "Transbank\\Webpay\\WebpayPlus\\": [
+                        "lib/webpay_rest/webpay_plus"
+                    ],
+                    "Transbank\\Webpay\\WebpayPlus\\Exceptions\\": [
+                        "lib/webpay_rest/webpay_plus/exceptions"
+                    ],
+                    "Transbank\\Webpay\\Oneclick\\": [
+                        "lib/webpay_rest/oneclick",
+                        "lib/webpay_rest/oneclick/inscription",
+                        "lib/webpay_rest/oneclick/mall"
+                    ],
+                    "Transbank\\Webpay\\Oneclick\\Exceptions\\": [
+                        "lib/webpay_rest/oneclick/exceptions",
+                        "lib/webpay_rest/oneclick/mall/exceptions"
+                    ],
+                    "Transbank\\Patpass\\": [
+                        "lib/patpass",
+                        "lib/patpass/patpass_by_webpay"
+                    ],
+                    "Transbank\\Patpass\\Exceptions\\": [
+                        "lib/patpass/exceptions"
+                    ],
+                    "Transbank\\Patpass\\PatpassByWebpay\\": [
+                        "lib/patpass/patpass_by_webpay"
+                    ],
+                    "Transbank\\Patpass\\PatpassComercio\\": [
+                        "lib/patpass/patpass_comercio",
+                        "lib/patpass/patpass_comercio/inscription"
+                    ],
+                    "Transbank\\Patpass\\PatpassComercio\\Exceptions\\": [
+                        "lib/patpass/patpass_comercio/exceptions"
+                    ],
+                    "Transbank\\Patpass\\PatpassByWebpay\\Exceptions\\": [
+                        "lib/patpass/patpass_by_webpay/exceptions"
+                    ],
+                    "Transbank\\TransaccionCompleta\\": [
+                        "lib/transaccion_completa",
+                        "lib/transaccion_completa/inscription",
+                        "lib/transaccion_completa/transaction",
+                        "lib/transaccion_completa/mall",
+                        "lib/transaccion_completa/mall/transaction"
+                    ],
+                    "Transbank\\TransaccionCompleta\\Exceptions\\": [
+                        "lib/transaccion_completa/exceptions",
+                        "lib/transaccion_completa/mall/exceptions"
+                    ],
+                    "Transbank\\Utils\\": [
+                        "lib/utils"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Transbank SDK",
+            "keywords": [
+                "api",
+                "payments",
+                "sdk",
+                "transbank"
+            ],
+            "time": "2019-12-30T12:49:17+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

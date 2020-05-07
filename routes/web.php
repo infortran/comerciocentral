@@ -25,6 +25,10 @@ Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
 Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 
+Route::get('/checkout', 'CheckoutController@index');
+Route::post('/payment_process', 'CheckoutController@paymentProcess');
+
+
 Route::get('/productos', 'ProductoFrontController@index');
 Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
 Route::get('/cuenta', 'UserController@index');
