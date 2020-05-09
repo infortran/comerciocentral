@@ -254,7 +254,7 @@ function addToCartByQty(idProd, cant){
                     $('#panel-envio').fadeOut(500);
                 }
                 if(json.precio_envio == 0){
-                    $('#precio-envio').html("Envio Sin Costo");
+                    $('#precio-envio').html('<i style="color:green">GRATIS</i>');
                 }else{
                     $('#precio-envio').html("$ " + json.precio_envio);
                 }

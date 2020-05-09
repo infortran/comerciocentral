@@ -6,6 +6,7 @@ use App\Cart;
 use App\FooterInfo;
 use App\HeaderFrontend;
 use App\Http\Requests\ProductosFormRequest;
+use App\Loader;
 use App\TeamMember;
 use Illuminate\Http\Request;
 use App\Producto;
@@ -17,26 +18,26 @@ use Session;
 
 class ProductoController extends Controller
 {
-    private $categorias;
-    private $marcas;
-    private $productos;
+    private $data;
 
 
     public function __construct()
     {
         $this->middleware('admin');
-        $this->categorias = Categoria::all();
-        $this->marcas = Marca::all();
-        $this->productos = Producto::all();
+        $loader = new Loader();
+        $this->data = $loader->getData();
+        $this->data['categorias'] = Categoria::all();
+        $this->data['marcas'] = Marca::all();
+        $this->data['productos'] = Producto::all();
     }
 
     public function index(Request $request){
         $query = trim($request->get('search'));
         if($request){
-            $this->productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
+            $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
         }
-
-    	return view('backend.productos.index',['productos'=>$this->productos,'search' => $query, 'header' => HeaderFrontend::find(1)]);
+        $this->data['search'] = $query;
+    	return view('backend.productos.index', $this->data);
     }
 
     //abre la vista crear producto
@@ -79,38 +80,28 @@ class ProductoController extends Controller
     }
 
     //muestra la vista FRONTEND PRODUCTOS
-    public function show(Request $request){
+    /*public function show(Request $request){
         $query = trim($request->get('search'));
         if($request){
-            $this->productos = Producto::where('nombre', 'LIKE', '%' . $query . '%')
+            $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')
                 ->orWhere('descripcion', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
         }
         if(request('categoria')){
-            $this->productos = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);
+            $this->data['productos'] = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);
         }
         if(request('marca')){
-            $this->productos = Producto::where('id_marca', request('marca'))->orderBy('id', 'asc')->paginate(9);
+            $this->data['productos'] = Producto::where('id_marca', request('marca'))->orderBy('id', 'asc')->paginate(9);
         }
-        $data = [
-            'header' => HeaderFrontend::find(1),
-            'footer' => FooterInfo::find(1),
-            'members' => TeamMember::all(),
-            'categorias' => $this->categorias,
-            'marcas' => $this->marcas,
-            'productos' => $this->productos,
-            'search' => $query
-        ];
-        return view('frontend.productos', $data);
-    }
+        $this->data['search'] = $query;
+        return view('frontend.productos', $this->data);
+    }*/
 
 
 
     //muestra la vista editar
     public function edit($id){
-        return view('backend.productos.edit', [
-            'producto' => Producto::findOrFail($id),
-            'categorias' => $this->categorias,
-            'marcas' => $this->marcas]);
+        $this->data['producto'] = Producto::find($id);
+        return view('backend.productos.edit', $this->data);
     }
     //edita y guarda el registro en db
     public function update(Request $request, $id){

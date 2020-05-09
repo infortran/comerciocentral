@@ -270,13 +270,25 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{url('admin/ordenes')}}"
+                                   class="{{ Request::path() === 'ordenes' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Ordenes
+                                        <?php use App\Orden; $orden_count = Orden::all()->count(); ?>
+                                        <span class="right badge badge-danger">{{ $orden_count ?? '' }}</span>
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{url('admin/users')}}"
                                     class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Usuarios
                                         <?php use App\User; $users_count = User::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $users_count ?? '0' }}</span>
+                                        <span class="right badge badge-danger">{{ $users_count ?? '' }}</span>
                                     </p>
                                 </a>
                             </li>

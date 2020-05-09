@@ -26,8 +26,9 @@ Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 
 Route::get('/checkout', 'CheckoutController@index');
-Route::post('/payment_process', 'CheckoutController@paymentProcess');
-Route::post('/pagar', 'CheckoutController@getPaymentProcess');
+Route::post('/payment/process', 'CheckoutController@paymentProcess');
+Route::post('/payment', 'CheckoutController@getPaymentProcess');
+Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
 
 
 Route::get('/productos', 'ProductoFrontController@index');
@@ -49,6 +50,9 @@ Route::get('/admin/blog', 'BlogAdminController@index');
 Route::get('/admin/categorias', 'CategoriaController@index');
 
 Route::get('/admin/marcas', 'MarcaController@index');
+
+Route::get('/admin/ordenes', 'OrdenController@index');
+Route::get('/admin/orden/{id}', 'OrdenController@show');
 
 Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
 Route::put('/admin/comentarios/ban/{id}', 'ComentarioController@ban')->name('comentario.ban');

@@ -16,12 +16,12 @@ class CreateOrdensTable extends Migration
         Schema::create('ordens', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('apellido');
-            $table->integer('id_usuario')->nullable();
-            $table->string('direccion');
+            $table->integer('id_user')->nullable();
+            $table->string('direccion')->nullable();
             $table->string('telefono');
             $table->string('email');
             $table->text('cart');
+            $table->integer('envio')->nullable();
             $table->string('estado')->default('pendiente');
             $table->timestamps();
         });

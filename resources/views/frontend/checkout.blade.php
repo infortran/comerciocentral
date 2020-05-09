@@ -3,7 +3,8 @@
 @section('content')
 
     <section>
-        <div class="container">
+        <form class="container" action="{{url('/payment')}}" method="POST">
+            @csrf
             <h1 class="titulo-principal">
                 Revisa y confirma tu orden
             </h1>
@@ -11,6 +12,7 @@
 
 
             <div class="row">
+                @if(Session::has('envio'))
                 <div class="col-md-6">
                     @if(Auth::check())
                         <div class="panel panel-default"   style="background: #fafafa">
@@ -88,11 +90,15 @@
                             <div class="panel-body">
                                 <h4>Tus datos personales</h4>
                                 <hr>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Tu nombre <i style="color: red">*</i></label>
-                                            <input type="text" class="form-control" placeholder="Nombre y apellido">
+                                            <input name="nombre" type="text" class="form-control" placeholder="Nombre y apellido">
+                                            @error('nombre')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -101,16 +107,24 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Email <i style="color: red">*</i></label>
-                                            <input type="email" class="form-control" placeholder="ej. usuario@dominio.com">
+                                            <input name="email" type="email" class="form-control" placeholder="ej. usuario@dominio.com">
+                                            @error('email')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Telefono <i style="color: red">*</i></label>
-                                            <input type="text" class="form-control" placeholder="ej. +56 9 12345678">
+                                            <input name="telefono" type="text" class="form-control" placeholder="ej. +56 9 12345678">
+                                            @error('telefono')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <hr>
                                 <h4>Direccion de envio</h4>
                                 <hr>
@@ -118,13 +132,19 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label for="">Calle <i style="color: red">*</i></label>
-                                            <input type="text" class="form-control" placeholder="ej. Av. Maipu">
+                                            <input name="calle" type="text" class="form-control" placeholder="ej. Av. Maipu">
+                                            @error('calle')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Numero <i style="color: red">*</i></label>
-                                            <input type="text" class="form-control" placeholder="ej. 123">
+                                            <input name="numero" type="text" class="form-control" placeholder="ej. 123">
+                                            @error('numero')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -134,22 +154,28 @@
                                     <div class="col-md-9">
                                         <div class="form-group">
                                             <label for="">Villa / Poblacion <i style="color: red">*</i></label>
-                                            <input type="text" class="form-control" placeholder="Ingrese su Villa / Poblacion">
+                                            <input name="poblacion" type="text" class="form-control" placeholder="Ingrese su Villa / Poblacion">
+                                            @error('poblacion')
+                                            <p style="color: red">{{$message}}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Num. Depto.</label>
-                                            <input type="email" class="form-control" placeholder="Opcional">
+                                            <input name="departamento" type="text" class="form-control" placeholder="Opcional">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 50px">
                                     <div class="col-md-12">
                                         <label for="">Ciudad <i style="color: red">*</i></label>
-                                        <select name="" class="form-control" id="">
-                                            <option value="">San Felipe</option>
+                                        <select name="ciudad" class="form-control" id="">
+                                            <option value="San Felipe" selected>San Felipe</option>
                                         </select>
+                                        @error('ciudad')
+                                        <p style="color: red">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -158,6 +184,91 @@
                     @endif
 
                 </div>
+                @else
+                     <div class="col-md-6">
+                         <div class="list-group">
+                             <div class="list-group-item text-center" style="background: #efefef">
+                                 <h4 style="font-size: 80px">
+                                     <div class="icon-titulo" >
+                                         <i class="fa fa-store"></i>
+                                     </div>
+                                 </h4>
+                                 <h4>RETIRO EN TIENDA</h4>
+                                 <p>Puedes pasar a retirar en tienda presentando el numero de orden</p>
+                                 <small>El numero de orden te sera entregado una vez hayas pagado</small>
+                             </div>
+                            @if(Auth::check())
+                                 <div class="panel panel-default"   style="background: #fafafa">
+
+                                     <div class="panel-body">
+                                         <h4>Tus datos personales</h4>
+                                         <hr>
+
+                                         <div class="list-group">
+                                             <div class="list-group-item list-group-item-checkout" style="padding:20px">
+                                                 <div>
+                                                     <img class="img-rounded" style="max-height: 50px" src="{{asset('images/uploads/users') .'/'. Auth::user()->img}}" alt="">
+                                                 </div>
+                                                 <div>
+                                                     <h4>{{Auth::user()->name}} {{Auth::user()->lastname}}</h4>
+                                                 </div>
+                                                 <div>
+                                                     <p>
+                                                         <i class="fa fa-phone"></i>
+                                                         {{Auth::user()->telefono}}
+                                                     </p>
+                                                     <p>
+                                                         <i class="fa fa-envelope"></i>
+                                                         {{Auth::user()->email}}
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             @else
+                                 <div class="list-group-item"   style="background: #fafafa">
+                                     <h4>Tus datos personales</h4>
+                                     <hr>
+
+                                     <div class="row">
+                                         <div class="col-md-12">
+                                             <div class="form-group">
+                                                 <label for="">Tu nombre <i style="color: red">*</i></label>
+                                                 <input name="nombre" type="text" class="form-control" placeholder="Nombre y apellido" required autocomplete="off">
+                                                 @error('nombre')
+                                                 <p style="color: red">{{$message}}</p>
+                                                 @enderror
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="row">
+                                         <div class="col-md-6">
+                                             <div class="form-group">
+                                                 <label for="">Email <i style="color: red">*</i></label>
+                                                 <input name="email" type="email" class="form-control" placeholder="ej. usuario@dominio.com">
+                                                 @error('email')
+                                                 <p style="color: red">{{$message}}</p>
+                                                 @enderror
+                                             </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                             <div class="form-group">
+                                                 <label for="">Telefono <i style="color: red">*</i></label>
+                                                 <input name="telefono" type="text" class="form-control" placeholder="ej. +56 9 12345678">
+                                                 @error('telefono')
+                                                 <p style="color: red">{{$message}}</p>
+                                                 @enderror
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             @endif
+                         </div>
+                     </div>
+
+                @endif
                 <div class="col-md-6">
                     <div class="panel panel-default"  style="background: #fafafa">
                         <div class="panel-heading">
@@ -213,10 +324,14 @@
                                                 COSTE DE ENVIO
                                             </div>
                                             <div class="td-checkout">
-                                                @if($precio_envio > 0)
-                                                <strong>$ {{number_format($precio_envio, 0, '', '.')}}</strong>
+                                                @if(Session::has('envio'))
+                                                    @if(Session::get('envio')->precio > 0)
+                                                        <strong>$ {{number_format(Session::get('envio')->precio, 0, '', '.')}}</strong>
+                                                    @else
+                                                        <strong style="color: green">GRATIS</strong>
+                                                    @endif
                                                 @else
-                                                    <strong style="color: green">GRATIS</strong>
+                                                    <strong style="color: red">ENVIO NO DISPONIBLE</strong>
                                                 @endif
                                             </div>
 
@@ -289,7 +404,7 @@
 
                 </div>
             </div>
-        </div>
+        </form>
     </section>
 
 
