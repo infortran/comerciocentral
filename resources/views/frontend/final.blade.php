@@ -17,9 +17,6 @@
                             Volver al Inicio
                         </button>
                     </a>
-
-
-
                 </div>
             </div>
         </div>
@@ -147,6 +144,7 @@
             document.getElementById("direccion-webpay").innerHTML = direccion;
 
             successContainer.className = successContainer.className.replace("d-none", "");
+            window.localStorage.clear();
         }else{
             errorContainer.className = errorContainer.className.replace("d-none", "");
         }

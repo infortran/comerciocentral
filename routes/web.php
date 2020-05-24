@@ -26,9 +26,13 @@ Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 
 Route::get('/checkout', 'CheckoutController@index');
-Route::post('/payment/process', 'CheckoutController@paymentProcess');
+Route::post('/payment/webpay', 'CheckoutController@webpayProcess');
+Route::get('/payment/retry', 'CheckoutController@getRetryPayment');
+Route::get('/payment/webpay/retry', 'CheckoutController@retryPayment');
 Route::post('/payment', 'CheckoutController@getPaymentProcess');
+Route::get('/payment/deposito', 'CheckoutController@getDepositoPaymentProcess');
 Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
+Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
 
 
 Route::get('/productos', 'ProductoFrontController@index');

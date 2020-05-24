@@ -23,6 +23,10 @@
     height: 34px !important;
 }
 
+.borde{
+    border:1px solid black !important;
+}
+
 /*******SWITCH*******/
 .switch {
     position: relative;

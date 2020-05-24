@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79dbd6cf1eb57ad484ad1d62835bd571",
+    "content-hash": "3a8ae33fcb1b8b363d220295fc643b7c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -884,6 +884,56 @@
                 "watermark"
             ],
             "time": "2019-11-02T09:15:47+00:00"
+        },
+        {
+            "name": "khipu/khipu-api-client",
+            "version": "2.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/khipu/khipu-api-php-client.git",
+                "reference": "bef36baf4026884b45e5849a7875f6b5e9c462a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/khipu/khipu-api-php-client/zipball/bef36baf4026884b45e5849a7875f6b5e9c462a5",
+                "reference": "bef36baf4026884b45e5849a7875f6b5e9c462a5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6.1",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Khipu\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "khipu",
+                    "homepage": "https://github.com/khipu/khipu-api-php-client"
+                }
+            ],
+            "homepage": "https://github.com/khipu/khipu-api-php-client",
+            "keywords": [
+                "api",
+                "khipu",
+                "php",
+                "sdk"
+            ],
+            "time": "2019-05-27T14:21:10+00:00"
         },
         {
             "name": "laravel/framework",

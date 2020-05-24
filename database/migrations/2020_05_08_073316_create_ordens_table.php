@@ -21,8 +21,10 @@ class CreateOrdensTable extends Migration
             $table->string('telefono');
             $table->string('email');
             $table->text('cart');
+            $table->integer('total');
             $table->integer('envio')->nullable();
             $table->string('estado')->default('pendiente');
+            $table->string('tipo_pago');
             $table->timestamps();
         });
     }

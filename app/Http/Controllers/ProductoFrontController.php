@@ -32,6 +32,13 @@ class ProductoFrontController extends Controller
             $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')
                 ->orWhere('descripcion', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
         }
+        if($request->get('marca')){
+            $this->data['productos'] = Producto::where('marca', $request->get('marca'))->orderBy('id', 'asc')->paginate(9);
+        }
+
+        if($request->get('categoria')){
+            $this->data['productos'] = Producto::where('id_categoria', $request->get('categoria'))->orderBy('id', 'asc')->paginate(9);
+        }
         $this->data['search'] = $query;
         return view('frontend.productos', $this->data);
     }

@@ -21,11 +21,31 @@
                                             <strong style="color: green">PAGADO</strong>
                                             @elseif($orden->estado == 'pendiente')
                                             <strong style="color: orange">PENDIENTE</strong>
-                                        @elseif($orden->estado == 'deposito')
-                                            <strong style="color: #00c7ff">DEPOSITO</strong>
                                         @else
                                             <strong style="color: red">RECHAZADO</strong>
                                         @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        Fecha y hora
+                                    </div>
+                                    <div class="col text-right">
+                                        {{ $orden->created_at->timezone('America/Santiago')->format('d/m/Y') .' -- '. $orden->created_at->timezone('America/Santiago')->format('H:i')}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>Tipo de pago</strong>
+                                    </div>
+                                    <div class="col text-right">
+                                        {{$orden->tipo_pago}}
                                     </div>
                                 </div>
                             </div>
@@ -60,14 +80,14 @@
                                             </div>
                                             <div class="modal-body">
                                                 @foreach($cart->items as $producto)
-                                                    <div class="card">
-                                                        <div class="card-body" style="display: table">
-                                                            <td>
+                                                    <div class="list-group">
+                                                        <div class="list-group-item" style="display: table">
+                                                            <div style="display: table-cell">
                                                                 <img style="max-height: 50px" src="{{asset('images/uploads/productos') .'/' . $producto['item']['img'] }}" alt="">
-                                                            </td>
-                                                            <td>{{$producto['item']['nombre']}}</td>
-                                                            <td>{{$producto['cantidad']}} x {{$producto['item']['precio']}}</td>
-                                                            <td>{{$producto['precio']}}</td>
+                                                            </div>
+                                                            <div style="display: table-cell;">{{$producto['item']['nombre']}}</div>
+                                                            <div style="display: table-cell;width:30%">{{$producto['cantidad']}} x $ {{number_format($producto['item']['precio'],0,'','.')}}</div>
+                                                            <div style="display: table-cell;width:20%"><strong>$ {{number_format($producto['precio'],0,'','.')}}</strong></div>
                                                         </div>
                                                     </div>
                                                     @endforeach
@@ -94,12 +114,21 @@
                             </div>
                             <div class="list-group-item">
                                 <div class="row">
+                                    @if($orden->direccion)
                                     <div class="col">
-                                        <strong>Direccion</strong>
+                                        <strong>Entrega</strong>
                                     </div>
                                     <div class="col text-right">
-                                        <a href="#direccion-collapse" data-toggle="collapse" role="button">Ver</a>
+                                        <a href="#direccion-collapse" data-toggle="collapse" role="button">DESPACHO A DOMICILIO</a>
                                     </div>
+                                    @else
+                                        <div class="col">
+                                            <strong>Entrega</strong>
+                                        </div>
+                                        <div class="col text-right" style="color: green">
+                                            <strong>RETIRO EN TIENDA</strong>
+                                        </div>
+                                    @endif
 
                                 </div>
                                 <div class="collapse" id="direccion-collapse">

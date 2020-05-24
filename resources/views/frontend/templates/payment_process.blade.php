@@ -12,14 +12,12 @@
                         <span></span>
                     </div>
                 </div>
-
-                <!--img style="border-radius: 50%;max-height: 300px" class="center-block" src="{{asset('images/system/loading.gif')}}" alt=""-->
                 <h2>Estamos procesando tu pago...</h2>
             </div>
         </div>
     </section>
-    <form id="form-payment-access" action="{{$form_action}}" method="POST">
-        <input type="hidden" value="{{$token_ws}}" name="token_ws">
+    <form id="form-payment-access" action="{{ $form_action }}" method="POST">
+        <input type="hidden" value="{{ $token_ws }}" name="token_ws">
     </form>
 
     <script>

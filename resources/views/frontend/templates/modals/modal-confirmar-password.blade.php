@@ -11,7 +11,8 @@
             </div>
             <div class="modal-body">
                 <p>Por favor ingrese su contraseña actual para confirmar</p>
-                <input type="password" class="form-control" name="oldpass">
+
+                <input type="password" class="form-control" autocomplete="off" name="oldpass">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

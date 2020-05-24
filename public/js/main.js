@@ -17,6 +17,11 @@ $(document).ready(function () {
         readURL(this, selector);
     });
 
+    $("#input-img-voucher").change(function(){
+        var selector = $('#img-voucher');
+        readURL(this, selector);
+    });
+
 
 
     $(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Loader;
 use App\Orden;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrdenController extends Controller
@@ -18,12 +19,22 @@ class OrdenController extends Controller
     }
 
     public function index(Request $request){
-        $query = trim($request->get('search'));
+        //NECESITO SOLO LAS ORDENES DEL DIA
         if($request){
-            $ordenes = Orden::where('id','LIKE','%'. $query .'%')->orderBy('id', 'desc')->paginate(10);
+            $ordenes = Orden::whereDate('created_at', Carbon::today())->paginate(10);
+            $countOrdenes = $ordenes->count();
+            $this->data['search'] = null;
+            $this->data['ordenes'] = $ordenes;
+            $this->data['count_ordenes'] = $countOrdenes;
+        }
+        $query = trim($request->get('search'));
+        if($query){
+            $ordenes = Orden::where('id', $query)->orderBy('id', 'desc')->paginate(10);
             $this->data['search'] = $query;
             $this->data['ordenes'] = $ordenes;
         }
+
+
         return view('backend.ordenes.index', $this->data);
     }
 

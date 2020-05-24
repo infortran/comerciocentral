@@ -104,6 +104,7 @@
       <path value="$PROJECT_DIR$/vendor/predis/predis" />
       <path value="$PROJECT_DIR$/vendor/ctala/transaccion-default" />
       <path value="$PROJECT_DIR$/vendor/transbank/transbank-sdk" />
+      <path value="$PROJECT_DIR$/vendor/khipu/khipu-api-client" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

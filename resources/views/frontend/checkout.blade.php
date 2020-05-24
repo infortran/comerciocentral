@@ -95,7 +95,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="">Tu nombre <i style="color: red">*</i></label>
-                                            <input name="nombre" type="text" class="form-control" placeholder="Nombre y apellido">
+                                            <input name="nombre" type="text" class="form-control" placeholder="Nombre y apellido" autocomplete="off">
                                             @error('nombre')
                                             <p style="color: red">{{$message}}</p>
                                             @enderror

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comprobante;
 use App\Direccion;
 use App\Loader;
 use App\Orden;
@@ -14,7 +15,7 @@ use Session;
 
 class CheckoutController extends Controller
 {
-    private $data, $orden;
+    private $data;
 
     public function __construct(){
         $data = new Loader();
@@ -87,33 +88,69 @@ class CheckoutController extends Controller
         $orden->telefono = Auth::check() ? Auth::user()->telefono : $request->get('telefono');
         $orden->id_user = Auth::check() ? Auth::user()->id : null;
         $orden->cart = serialize($cart);
+        $orden->total = $cart->precioTotal;
         $orden->envio = $envio;
         $orden->direccion = $dir_string ? $dir_string : null;
-        $this->orden = $orden;
 
+
+        //PAYMENT SELECTOR
         if($request->get('forma_pago') == 'webpay'){
+            $orden->tipo_pago = 'webpay';
             $orden->save();
             if($this->getWebpay($total, $orden->id)){
-                //SI WEBPAY AUTORIZA LA TRANSACCION SE CARGA LA VISTA DEL PAYMENT PROCESS
                 return view('frontend.templates.payment_process', $this->data);
             }else{
                 return redirect('checkout')->withErrors("Error en la autorizacion de WEBPAY");
             }
         }else{
-            $orden->estado = 'deposito';
-            $orden->save();
-            dd('PAGO CON DEPOSITO');
+            $orden->tipo_pago = 'deposito';
+            Session::put('orden', $orden);
+            return redirect('/payment/deposito');
         }
     }
 
     public function getDepositoPaymentProcess(Request $request){
+        if (Session::has('orden')){
+            return view('frontend.templates.deposito', $this->data);
+        }else{
+            return redirect('/');
+        }
+    }
 
+    public function finalDepositoProcess(Request $request){
+        $request->validate([
+            'voucher' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        //comprobar si viene la orden en session
+        if(!Session::has('orden')){
+            return redirect('/');
+        }
+
+        $orden = Session::get('orden');
+
+        $img = $request->file('voucher');
+
+        $imageName = $img->getClientOriginalName(). time().'.'.$img->extension();
+        request()->voucher->move(public_path('images/uploads/comprobantes'), $imageName);
+
+        $comprobante = new Comprobante();
+        $comprobante->img = $imageName;
+        $orden->save();
+
+        $orden->comprobantes()->save($comprobante);
+        $this->data['nombre'] = $orden->nombre;
+        $this->data['direccion'] = $orden->direccion;
+        $this->data['nro_orden'] = 'N°'.$orden->id;
+        $this->data['monto'] = $orden->envio ? $orden->envio + $orden->total : $orden->total;
+        Session::forget('orden');
+        Session::forget('cart');
+        return view('frontend.final-deposito', $this->data);
     }
 
     public function getWebpay($amount, $buyOrder){
         $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))
             ->getNormalTransaction();
-        $returnUrl = url('/payment/process');
+        $returnUrl = url('/payment/webpay');
         $finalUrl = url('/payment/final');
         $sessionId = Session::getId();
         $initResult = $transaction->initTransaction(
@@ -124,14 +161,13 @@ class CheckoutController extends Controller
         if($formAction != null && $tokenWs != null){
             $this->data['form_action'] = $formAction;
             $this->data['token_ws'] = $tokenWs;
-            //dd($this->data['form_action']);
             return true;
         }else{
             return false;
         }
     }
 
-    public function paymentProcess(Request $request){
+    public function webpayProcess(Request $request){
         $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))
             ->getNormalTransaction();
         $tokenWs = $request->get('token_ws');
@@ -142,6 +178,7 @@ class CheckoutController extends Controller
         }
         $output = $result->detailOutput;
         if($output->responseCode == 0){
+
             //guardar los datos del pago en la db
             $webpayOrden = new WebpayOrden();
             $webpayOrden->session_id = $result->sessionId;
@@ -155,26 +192,37 @@ class CheckoutController extends Controller
             $orden = Orden::find($output->buyOrder);
             //CAMBIAR EL ESTADO DE ORDEN A CONFIRMADO
             $orden->estado = 'pagado';
-            $this->orden = $orden;
             $orden->save();
             $orden->webpayOrdens()->save($webpayOrden);
+            $data = [
+                'card_number' => $result->cardDetail->cardNumber,
+                'authorization_code' => $output->authorizationCode,
+                'amount' => number_format($output->amount, 0, '', '.'),
+                'buy_order' => $output->buyOrder,
+                'shares_number' => $output->sharesNumber,
+                'response_code' => $output->responseCode,
+                'url_redirection' => $result->urlRedirection,
+                'token_ws' => $tokenWs,
+                'nombre' => $orden->nombre,
+                'direccion' => $orden->direccion
+            ];
+            return view('frontend.templates.webpay_process', $data);
+        }else{
+            dd($output->responseCode);
         }
-        $data = [
-            'card_number' => $result->cardDetail->cardNumber,
-            'authorization_code' => $output->authorizationCode,
-            'amount' => number_format($output->amount, 0, '', '.'),
-            'buy_order' => $output->buyOrder,
-            'shares_number' => $output->sharesNumber,
-            'response_code' => $output->responseCode,
-            'url_redirection' => $result->urlRedirection,
-            'token_ws' => $tokenWs,
-            'nombre' => $this->orden->nombre,
-            'direccion' => $this->orden->direccion
-        ];
-        return view('frontend.templates.webpay_process', $data);
+
     }
 
-    public function finalPaymentProcess(){
+    public function finalPaymentProcess(Request $request){
+        //BORRAR LA ORDEN QUE NO FUE PROCESADA
+        if($request->get('TBK_TOKEN')){
+            $orden = Orden::findOrFail($request->get('TBK_ORDEN_COMPRA'));
+            $orden->delete();
+        }
         return view('frontend.final', $this->data);
+    }
+
+    public function getRetryPayment(){
+        return view('frontend.templates.retry-payment', $this->data);
     }
 }

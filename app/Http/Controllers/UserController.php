@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Direccion;
 use App\FooterInfo;
 use App\HeaderFrontend;
+use App\Loader;
+use App\Orden;
 use App\SiteSocial;
 use App\TeamMember;
 use App\User;
@@ -17,10 +19,13 @@ use Image;
 
 class UserController extends Controller
 {
+    private $data;
     public function __construct(){
         if(Session::has('auth_change_pass_user')){
             Session::remove('auth_change_pass_user');
         }
+        $loader = new Loader();
+        $this->data = $loader->getData();
     }
 
     public function index(){
@@ -30,13 +35,8 @@ class UserController extends Controller
             }
             return redirect('/login');
         }
-        $data = [
-            'header' => HeaderFrontend::find(1),
-            'footer' => FooterInfo::find(1),
-            'members' => TeamMember::all(),
-            'siteSocials' => SiteSocial::all()
-        ];
-        return view('frontend.user', $data);
+        $this->data['compras'] = Orden::where('id_user', Auth::user()->id)->get();
+        return view('frontend.user', $this->data);
     }
 
     public function update(Request $request, $id){
@@ -106,14 +106,13 @@ class UserController extends Controller
     }
 
     public function addDireccion(Request $request){
-        $user = Auth::user();
         $request->validate([
             'calle' => 'required',
             'numero' => 'required',
             'poblacion' => 'required',
             'ciudad' => 'required'
         ]);
-
+        $user = Auth::user();
         $direccion = new Direccion();
         $direccion->calle = $request->get('calle');
         $direccion->numero = $request->get('numero');
@@ -128,13 +127,7 @@ class UserController extends Controller
 
     public function changePassword(Request $request){
         if(Session::has('auth_change_pass_user') && Session::get('auth_change_pass_user')){
-            $data = [
-                'header' => HeaderFrontend::findOrFail(1),
-                'footer' => FooterInfo::findOrFail(1),
-                'members' => TeamMember::all(),
-                'siteSocials' => SiteSocial::all()
-            ];
-            return view('frontend.templates.change-password', $data);
+            return view('frontend.templates.change-password', $this->data);
         }else{
             return redirect('/cuenta')->withErrors('Error al cambiar la contraseña');
         }

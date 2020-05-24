@@ -69,10 +69,11 @@
     },30000);
 
      window.onbeforeunload = function () {
-         alert('Tu contraseña no sera cambiada');
+
          $.ajax({
              url: 'reset',
              success: function (data) {
+                 alert('Tu contraseña no sera cambiada');
                  location.href = '/cuenta';
              }
          });
