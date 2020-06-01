@@ -14,10 +14,6 @@ class HeaderFrontendTableSeeder extends Seeder
         DB::table('header_frontends')->insert([
         	'telefono' => '+56 9 12345678',
         	'email' => 'contacto@dominio.cl',
-        	'facebook' => 'facebook.com/user',
-        	'twitter' => 'twitter.com/user',
-        	'instagram' => 'instagram.com/user',
-    		'linkedin' => 'linkedin.com/user',
 			'img_header' => 'navbar-brand.png',]);
     }
 }

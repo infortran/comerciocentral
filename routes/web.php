@@ -12,11 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'InicioController@index')->name('inicio.index');
+Route::get('/tienda', 'InicioController@index')->name('inicio.index');
+
+Route::get('/', 'MainController@index');
 
 Route::get('/contacto', 'ContactoController@index');
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
+Route::get('/productos', 'ProductoFrontController@index');
+Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
+Route::get('/cuenta', 'UserController@index');
+Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
 
 Route::get('/carrito', 'CartController@index');
 Route::post('/add_to_cart', 'CartController@addItemsToCart');
@@ -35,15 +41,13 @@ Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
 Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
 
 
-Route::get('/productos', 'ProductoFrontController@index');
-Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
-Route::get('/cuenta', 'UserController@index');
-Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
+
 
 Route::resource('comentario', 'ComentarioController');
 
 Route::resource('user', 'UserController');
 
+//Route::get('/.well-known/pki-validation/{key}', 'InicioController@pkiValidation');
 
 Auth::routes();
 

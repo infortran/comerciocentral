@@ -48,7 +48,9 @@ class InicioController extends Controller
     }
 
 
-    public function alexander($nombre){
-        return view('frontend.servicios', ['nombre' => $nombre]);
+    public function pkiValidation(Request $request, $key){
+        echo 'FC82429374A6C78ED7A0EA8AA52E602322A6BB71387649B235F9056D49719A81
+comodoca.com
+ba4a31e804475fe';
     }
 }
