@@ -15,6 +15,7 @@ class CreateSiteSocialsTable extends Migration
     {
         Schema::create('site_socials', function (Blueprint $table) {
             $table->id();
+            $table->integer('tienda_id')->unsigned();
             $table->integer('id_social')->unsigned();
             $table->string('uri');
         });

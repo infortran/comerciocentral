@@ -23,8 +23,8 @@ class CartController extends Controller
     private $data;
 
     public function __construct(){
-        $loader = new Loader();
-        $this->data =  $loader->getData();
+        /*$loader = new Loader();
+        $this->data =  $loader->getData();*/
     }
 
     /**

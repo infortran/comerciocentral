@@ -9,7 +9,8 @@
                 <div class="col-sm-4 col-sm-offset-1">
                     <div class="login-form"><!--login form-->
                         <h2>Ingresa con tu cuenta</h2>
-                        <form method="POST" action="{{ route('login') }}">
+
+                        <form method="POST" action="">
                             @csrf
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')

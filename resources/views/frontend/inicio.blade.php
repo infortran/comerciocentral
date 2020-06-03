@@ -111,7 +111,7 @@
 
 
 					</div><!--FIN PRODUCTOS-->
-                    {{$productos->links()}}
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BlogAdmin;
 use App\Comentario;
 use App\HeaderFrontend;
+use App\Loader;
 use App\User;
 use Illuminate\Http\Request;
 use App\Post;
@@ -24,12 +25,22 @@ class BlogAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $query = trim($request->get('search'));
-        $posts = Post::all();
-        if($request){
-            $posts = Post::where('titulo', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(3);
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $id = $data['tienda']->id;
+                $query = trim($request->get('search'));
+                if($request){
+                    $posts = Post::where('tienda_id',$id )->where('titulo', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(3);
+                }
+                $data['posts'] = $posts;
+                $data['search'] = $query;
+                return view('backend.blog.index', $data);
+            }
         }
-        return view('backend.blog.index', ['posts' => $posts, 'search' => $query,'header' => HeaderFrontend::find(1)]);
     }
 
     /**
@@ -75,16 +86,23 @@ class BlogAdminController extends Controller
      * @param  \App\BlogAdmin  $blogAdmin
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $domain, $id)
     {
-        $post = Post::findOrFail($id);
-        $data = [
-            'post' => $post,
-            'user_post' => User::findOrFail($post->id_usuario),
-            'comentarios' => Comentario::where('id_post', $post->id)->get(),
-            'header' => HeaderFrontend::find(1)
-        ];
-        return view('backend.blog.post', $data);
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $post = Post::where('tienda_id', $data['tienda']->id )->findOrFail($id);
+
+                $data['post'] = $post;
+                $data['user_post'] = User::findOrFail($post->id);
+                $data['comentarios'] = Comentario::where('id_post', $post->id)->get();
+                return view('backend.blog.post', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     /**
@@ -93,9 +111,23 @@ class BlogAdminController extends Controller
      * @param  \App\BlogAdmin  $blogAdmin
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $domain ,$id)
     {
-        return view('backend.blog.edit',['post' => Post::findOrFail($id)]);
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+
+                $posts = Post::where('tienda_id', $data['tienda']->id )->first();
+
+                $data['post'] = $posts;
+
+                return view('backend.blog.edit', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     /**
@@ -105,7 +137,7 @@ class BlogAdminController extends Controller
      * @param  \App\BlogAdmin  $blogAdmin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $domain, $id)
     {
         $post = Post::findOrFail($id);
         if($request->img){
@@ -144,7 +176,7 @@ class BlogAdminController extends Controller
      * @param  \App\BlogAdmin  $blogAdmin
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $domain, $id)
     {
         $post = Post::findOrFail($id);
         $img_delete = 'images/uploads/blog/'. $post->img;

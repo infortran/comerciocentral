@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Loader;
 use App\SiteSocial;
 use App\Social;
 use Illuminate\Http\Request;
@@ -12,14 +13,17 @@ use App\TeamMember;
 class ContactoController extends Controller
 {
     public function index(){
-    	$header = HeaderFrontend::findOrFail(1);
-    	$footer = FooterInfo::findOrFail(1);
-    	$members = TeamMember::all();
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                return view('frontend.contacto', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
 
-    	return view('frontend.contacto',[
-    		'header'=> $header,
-    		'footer' => $footer,
-    		'members' => $members,
-            'siteSocials' => SiteSocial::all()]);
+
     }
 }

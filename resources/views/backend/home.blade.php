@@ -47,14 +47,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="tel">Telefono del sitio</label>
-                                                <input name="telefono" type="text" class="form-control" id="tel" placeholder="ej. +56 9 12345678" value="{{$header->telefono}}">
+                                                <input name="telefono" type="text" class="form-control" id="tel" placeholder="ej. +56 9 12345678" value="{{$tienda->telefono}}">
                                             </div>
 
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="correo">Email del sitio</label>
-                                                <input name="email" type="text" class="form-control" id="correo" placeholder="ej. +contacto@dominio.cl" value="{{$header->email}}">
+                                                <input name="email" type="text" class="form-control" id="correo" placeholder="ej. +contacto@dominio.cl" value="{{$tienda->email}}">
                                             </div>
                                         </div>
                                     </div><!--...row-->
@@ -161,13 +161,13 @@
                                           <div class="col-md-6">
                                               <div class="form-group">
                                                       <label for="tel"><i class="fa fa-align-left"></i> Leyenda del pie de pagina</label>
-                                                      <input name="info" type="text" class="form-control" id="" placeholder="Texto del pie de pagina" value="{{$footer->info}}">
+                                                      <input name="info" type="text" class="form-control" id="" placeholder="Texto del pie de pagina" value="{{$tienda->info}}">
                                               </div>
                                           </div>
                                           <div class="col-md-6">
                                             <div class="form-group">
                                                       <label for="tel"><i class="fa fa-map"></i> Direccion fisica</label>
-                                                      <input name="direccion" type="text" class="form-control" id="tel" placeholder="ej. Calle #000, ciudad, pais." value="{{$footer->direccion}}">
+                                                      <input name="direccion" type="text" class="form-control" id="tel" placeholder="ej. Calle #000, ciudad, pais." value="">
                                               </div>
                                           </div>
                                         </div>
@@ -489,8 +489,8 @@
         ==================================-->
         @include('backend.templates.modal-confirmar-password')
         <div class="col-md-4">
-          {!!Form::open(['enctype' => 'multipart/form-data', 'method' => 'PATCH', 'action' =>['AdminController@update' , Auth::user()->id]])!!}
-            <div class="card" >
+
+            <form action="{{ route('admin.update',['domain' => $domain, Auth::user()->id]) }}" enctype="multipart/form-data" class="card" >
               <div class="card-header">
                 <strong><i class="fa fa-user-cog"></i> Datos del Administrador</strong>
               </div><!--.card-header-->
@@ -546,8 +546,8 @@
 
               </div>
 
-            </div><!--.Form User-->
-            {!!Form::close()!!}
+            </form><!--.Form User-->
+
 
             <!--div class="card">
                 <div class="card-header">

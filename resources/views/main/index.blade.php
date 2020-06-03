@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-12 text-center">
                         <div class="slider_text">
-                            <img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop.png')}}" alt="">
+                            <img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop-optimized.png')}}" alt="">
                             <h3>Ahora puedes crear tu tienda online <strong>GRATIS</strong> y en minutos</h3>
                         </div>
                     </div>
@@ -18,7 +18,7 @@
                             <div class="input-group-append">
                                 <button class="input-group-text btn-input-main btn-hover color-1" id="basic-addon2">
                                         <i class="fa fa-shopping-cart" style="margin-right:10px"></i>
-                                        Crear mi tienda
+                                    <div class="d-none d-sm-inline-block">Crear mi tienda</div>
                                 </button>
                             </div>
                         </form>

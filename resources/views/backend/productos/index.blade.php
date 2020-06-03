@@ -83,7 +83,7 @@
 
 
         </td>
-      <td><a href="{{route('productos.edit', $producto->id)}}"><button class="btn btn-warning"><i class="fas fa-edit"></i> Editar</button></a>
+      <td><a href="{{route('productos.edit', ['domain' => $domain, $producto->id])}}"><button class="btn btn-warning"><i class="fas fa-edit"></i> Editar</button></a>
       <button class="btn btn-danger" style="padding:10px"  data-toggle="modal" data-target="#modal-destroy{{$producto->id}}"><i class="fas fa-minus-circle"></i></button>
 
       </td>

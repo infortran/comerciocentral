@@ -1,4 +1,7 @@
-{!!Form::open(['action' => ['MarcaController@update', $marca->id], 'method' => 'PATCH'])!!}
+
+<form action="{{ route('marcas.update', ['domain' => $domain, $marca->id]) }}" method="POST">
+    @csrf
+        @method('PATCH')
 <!-- Modal -->
 <div class="modal fade" id="modal-edit-marca{{$marca->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -32,16 +35,17 @@
             </div>
         </div>
 
-        
-        
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="defaultButton" data-dismiss="modal">Cancelar</button>
-        
+
         <button type="submit" class="addButton"><i class="fa fa-save"></i> Guardar</button>
-        {!! Form::close() !!}
-        
+
+
       </div>
     </div>
   </div>
 </div>
+</form>

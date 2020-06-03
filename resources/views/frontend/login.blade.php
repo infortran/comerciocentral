@@ -9,7 +9,7 @@
                 <div class="col-sm-4 col-sm-offset-1">
                     <div class="login-form"><!--login form-->
                         <h2>Ingresa con tu cuenta</h2>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login', ['domain' => $domain]) }}">
                             @csrf
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')
@@ -33,7 +33,7 @@
                                 Ingresar
                             </button>
                             @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link" href="{{ route('password.request', ['domain' => $domain]) }}">
                                     {{ __('Olvidaste tu contraseña?') }}
                                 </a>
                             @endif
@@ -46,7 +46,7 @@
                 <div class="col-sm-4">
                     <div class="signup-form"><!--sign up form-->
                         <h2>Registrate!</h2>
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register', ['domain' => $domain]) }}">
                             <input placeholder="Ingresa tu nombre y apellido" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                             @csrf
                             @error('name')

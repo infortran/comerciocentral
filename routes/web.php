@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InicioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +15,35 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/tienda', 'InicioController@index')->name('inicio.index');
 
+
+
+Route::domain('{domain}.comerciocentral.chi')->group(function () {
+
+    Route::get('/', 'InicioController@index');
+    Auth::routes();
+    Route::get('/contacto', 'ContactoController@index');
+    Route::get('/cuenta', 'UserController@index');
+
+    Route::get('/admin/productos', 'ProductoController@index');
+    Route::get('/admin/categorias', 'CategoriaController@index');
+    Route::get('/admin/marcas', 'MarcaController@index');
+    Route::get('/admin/blog', 'BlogAdminController@index');
+
+    Route::resource('/admin', 'AdminController');
+    Route::resource('admin/productos', 'ProductoController');
+    Route::resource('admin/categorias', 'CategoriaController');
+    Route::resource('admin/marcas', 'MarcaController');
+    Route::resource('admin/blog', 'BlogAdminController');
+});
+
 Route::get('/', 'MainController@index');
 
-Route::get('/contacto', 'ContactoController@index');
+
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
 Route::get('/productos', 'ProductoFrontController@index');
 Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
-Route::get('/cuenta', 'UserController@index');
+
 Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
 
 Route::get('/carrito', 'CartController@index');
@@ -49,15 +71,15 @@ Route::resource('user', 'UserController');
 
 //Route::get('/.well-known/pki-validation/{key}', 'InicioController@pkiValidation');
 
-Auth::routes();
 
-Route::get('/admin/productos', 'ProductoController@index');
 
-Route::get('/admin/blog', 'BlogAdminController@index');
 
-Route::get('/admin/categorias', 'CategoriaController@index');
 
-Route::get('/admin/marcas', 'MarcaController@index');
+
+
+
+
+
 
 Route::get('/admin/ordenes', 'OrdenController@index');
 Route::get('/admin/orden/{id}', 'OrdenController@show');
@@ -89,9 +111,9 @@ Route::post('admin/productos/set_available/{id}', 'ProductoController@setAvailab
 Route::post('admin/productos/set_not_available/{id}', 'ProductoController@setNotAvailable');
 
 
-Route::resource('/admin', 'AdminController');
 
-Route::resource('admin/productos', 'ProductoController');
+
+
 
 Route::resource('admin/headerfrontend', 'HeaderFrontendController');
 
@@ -99,11 +121,11 @@ Route::resource('admin/footerinfo', 'FooterInfoController');
 
 Route::resource('admin/teammember', 'TeamMemberController');
 
-Route::resource('admin/blog', 'BlogAdminController');
 
-Route::resource('admin/categorias', 'CategoriaController');
 
-Route::resource('admin/marcas', 'MarcaController');
+
+
+
 
 Route::resource('admin/slides', 'SlideController');
 

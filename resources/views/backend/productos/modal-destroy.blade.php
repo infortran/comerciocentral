@@ -15,12 +15,16 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        
-        {!! Form::open(['method' => 'DELETE','action' => ['ProductoController@destroy', $producto->id]]) !!}
-        
-        <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
-        {!! Form::close() !!}
-        
+
+
+        <form action="{{ route('productos.destroy', ['domain' => $domain, $producto->id]) }}">
+            @csrf
+
+            <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
+        </form>
+
+
+
       </div>
     </div>
   </div>

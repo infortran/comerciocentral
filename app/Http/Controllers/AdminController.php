@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Envio;
 use App\Http\Controllers\Controller;
 use App\Jobs\deleteCheckPassword;
+use App\Loader;
 use App\SiteSocial;
 use App\Slide;
 use App\Social;
@@ -30,7 +31,23 @@ class AdminController extends Controller
     }
 
     public function index(Request $request){
-        $data = [
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $id = $data['tienda']->id;
+                $data['socials'] = Social::where('tienda_id', $id)->get();
+                $data['site_socials'] = SiteSocial::where('tienda_id', $id)->get();
+                $data['slides'] = Slide::where('tienda_id', $id)->get();
+                $data['envios'] = Envio::where('tienda_id', $id)->get();
+                return view('backend.home', $data);
+            }
+        }
+
+        return view('frontend.templates.site-not-found');
+        /*$data = [
             'header' => HeaderFrontend::findOrFail(1),
             'footer' => FooterInfo::findOrFail(1),
             'members' => TeamMember::all(),
@@ -38,12 +55,12 @@ class AdminController extends Controller
             'socials' => Social::all(),
             'site_socials' => SiteSocial::all(),
             'envios' => Envio::all()
-        ];
+        ];*/
 
         if(Session::has('auth_change_pass')){
             Session::remove('auth_change_pass');
         }
-    	return view('backend.home', $data);
+
     }
 
     /*public function store(){

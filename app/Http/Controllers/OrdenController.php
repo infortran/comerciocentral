@@ -11,10 +11,10 @@ class OrdenController extends Controller
 {
     private $data;
     public function __construct(){
-        $this->middleware('admin');
+        /*$this->middleware('admin');
         $loader = new Loader();
         $this->data = $loader->getData();
-        $this->data['ordenes'] = Orden::all();
+        $this->data['ordenes'] = Orden::all();*/
 
     }
 

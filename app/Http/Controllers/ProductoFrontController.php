@@ -19,14 +19,15 @@ class ProductoFrontController extends Controller
 
     public function __construct()
     {
-        $loader = new Loader();
+        /*$loader = new Loader();
         $this->data = $loader->getData();
         $this->data['categorias'] = Categoria::all();
         $this->data['marcas'] = Marca::all();
-        $this->data['productos'] = Producto::all();
+        $this->data['productos'] = Producto::all();*/
     }
 
     public function index(Request $request){
+        dd('se fue pa otro lado');
         $query = trim($request->get('search'));
         if($request){
             $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')

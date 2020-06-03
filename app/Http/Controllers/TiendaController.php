@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MainController extends Controller
+class TiendaController extends Controller
 {
     public function index(){
-        return view('main.index');
+
     }
 
     public function create(){
@@ -15,6 +15,18 @@ class MainController extends Controller
     }
 
     public function store(){
+
+    }
+
+    public function edit(){
+
+    }
+
+    public function update(){
+
+    }
+
+    public function destroy(){
 
     }
 }

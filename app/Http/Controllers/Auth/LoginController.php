@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\FooterInfo;
 use App\HeaderFrontend;
 use App\Http\Controllers\Controller;
+use App\Loader;
 use App\Providers\RouteServiceProvider;
 use App\SiteSocial;
 use App\TeamMember;
@@ -57,12 +58,18 @@ class LoginController extends Controller
         if(!session()->has('from')){
             session()->put('from', url()->previous());
         }
-        $data = [
-          'header' => HeaderFrontend::find(1),
-          'footer' => FooterInfo::find(1),
-          'members' => TeamMember::all(),
-            'siteSocials' => SiteSocial::all()
-        ];
-        return view('frontend.login', $data);
+
+        $domain = request()->route('domain');
+        //dd($domain);
+        if($domain) {
+            //dd($domain);
+            $loader = new Loader($domain);
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $data['domain'] = $domain;
+                return view('frontend.login', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 }

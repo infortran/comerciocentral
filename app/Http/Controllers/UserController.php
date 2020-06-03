@@ -19,13 +19,10 @@ use Image;
 
 class UserController extends Controller
 {
-    private $data;
     public function __construct(){
         if(Session::has('auth_change_pass_user')){
             Session::remove('auth_change_pass_user');
         }
-        $loader = new Loader();
-        $this->data = $loader->getData();
     }
 
     public function index(){
@@ -35,8 +32,18 @@ class UserController extends Controller
             }
             return redirect('/login');
         }
-        $this->data['compras'] = Orden::where('id_user', Auth::user()->id)->get();
-        return view('frontend.user', $this->data);
+
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            if($loader->checkDominio()){
+                $data = $loader->getData();
+                $data['compras'] = Orden::where('id_user', Auth::user()->id)->get();
+                return view('frontend.user', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
+
     }
 
     public function update(Request $request, $id){

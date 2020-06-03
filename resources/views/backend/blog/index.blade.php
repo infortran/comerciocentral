@@ -36,7 +36,7 @@
 		<div class="card mb-3"><!--card 1-->
 			<div class="row no-gutters">
 			    <div class="col-md-4">
-                    <a href="{{route('blog.show', $post->id)}}">
+                    <a href="{{route('blog.show', ['domain' => $domain ,$post->id])}}">
                         <img src="{{asset('images/uploads/blog').'/'.$post->img}}" class="card-img" alt="...">
                     </a>
 			    </div>
@@ -44,7 +44,7 @@
 			      <div class="card-body">
 			      		<div class="row">
 			      			<div class="col-7">
-                                <a href="{{route('blog.show', $post->id)}}"><h5 class="card-title"><strong>{{$post->titulo}}</strong></h5></a>
+                                <a href="{{route('blog.show', ['domain' => $domain ,$post->id])}}"><h5 class="card-title"><strong>{{$post->titulo}}</strong></h5></a>
 			      				<br>
 			      				<hr>
 						        <p class="card-text block-ellipsis">{{$post->contenido}}</p>
@@ -53,7 +53,7 @@
 			      			<div class="col-5">
 			      				<button data-toggle="modal" data-target="#modal-destroy{{$post->id}}" style="margin-left: 10px" class="btn btn-danger float-right"><i class="fa fa-trash"></i> Eliminar</button>
 
-								<a href="{{route('blog.edit', $post->id)}}">
+								<a href="{{route('blog.edit', ['domain' => $domain ,$post->id])}}">
 						        <button class="btn btn-warning float-right"><i class="fa fa-edit"></i> Editar</button></a>
 								<br><br>
 						        <hr>

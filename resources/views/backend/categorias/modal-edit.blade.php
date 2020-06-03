@@ -1,4 +1,6 @@
-{!!Form::open(['action' => ['CategoriaController@update', $categoria->id], 'method' => 'PATCH'])!!}
+<form action="{{ route('categorias.update', ['domain' => $domain, $categoria->id]) }}">
+    @csrf
+        @method('patch')
 <!-- Modal -->
 <div class="modal fade" id="modal-edit-cat{{$categoria->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -32,16 +34,18 @@
             </div>
         </div>
 
-        
-        
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="defaultButton" data-dismiss="modal">Cancelar</button>
-        
+
         <button type="submit" class="addButton"><i class="fa fa-save"></i> Guardar</button>
-        {!! Form::close() !!}
-        
+
+
       </div>
     </div>
   </div>
 </div>
+
+</form>

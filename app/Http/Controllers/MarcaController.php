@@ -11,20 +11,29 @@ class MarcaController extends Controller
 {
     private $data;
     public function __construct(){
-        $this->middleware('admin');
+        /*$this->middleware('admin');
         $loader = new Loader();
         $this->data = $loader->getData();
-        $this->data['marcas'] = Marca::all();
+        $this->data['marcas'] = Marca::all();*/
     }
 
     public function index(Request $request)
     {
-        $query = trim($request->get('search'));
-        if($request){
-            $this->data['marcas'] = Marca::where('marca', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $query = trim($request->get('search'));
+                if($request){
+                    $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->where('marca', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+                }
+                $data['search'] = $query;
+                return view('backend.marcas.index', $data);
+            }
         }
-        $this->data['search'] = $query;
-        return view('backend.marcas.index', $this->data);
+        return view('frontend.templates.site-not-found');
     }
 
     public function store(Request $request)

@@ -18,8 +18,8 @@ class CheckoutController extends Controller
     private $data;
 
     public function __construct(){
-        $data = new Loader();
-        $this->data = $data->getData();
+        /*$data = new Loader();
+        $this->data = $data->getData();*/
     }
 
     public function index(Request $request){

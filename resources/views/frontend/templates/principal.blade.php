@@ -51,11 +51,11 @@
 			<div class="container">
 				<div class="row">
 
-					<a class="pull-right" href="{{ route('logout') }}" onclick="event.preventDefault();
+					<a class="pull-right" href="" onclick="event.preventDefault();
                     document.getElementById('logout-form-nav').submit();">
                     	<button style="margin: 10px" class="btn btn-warning">Salir</button>
                     </a>
-                    <form id="logout-form-nav" action="{{ route('logout') }}" method="POST"
+                    <form id="logout-form-nav" action="" method="POST"
                         style="display: none;">
                         @csrf
                     </form>
@@ -78,8 +78,8 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="{{url('/contacto')}}"><i class="fa fa-phone"></i> {{$header->telefono}}</a></li>
-								<li><a href="{{url('/contacto')}}"><i class="fa fa-envelope"></i> {{$header->email}}</a></li>
+								<li><a href="{{url('/contacto')}}"><i class="fa fa-phone"></i> {{$tienda->telefono}}</a></li>
+								<li><a href="{{url('/contacto')}}"><i class="fa fa-envelope"></i> {{$tienda->email}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 							LOGOTIPO
 							===============-->
 						<div class="logo pull-left">
-							<a href="/"><img src="{{asset('images/system').'/'.$header->img_header}}" alt="" /></a>
+							<a href="/"><img src="{{asset('images/system').'/'.$tienda->img}}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right clearfix">
 
@@ -162,12 +162,12 @@
                                     @if(Auth::check() && Auth::user()->role=='admin')
                                     <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Administracion</a></li>
                                     @endif
-								<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a></li>
 
 
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                <form id="logout-form" action="{{ route('logout', ['domain' => $domain]) }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                 </form>
@@ -241,8 +241,8 @@
 				<div class="row">
 					<div class="col-sm-2">
 						<div class="companyinfo">
-							<h2><img src="{{asset('images/system') .'/'. $header->img_header}}"></h2>
-							<p>{{$footer->info}}</p>
+							<h2><img src="{{asset('images/system') .'/'. $tienda->img}}"></h2>
+							<p>{{$tienda->info}}</p>
 						</div>
 					</div>
 					<div class="col-sm-7">
@@ -270,7 +270,7 @@
 					<div class="col-sm-3">
 						<div class="address">
 							<img src="{{asset('images/home/map.png')}}" alt="" />
-							<p>{{$footer->direccion}}</p>
+							<p>{{$tienda->direccion}}</p>
 						</div>
 					</div>
 				</div>
@@ -311,12 +311,12 @@
 								@guest
 								<li><a href="/login"> Iniciar sesion</a></li>
 								@else
-								<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
 								document.getElementById('logout-form-footer').submit();"> Logout</a></li>
 
 
 
-                                <form id="logout-form-footer" action="{{ route('logout') }}" method="POST"
+                                <form id="logout-form-footer" action="{{ route('logout', ['domain' => $domain]) }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                 </form>

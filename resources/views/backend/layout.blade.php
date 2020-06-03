@@ -224,7 +224,7 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
                 <a href="{{ url('/admin') }}" class="brand-link">
-                    <img src="{{ asset('/images/system').'/'.$header->img_header }}" alt="AdminLTE Logo" class="brand-image "
+                    <img src="{{ asset('/images/system').'/' }}" alt="AdminLTE Logo" class="brand-image "
                         style="opacity: .8">
                     <span class="brand-text font-weight-light">Admin</span>
                 </a>
@@ -242,12 +242,12 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
                                 @else
                                 {{ Auth::user()->name }}
-                                <a class="defaultButton" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="defaultButton" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">
                                     Cerrar Sesión
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                <form id="logout-form" action="{{ route('logout', ['domain' => $domain]) }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                 </form>

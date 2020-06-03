@@ -12,20 +12,29 @@ class CategoriaController extends Controller
 {
     private $data;
     public function __construct(){
-        $this->middleware('admin');
+        /*$this->middleware('admin');
         $loader = new Loader();
         $this->data = $loader->getData();
-        $this->data['categorias'] = Categoria::all();
+        $this->data['categorias'] = Categoria::all();*/
     }
 
     public function index(Request $request)
     {
-        $query = trim($request->get('search'));
-        if($request){
-            $this->data['categorias'] = Categoria::where('categoria', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $query = trim($request->get('search'));
+                if($request){
+                    $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->where('categoria', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
+                }
+                $data['search'] = $query;
+                return view('backend.categorias.index',$data);
+            }
         }
-        $this->data['search'] = $query;
-        return view('backend.categorias.index',$this->data);
+
     }
 
     public function store(Request $request)

@@ -14,12 +14,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        
-        {!! Form::open(['method' => 'DELETE','action' => ['CategoriaController@destroy', $categoria->id]]) !!}
-        
+
+
+          <form action="{{route('categorias.destroy', ['domain' => $domain, $categoria->id])}}" method="POST">
+              @csrf
+              @method('DELETE')
         <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
-        {!! Form::close() !!}
-        
+          </form>
+
+
       </div>
     </div>
   </div>

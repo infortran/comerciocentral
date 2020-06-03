@@ -23,21 +23,35 @@ class ProductoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin');
+        /*$this->middleware('admin');
         $loader = new Loader();
         $this->data = $loader->getData();
         $this->data['categorias'] = Categoria::all();
         $this->data['marcas'] = Marca::all();
-        $this->data['productos'] = Producto::all();
+        $this->data['productos'] = Producto::all();*/
+
     }
 
     public function index(Request $request){
-        $query = trim($request->get('search'));
-        if($request){
-            $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
+        //dd('que pasa');
+        $domain = request()->route('domain');
+        ($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+
+                $id = $data['tienda']->id;
+                $query = trim($request->get('search'));
+                if($request){
+                    $data['productos'] = Producto::where('tienda_id', $id)->where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
+                }
+                $data['search'] = $query;
+                return view('backend.productos.index', $data);
+            }
         }
-        $this->data['search'] = $query;
-    	return view('backend.productos.index', $this->data);
+        return view('frontend.templates.site-not-found');
     }
 
     //abre la vista crear producto

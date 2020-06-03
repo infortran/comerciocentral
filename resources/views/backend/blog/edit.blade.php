@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="container" action="{{route('blog.update', $post->id)}}" method="POST" enctype="multipart/form-data">
+<form class="container" action="{{route('blog.update', ['domain' => $domain, $post->id])}}" method="POST" enctype="multipart/form-data">
 	@method('PATCH')
 	@csrf
 	<h1>Editar entrada <button type="submit" class="addButton float-right"><i class="fa fa-save"></i> Guardar</button></h1>
@@ -22,9 +22,9 @@
 	<div style="margin-top: 20px" class="row">
 		<div class="col-8">
 			<div class="card">
-				
+
 				<div class="card-body">
-					
+
 						<div class="form-group">
 						    <label for="">Titulo</label>
 						    <input name="titulo" type="text" class="form-control" value="{{$post->titulo}}">
@@ -33,12 +33,12 @@
 						    <label for="">Contenido</label>
 						    <textarea name="contenido" class="form-control" style="min-height: 300px">{{$post->contenido}}</textarea>
 						</div>
-						
-						
-					
+
+
+
 				</div>
 			</div>
-			
+
 		</div>
 
 		<div class="col-4">
