@@ -1,19 +1,19 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="http://comerciocentral.chi/images/system/navbar.png" width="400"></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<!--a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a-->
 </p>
 
-## About Laravel
+## Comercio Central
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Somos un sistema enfocado en solucionar la falta de negocios para el mundo, presentando un modelo de negocio capaz de proporcionar herramientas a quienes no tienen como. Siempre enfocados en:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- [Tiendas virtuales totalmente GRATIS](https://laravel.com/docs/routing).
+- [Capacidad de mejorar y ampliar tu tienda virtual](https://laravel.com/docs/container).
+- Ayuda a los que perdieron todo en esta pandemia [](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
 - Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
 - Database agnostic [schema migrations](https://laravel.com/docs/migrations).
 - [Robust background job processing](https://laravel.com/docs/queues).
