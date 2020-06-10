@@ -23,17 +23,8 @@ class InicioController extends Controller
 			HOME FRONTEND
 	==================================*/
 
-	public function indexAdm(Request $request){
-        //if($request->method() == 'POST'){
-            $sessionId = $request->get('session-id');
-            dd($sessionId);
-       // }
-    }
+
     public function index(Request $request){
-        if($request->method() == 'POST'){
-            $sessionId = $request->get('session-id');
-            dd($sessionId);
-        }
 
         $domain = request()->route('domain');
         if($domain) {

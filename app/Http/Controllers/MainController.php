@@ -21,21 +21,22 @@ class MainController extends Controller
     public function index(Request $request){
 
         //
-        return view('main.index');
+        //
         //dd(Session()->getId());
         if(Auth::check()){
             $domain = Auth::user()->tiendas()->first()->dominio;
-            //$url = 'http://'.$domain.'.comerciocentral.chi/';
-            $url = '/redirect';
+            $url = 'http://'.$domain.'.comerciocentral.chi/';
+            //$url = '/redirect';
             $data = [
                 'sessionId' => Session()->getId(),
                 'domain' => $domain
             ];
-            return view('main.redirect', $data);
+            return redirect($url);
+            //return view('main.redirect', $data);
             //Session::flush();
         }
 
-
+        return view('main.index');
 
     }
 

@@ -38,7 +38,7 @@ class LoginController extends Controller
 
     public function authenticated($request,$user)
     {
-        return redirect('/');
+        return redirect(session()->pull('from',$this->redirectTo));
     }
 
     /**

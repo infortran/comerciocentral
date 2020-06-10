@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::get('/', 'InicioController@index');
-    Route::post('/', 'InicioController@indexAdm');
+    Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
+    //Route::post('/', 'InicioController@indexAdm');
     Auth::routes();
     Route::get('/contacto', 'ContactoController@index');
     Route::get('/cuenta', 'UserController@index');
@@ -40,8 +41,8 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
 //Auth::routes();
 
 Route::get('/', 'MainController@index');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/login', 'MainController@login');
-Route::get('/redirect', 'ManCOntroller@redirect');
 Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
 Route::post('/registro', 'MainController@register')->name('main.register');
 Route::post('/registro/submit', 'MainController@submitRegister')->name('main.register.submit');

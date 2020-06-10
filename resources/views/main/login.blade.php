@@ -88,7 +88,7 @@
 
             <div class="col-12 col-lg-6 mx-auto">
                 <form action="{{ route('main.login.auth') }}" class="card" method="POST">
-                    @csrf
+                    {{ csrf_field() }}
                     <div class="card-header text-center">
                         <img class="mx-auto" src="{{ asset('images/system/navbar.png') }}" alt="">
                     </div>
