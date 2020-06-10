@@ -13,8 +13,18 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-10 col-xl-8">
-                        <form action="" method="POST" class="input-group mb-3">
-                            <input autofocus type="text" class="form-control input-main" placeholder="Ingresa el nombre de tu tienda" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('main.register') }}" method="POST" class="input-group mb-3">
+                            @csrf
+                            <input name="domain" autofocus type="text" class="form-control input-main" placeholder="Ingresa el nombre de tu tienda" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="input-group-text btn-input-main btn-hover color-1" id="basic-addon2">
                                         <i class="fa fa-shopping-cart" style="margin-right:10px"></i>
@@ -22,7 +32,13 @@
                                 </button>
                             </div>
                         </form>
-                        <!--div class="payment_form white-bg wow fadeInDown" data-wow-duration="1.2s" data-wow-delay=".2s">
+
+
+                            <!--form action="" method="post">
+                                @csrf
+                                <button type="submit">logout</button>
+                            </form>
+                        <div class="payment_form white-bg wow fadeInDown" data-wow-duration="1.2s" data-wow-delay=".2s">
                             <div class="info text-center">
                                 <h4>Como se llama tu tienda?</h4>
                                 <p>Verifica si el nombre de tu tienda esta disponible</p>

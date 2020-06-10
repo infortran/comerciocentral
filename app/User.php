@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function comentarios(){
         return $this->hasMany('App\Comentario', 'id_user');
     }
+
+    public function tiendas(){
+        return $this->hasMany('App\Tienda', 'user_id');
+    }
 }

@@ -33,12 +33,12 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/';
 
 
     public function authenticated($request,$user)
     {
-        return redirect(session()->pull('from',$this->redirectTo));
+        return redirect('/');
     }
 
     /**

@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/tienda', 'InicioController@index')->name('inicio.index');
+//Route::get('/tienda', 'InicioController@index')->name('inicio.index');
 
 
 
 Route::domain('{domain}.comerciocentral.chi')->group(function () {
-
     Route::get('/', 'InicioController@index');
+    Route::post('/', 'InicioController@indexAdm');
     Auth::routes();
     Route::get('/contacto', 'ContactoController@index');
     Route::get('/cuenta', 'UserController@index');
@@ -34,9 +34,22 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::resource('admin/categorias', 'CategoriaController');
     Route::resource('admin/marcas', 'MarcaController');
     Route::resource('admin/blog', 'BlogAdminController');
+
 });
 
+//Auth::routes();
+
 Route::get('/', 'MainController@index');
+Route::get('/login', 'MainController@login');
+Route::get('/redirect', 'ManCOntroller@redirect');
+Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
+Route::post('/registro', 'MainController@register')->name('main.register');
+Route::post('/registro/submit', 'MainController@submitRegister')->name('main.register.submit');
+Route::get('/registro/checktienda/{domain}', 'MainController@checkTienda');
+Route::get('/registro/checkemail/{email}', 'MainController@checkEmail');
+Route::get('/registro/checktiendaemail/{email}', 'MainController@checkTiendaEmail');
+Route::get('/registro/checktiendadomainemail/{domain}/{email}', 'MainController@checkTiendaDomainEmail');
+
 
 
 Route::get('/blog', 'BlogController@index');

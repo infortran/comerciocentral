@@ -14,6 +14,7 @@ use App\FooterInfo;
 use App\Categoria;
 use App\Marca;
 use Session;
+use Illuminate\Support\Facades\Auth;
 
 class InicioController extends Controller
 {
@@ -21,12 +22,25 @@ class InicioController extends Controller
 	/*================================
 			HOME FRONTEND
 	==================================*/
+
+	public function indexAdm(Request $request){
+        //if($request->method() == 'POST'){
+            $sessionId = $request->get('session-id');
+            dd($sessionId);
+       // }
+    }
     public function index(Request $request){
+        if($request->method() == 'POST'){
+            $sessionId = $request->get('session-id');
+            dd($sessionId);
+        }
+
         $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
                 $data = $loader->getData();
                 $data['slides'] = Slide::where('tienda_id', $data['tienda']->id)->get();
                 $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();

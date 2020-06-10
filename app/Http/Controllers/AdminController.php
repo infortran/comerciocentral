@@ -35,7 +35,7 @@ class AdminController extends Controller
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 $id = $data['tienda']->id;
                 $data['socials'] = Social::where('tienda_id', $id)->get();
@@ -44,6 +44,7 @@ class AdminController extends Controller
                 $data['envios'] = Envio::where('tienda_id', $id)->get();
                 return view('backend.home', $data);
             }
+            return redirect('http://'. $domain.'.comerciocentral.chi');
         }
 
         return view('frontend.templates.site-not-found');

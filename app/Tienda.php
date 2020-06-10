@@ -13,4 +13,8 @@ class Tienda extends Model
     public function teammembers(){
         return $this->belongsToMany('App\TeamMember', 'tienda_id');
     }
+
+    public function users(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

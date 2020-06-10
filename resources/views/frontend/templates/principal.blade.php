@@ -159,7 +159,7 @@
 								@guest
 								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
-                                    @if(Auth::check() && Auth::user()->role=='admin')
+                                    @if(Auth::check() && Auth::user()->role=='admin' && $is_owner)
                                     <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Administracion</a></li>
                                     @endif
 								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();

@@ -12,11 +12,289 @@
         }
     });
 
+    function nextStep(){
+        $('#carouselRegistro').carousel('next');
+        $('#carouselRegistro').carousel({
+            pause:true,
+            interval:false
+        });
+    }
 
 
+    $(document).on('click', '#btn-registrar-next',function(){
+        if($(this).data('account') == 'create'){
+            nextStep();
+        }else{
+            location.href = '/login';
+        }
+
+    });
+
+    $(document).on('click', '#btn-registrar-next-step-1',function(){
+        nextStep();
+    });
+
+    $(document).on('click', '#btn-create-account', function(){
+        $(this).addClass('btn-hover');
+        $('#btn-registrar-next').data('account', 'create');
+        $('#btn-has-account').removeClass('btn-hover');
+    });
+
+    $(document).on('click', '#btn-has-account', function(){
+        $(this).addClass('btn-hover');
+        $('#btn-registrar-next').data('account', 'has-account');
+        $('#btn-create-account').removeClass('btn-hover');
+    });
+
+    $(document).on('input','#nombre-tienda', function(){
+        var domain = $('#nombre-tienda').val().replace(/\s+/g, '').toLowerCase();
+
+        if(domain === ""){
+            $('#domain-dinamic').css('color', 'red');
+            $('#domain-dinamic').html('<i class="fa fa-times-circle"></i> Debe ingresar una tienda');
+        }else{
+            $('#domain-dinamic').css('color', '#00023d');
+            $('#domain-dinamic').html('<i id="domain-dinamic-symbol" class="fa fa-check-circle" style="color: green"></i>\n' +
+                'https://<strong id="domain-tienda" style="color:#6d2ead"></strong>.comerciocentral.cl')
+        }
+        $('#domain-tienda').html(domain);
+    });
+
+    $(document).on('change', '#nombre-tienda', function(){
+        var domain = $(this).val().replace(/\s+/g, '');
+        var email = $('#email-tienda').val();
+        if(domain !== ""){
+            checkDomainAndEmail(domain, email);
+        }
+    });
+
+    $(document).on('input', '#email', function(){
+        var email = $(this).val();
+        checkEmail(email);
+    });
+
+    $(document).on('change', '#email-tienda', function(){
+        var email = $(this).val();
+        var domain = $('#nombre-tienda').val().replace(/\s+/g, '');
+        checkDomainAndEmail(domain, email);
+    });
+
+    function checkDomainAndEmail(domain, email){
+        checkTiendaEmail(email);
+        checkDomain(domain);
+        checkTiendaDomainEmail(domain,email);
+    }
+
+    function checkEmail(email){
+        $.ajax({
+            url:'registro/checkemail/' + email,
+            dataType:'json',
+            success:function(data){
+                if(data.email_status){
+                    $('#email_error').addClass('d-none');
+                    $('.actions ul li').removeClass('d-none');
+                }else{
+                    $('#email_error').removeClass('d-none');
+                    $('.actions ul li').addClass('d-none');
+                }
+            }
+        });
+    }
+
+    function checkTiendaDomainEmail(domain, email){
+        $.ajax({
+            url:'registro/checktiendadomainemail/'+ domain + '/' + email,
+            dataType:'json',
+            success:function(data){
+                if(data.domain_email_tienda_status){
+                    $('.actions ul li').removeClass('d-none');
+                }else{
+                    $('.actions ul li').addClass('d-none');
+                }
+            }
+        });
+    }
+
+    function checkTiendaEmail(email){
+        $.ajax({
+            url:'registro/checktiendaemail/' + email,
+            dataType:'json',
+            success:function(data){
+                if(data.email_tienda_status){
+                    $('#email_tienda_error').addClass('d-none');
+                }else{
+                    $('#email_tienda_error').removeClass('d-none')
+                }
+            }
+        })
+    }
+
+    function checkDomain(domain){
+        $.ajax({
+            url:'registro/checktienda/' + domain,
+            dataType:'json',
+            success:function(data){
+                if(data.domain_status){
+                    $('#domain-dinamic').css('color', '#00023d');
+                    $('#domain-tienda').css('color', '#6d2ead');
+                    //$('.actions ul li').removeClass('d-none');
+                    $('#domain-dinamic-symbol').removeClass('fa-exclamation-circle').addClass('fa-check-circle').css('color', 'green');
+                }else{
+                    $('#domain-dinamic').css('color', 'red');
+                    $('#domain-tienda').css('color', 'red');
+                    //$('.actions ul li').addClass('d-none');
+                    $('#domain-dinamic-symbol').addClass('fa-exclamation-circle').removeClass('fa-check-circle').css('color', 'red');
+                }
+            }
+        });
+    }
 
 
     $(document).ready(function(){
+
+
+
+        $("#form-total").steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "fade",
+            // enableAllSteps: true,
+            autoFocus: true,
+            transitionEffectSpeed: 500,
+            titleTemplate : '<div class="title">#title#</div>',
+            labels: {
+                previous : '<i class="fa fa-chevron-left"></i> Atras',
+                next : 'Siguiente <i class="fa fa-chevron-right"></i>',
+                finish : '<i class="fa fa-user-check"></i> Registrarse',
+                current : ''
+            },
+            onStepChanging: function (event, currentIndex, newIndex) {
+                var username = $('#username').val();
+                var userlastname = $('#userlastname').val();
+                var email = $('#email').val();
+                var nombretienda = $('#nombre-tienda').val();
+                var domaintienda = $('#domain-tienda').html();
+                var emailtienda = $('#email-tienda').val();
+                var telefonotienda = $('#telefono-tienda').val();
+                var infotienda = $('#info-tienda').val();
+
+                $('#user-fullname-val').text(username + ' ' + userlastname);
+                $('#email-val').text(email);
+                $('#nombre-tienda-val').text(nombretienda);
+                $('#url-tienda-val').text('https://'+ domaintienda + '.comerciocentral.cl');
+                $('#email-tienda-val').text(emailtienda);
+                $('#tel-tienda-val').text(telefonotienda);
+                $('#info-tienda-val').text(infotienda);
+
+                $("#form-register").validate({
+                    ignore : ":disabled,:hidden",
+                    rules:{
+                        username:{
+                          required:true,
+                          minlength:3,
+                          maxlength:10
+                        },
+                        userlastname:{
+                          required:true,
+                          minlength:3,
+                          maxlength:10
+                        },
+                        email:{
+                          email:true,
+                          required:true,
+                          minlength:10,
+                          maxlength:50
+                        },
+                        password:{
+                            required:true,
+                            minlength:8
+                        },
+                        confirm_password:{
+                            required:true,
+                            minlength:8,
+                            equalTo: '#password'
+                        },
+                        nombre_tienda:{
+                            required:true,
+                            minlength:2,
+                            maxlength:30
+                        },
+                        email_tienda: {
+                            email:true,
+                            required:true,
+                            minlength:3,
+                            maxlength:50
+                        },
+                        telefono_tienda:{
+                            number:true,
+                            required:true,
+                            minlength:8,
+                            maxlength:9
+                        },
+                        info_tienda:{
+                            required:true,
+                            minlength:20,
+                            maxlength:200
+                        }
+                    },
+                    messages:{
+                        username:{
+                            required:"<i class='fa fa-times-circle' style='color:red'></i><strong> NOMBRE</strong> requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 3 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 10 caracteres"
+                        },
+                        userlastname:{
+                            required:"<i class='fa fa-times-circle' style='color:red'></i><strong> APELLIDO</strong> requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 3 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 10 caracteres"
+                        },
+                        password:{
+                            required:"<i class='fa fa-times-circle' style='color:red'></i> <strong>CONTRASEÑA</strong> requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 8 caracteres"
+                        },
+                        confirm_password:{
+                            required:"<i class='fa fa-times-circle' style='color:red'></i> <strong>REPETIR</strong> requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 8 caracteres",
+                            equalTo:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe ingresar la misma contraseña"
+                        },
+                        email:{
+                            email: "<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Ingrese un formato de email valido",
+                            required: "<i class='fa fa-times-circle' style='color:red'></i> El campo <strong>EMAIL</strong> es requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 10 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 20 caracteres"
+                        },
+                        nombre_tienda:{
+                            required:'',
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 2 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 30 caracteres"
+                        },
+                        email_tienda:{
+                            email: "<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Ingrese un formato de email valido",
+                            required: "<i class='fa fa-times-circle' style='color:red'></i> El campo <strong>EMAIL</strong> es requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 10 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 20 caracteres"
+                        },
+                        telefono_tienda:{
+                            number: "<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Solo puede ingresar numeros",
+                            required: "<i class='fa fa-times-circle' style='color:red'></i> El campo <strong>TELEFONO</strong> es requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 8 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 9 caracteres"
+                        },
+                        info_tienda:{
+                            required: "<i class='fa fa-times-circle' style='color:red'></i> El campo <strong>INFORMACION</strong> es requerido",
+                            minlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener minimo 20 caracteres",
+                            maxlength:"<i class='fa fa-exclamation-triangle' style='color:yellow'></i> Debe contener maximo 50 caracteres"
+                        }
+
+
+
+                    }
+                });
+                return $("#form-register").valid();
+            },onFinished(event, i){
+                $('#form-register').submit();
+            }
+        });
 
 // mobile_menu
         var menu = $('ul#navigation');

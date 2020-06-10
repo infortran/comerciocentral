@@ -98,6 +98,10 @@
     background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
 }
 
+.btn-hover.color-12 {
+    background-image: linear-gradient(to right, #0060eb, #5000f1, #659dff, #a26dff);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+
 /*********************************/
 
 /***********************************
