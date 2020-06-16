@@ -44,11 +44,26 @@ class ProductoFrontController extends Controller
         return view('frontend.productos', $this->data);
     }
 
-    public function single(Request $request, $id){
-        $producto = Producto::findOrFail($id);
-        $this->data['rating'] = $this->getPuntaje($id);
-        $this->data['producto'] = $producto;
-        return view('frontend.producto-detalle', $this->data);
+    public function single(Request $request, $domain, $id){
+        $domain = request()->route('domain');
+        //dd($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                //dd($id);
+                $producto = Producto::find($id);
+                //dd($producto);
+                $data['rating'] = 0;
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id);
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id);
+                $data['producto'] = $producto;
+                return view('frontend.producto-detalle', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     public function getPuntaje($id){

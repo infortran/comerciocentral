@@ -101,7 +101,7 @@
 								</div>
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
-										<li><a href="{{route('producto.single', $producto->id)}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
+										<li><a href="{{route('producto.single', [$domain ,$producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
 									</ul>
 								</div>
 							</div>

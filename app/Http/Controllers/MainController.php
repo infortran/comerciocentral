@@ -19,34 +19,29 @@ class MainController extends Controller
     }
 
     public function index(Request $request){
-
-        //
-        //
-        //dd(Session()->getId());
         if(Auth::check()){
-            $domain = Auth::user()->tiendas()->first()->dominio;
-            $url = 'http://'.$domain.'.comerciocentral.chi/';
-            //$url = '/redirect';
-            $data = [
-                'sessionId' => Session()->getId(),
-                'domain' => $domain
-            ];
-            return redirect($url);
-            //return view('main.redirect', $data);
-            //Session::flush();
+            $domain = Auth::user()->tiendas()->first()->dominio ?? null;
+            if($domain){
+                $url = 'http://'.$domain.'.comerciocentral.chi/';
+                return redirect($url);
+            }
+            return redirect('/tienda');
         }
-
         return view('main.index');
 
     }
 
-    public function redirect(Request $request){
-
-
+    public function tienda(Request $request){
+        if(Auth::check()){
+            return view('main.tienda');
+        }
+        return redirect('/registro');
     }
 
     public function login(Request $request){
-        return view('main.login');
+        //return view('main.login');
+        $data['color'] = '#afafaf';
+        return view('welcome', $data);
     }
 
 
@@ -147,7 +142,7 @@ class MainController extends Controller
 
         $user->save();
         $user->tiendas()->save($tienda);
-        return redirect('http://'.$domain.'.comerciocentral.chi/admin');
+        return redirect('http://'.$domain.'.comerciocentral.chi/');
     }
 
 

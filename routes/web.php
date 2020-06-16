@@ -23,12 +23,27 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     //Route::post('/', 'InicioController@indexAdm');
     Auth::routes();
     Route::get('/contacto', 'ContactoController@index');
-    Route::get('/cuenta', 'UserController@index');
+    //Route::get('/cuenta', 'UserController@index');
 
     Route::get('/admin/productos', 'ProductoController@index');
     Route::get('/admin/categorias', 'CategoriaController@index');
     Route::get('/admin/marcas', 'MarcaController@index');
     Route::get('/admin/blog', 'BlogAdminController@index');
+
+    Route::get('/carrito', 'CartController@index');
+    Route::post('/add_to_cart', 'CartController@addItemsToCart');
+    Route::get('/remove_on_cart/{id}', 'CartController@removeItemOnCart');
+    Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
+    Route::post('/add_cart_qty', 'CartController@processItemByQty');
+
+    Route::get('/checkout', 'CheckoutController@index');
+    Route::post('/payment/webpay', 'CheckoutController@webpayProcess');
+    Route::get('/payment/retry', 'CheckoutController@getRetryPayment');
+    Route::get('/payment/webpay/retry', 'CheckoutController@retryPayment');
+    Route::post('/payment', 'CheckoutController@getPaymentProcess');
+    Route::get('/payment/deposito', 'CheckoutController@getDepositoPaymentProcess');
+    Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
+    Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
 
     Route::resource('/admin', 'AdminController');
     Route::resource('admin/productos', 'ProductoController');
@@ -36,11 +51,15 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::resource('admin/marcas', 'MarcaController');
     Route::resource('admin/blog', 'BlogAdminController');
 
+    Route::get('/productos', 'ProductoFrontController@index');
+    Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
+
 });
 
 //Auth::routes();
 
 Route::get('/', 'MainController@index');
+Route::get('/tienda', 'MainController@tienda');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/login', 'MainController@login');
 Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
@@ -55,26 +74,15 @@ Route::get('/registro/checktiendadomainemail/{domain}/{email}', 'MainController@
 
 Route::get('/blog', 'BlogController@index');
 Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
-Route::get('/productos', 'ProductoFrontController@index');
-Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
+
 
 Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
 
-Route::get('/carrito', 'CartController@index');
-Route::post('/add_to_cart', 'CartController@addItemsToCart');
-Route::get('/remove_on_cart/{id}', 'CartController@removeItemOnCart');
-Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
-Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
 
-Route::get('/checkout', 'CheckoutController@index');
-Route::post('/payment/webpay', 'CheckoutController@webpayProcess');
-Route::get('/payment/retry', 'CheckoutController@getRetryPayment');
-Route::get('/payment/webpay/retry', 'CheckoutController@retryPayment');
-Route::post('/payment', 'CheckoutController@getPaymentProcess');
-Route::get('/payment/deposito', 'CheckoutController@getDepositoPaymentProcess');
-Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
-Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
+
+
+
 
 
 

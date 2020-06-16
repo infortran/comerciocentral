@@ -34,28 +34,39 @@ class CartController extends Controller
      */
     public function index()
     {
-        if(!Session::has('cart')){
+        $domain = request()->route('domain');
+        //dd($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                if(!Session::has('cart')){
 
-            $this->data['cart_productos'] = null;
-            $this->data['precio_total'] = 0;
-            $this->data['envios'] = Envio::all();
+                    $data['cart_productos'] = null;
+                    $data['precio_total'] = 0;
+                    $data['envios'] = Envio::where('tienda_id', $data['tienda']->id);
 
-            return view('frontend.cart', $this->data);
+                    return view('frontend.cart', $data);
+                }
+
+                $oldCart = Session::get('cart');
+                $cart = new Cart($oldCart);
+
+                $this->calcularEnvio($cart->precioTotal);
+                $total_mas_envio = Session::has('envio') ? $cart->precioTotal + Session::get('envio')->precio : $cart->precioTotal;
+
+                $data['cart'] = $cart;
+                $data['cart_productos'] = $cart->items;
+                $data['precio_total'] = $cart->precioTotal;
+                $data['total_mas_envio'] = $total_mas_envio;
+                $data['envio'] = Session::has('envio') ? Session::get('envio') : null;
+
+                return view('frontend.cart', $data);
+            }
         }
-
-        $oldCart = Session::get('cart');
-        $cart = new Cart($oldCart);
-
-        $this->calcularEnvio($cart->precioTotal);
-        $total_mas_envio = Session::has('envio') ? $cart->precioTotal + Session::get('envio')->precio : $cart->precioTotal;
-
-        $this->data['cart'] = $cart;
-        $this->data['cart_productos'] = $cart->items;
-        $this->data['precio_total'] = $cart->precioTotal;
-        $this->data['total_mas_envio'] = $total_mas_envio;
-        $this->data['envio'] = Session::has('envio') ? Session::get('envio') : null;
-
-        return view('frontend.cart', $this->data);
+        return view('frontend.templates.site-not-found');
     }
 
     public function isMax($envios){

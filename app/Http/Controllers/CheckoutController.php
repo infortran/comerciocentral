@@ -23,21 +23,32 @@ class CheckoutController extends Controller
     }
 
     public function index(Request $request){
+        $domain = request()->route('domain');
+        //dd($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                if(Session::has('cart')){
 
-        if(Session::has('cart')){
+                    $cart = Session::get('cart');
+                    $total = $cart->precioTotal;
+                    if(Session::has('envio')){
+                        $total = $cart->precioTotal + Session::get('envio')->precio;
+                    }
 
-            $cart = Session::get('cart');
-            $total = $cart->precioTotal;
-            if(Session::has('envio')){
-                $total = $cart->precioTotal + Session::get('envio')->precio;
+                    $data['cart'] = $cart;
+                    $data['total_final'] = $total;
+                    return view('frontend.checkout', $data);
+                }else{
+                    return redirect('/carrito');
+                }
             }
-
-            $this->data['cart'] = $cart;
-            $this->data['total_final'] = $total;
-            return view('frontend.checkout', $this->data);
-        }else{
-            return redirect('/carrito');
         }
+        return view('frontend.templates.site-not-found');
+
     }
 
     public function getPaymentProcess(Request $request){

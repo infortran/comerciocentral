@@ -56,7 +56,7 @@
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="{{url('/')}}">
-                                    <img src="{{asset('images/system/navbar.png')}}" alt="">
+                                    <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
                                 </a>
                             </div>
                         </div>
@@ -87,6 +87,7 @@
                         </div>
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="Appointment">
+                                @guest
                                 <div class="phone_num d-none d-xl-block">
                                     <span style="color:#fff; font-size:.9em"> Ya tienes una cuenta?</span>
                                 </div>
@@ -95,6 +96,13 @@
                                         <i class="fa fa-key"></i>
                                         Ingresar</a>
                                 </div>
+                                    @else
+                                    <div class="d-none d-lg-block">
+                                        <a class="boxed-btn4" href="{{url('/logout')}}">
+                                            <i class="fa fa-sign-out-alt"></i>
+                                            Salir</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-12">

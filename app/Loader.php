@@ -25,6 +25,19 @@ class Loader{
             'siteSocials' => SiteSocial::where('tienda_id', $tienda->id),
             'is_owner' => $this->isOwner
         ];
+        foreach($tienda->colorthemes as $color){
+            switch($color->name){
+                case 'primary':
+                    $data['primary'] = $color->value; break;
+                case 'secondary':
+                    $data['secondary'] = $color->value; break;
+                case 'dark':
+                    $data['dark'] = $color->value; break;
+                case 'light':
+                    $data['light'] = $color->value; break;
+                default: break;
+            }
+        }
         return $data;
     }
 

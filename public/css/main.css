@@ -303,6 +303,7 @@
 
 .loading-cart{
     border:3px solid #FE980F !important;
+    border-color:var(--color-primary) !important;
     background: transparent !important;
     font-size:0 !important;
     width:50px;
@@ -373,7 +374,7 @@
 .btn-plus-minus-cart{
     padding:5px !important;
     border: 1px solid transparent !important;
-    background: #ff7400 !important;
+    background: var(--color-primary) !important;
     color:#FFFFFF !important;
     border-radius: 3px !important;
     float:left !important;

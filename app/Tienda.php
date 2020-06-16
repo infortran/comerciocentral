@@ -17,4 +17,8 @@ class Tienda extends Model
     public function users(){
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function colorthemes(){
+        return $this->hasMany('App\ColorTheme', 'tienda_id');
+    }
 }

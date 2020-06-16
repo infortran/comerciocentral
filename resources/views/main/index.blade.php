@@ -8,7 +8,7 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-12 text-center">
                         <div class="slider_text">
-                            <img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop-optimized.png')}}" alt="">
+                            <!--img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop-optimized.png')}}" alt=""-->
                             <h3>Ahora puedes crear tu tienda online <strong>GRATIS</strong> y en minutos</h3>
                         </div>
                     </div>
