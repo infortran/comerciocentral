@@ -56,7 +56,7 @@
                         <div class="col-xl-3 col-lg-2">
                             <div class="logo">
                                 <a href="{{url('/')}}">
-                                    <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+                                    <img class="img-navbar" src="{{asset('images/system/navbar-new2.png')}}" alt="">
                                 </a>
                             </div>
                         </div>

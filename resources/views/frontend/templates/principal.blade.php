@@ -18,9 +18,10 @@
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <style>
         :root{
-            --color-primary: {{ $primary }} ;
-            --color-secondary: {{ $secondary }} ;
-            --color-dark: {{ $dark }} ;
+            --color-primary: {{ $primary ?? '#FE980F'}} ;
+            --color-secondary: {{ $secondary ?? '#efefef'}} ;
+            --color-dark: {{ $dark ?? ''}} ;
+            --color-background: {{ $background ?? '#ffffff'}} ;
         }
     </style>
 	<link href="{{asset('css/main.css')}}" rel="stylesheet">

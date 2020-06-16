@@ -35,6 +35,8 @@ class Loader{
                     $data['dark'] = $color->value; break;
                 case 'light':
                     $data['light'] = $color->value; break;
+                case 'background':
+                    $data['background'] = $color->value; break;
                 default: break;
             }
         }
