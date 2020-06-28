@@ -13,4 +13,8 @@ class Producto extends Model
     public function marcas(){
         return $this->belongsTo('App\Marca', 'id_marca');
     }
+
+    public function banners(){
+        return $this->hasMany('App\Banner', 'producto_id');
+    }
 }

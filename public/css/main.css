@@ -19,6 +19,241 @@
     width:50%;
 }
 
+svg{
+    position: absolute;
+    fill:rgba(255,255,255,.4);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.circle-a{
+    top:0;
+    left:0;
+
+}
+
+.circle-b{
+    top:0;
+    left:0;
+}
+
+.circle-c{
+    top:0;
+    left:0;
+}
+.circle-d{
+
+}
+
+.banner-main-productos{
+    margin-right: 10px;
+    box-shadow: 0 20px 30px rgba(0,0,0,.4);
+}
+
+.banner-main-a{
+    background:linear-gradient(to right, var(--color-banner-a1), var(--color-banner-a2));
+    padding:30px;
+    max-height: 300px;
+
+}
+
+
+.banner-main-b{
+    background:linear-gradient(to right, var(--color-banner-b1), var(--color-banner-b2));
+    max-height: 300px;
+}
+
+.banner-main-b img{
+    max-height: 300px;
+}
+
+
+
+
+.titulo-banner-main{
+    position:relative;
+    z-index: 2;
+    line-height: 100%;
+    font-size: 40px;
+    font-weight: bolder;
+    color:white;
+    text-shadow: 3px 3px rgba(0,0,0,.4);
+}
+
+.subtitulo-banner-main{
+    color:white;
+    font-size: 25px;
+}
+
+.text-banner-main{
+    color:white;
+}
+
+.btn-banner-main{
+    position:relative;
+    font-weight: bolder;
+    font-size: 20px;
+    z-index: 9999 !important;
+}
+
+
+
+.dscto-banner-main{
+    position:absolute;
+    top:10%;
+    left:-100px;
+    background:red;
+    color:white;
+    padding:5px;
+    border-radius: 8px;
+    font-size: 2.5em;
+    font-weight: bolder;
+    transform:rotate(8deg);
+    z-index: 2;
+    box-shadow: 0 10px 15px rgba(0,0,0,.5);
+}
+
+.banner-secondary-productos{
+
+    background:linear-gradient(to bottom, var(--color-banner-b1), transparent);
+    height: 300px;
+}
+
+.banner-sec-a{
+    height:80%;
+    padding: 20px;
+    background-position: top;
+    background-size: cover;
+}
+
+.banner-sec-b{
+    height:20%;
+    background:var(--color-secondary);
+
+}
+
+.btn-banner-sec{
+    width:60%;
+    position:absolute;
+    left:50%;
+    transform: translateY(-80%) translateX(-50%);
+
+}
+
+.titulo-banner-sec{
+    font-size: 30px;
+    color: #fff;
+    text-shadow: 2px 2px rgba(0,0,0,.4);
+    font-weight: bolder;
+}
+
+.dscto-banner-sec{
+    margin:0 auto;
+    font-size: 4.5em;
+    text-shadow: 2px 2px rgba(0,0,0,.4);
+    color:#fff;
+    transform: rotate(-5deg);
+    font-weight: bolder;
+    border-radius: 50%;
+    width:130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    float:right;
+    background: linear-gradient(to right, #ff0000, #ff8b00);
+}
+
+#txt-porcent-dscto{
+    line-height: 90%;
+}
+
+.texto-banner-sec{
+
+}
+
+
+.banner-aside{
+    background: linear-gradient(to bottom, #afafaf, #fff);
+    position:relative;
+    z-index: 1;
+}
+
+.banner-aside-a{
+    height: 200px;
+    background-position: top;
+    background-size: cover;
+}
+
+.dscto-banner-aside{
+    transform: rotate(-5deg);
+    display:inline-block;
+    border-radius: 10px;
+    margin:0 auto;
+    background: linear-gradient(to right, #ff0100, #ffa300);
+    padding:5px 15px;
+    font-size: 25px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0,0,0,.4);
+    font-weight: bolder;
+}
+
+.banner-aside-b{
+    position: relative;
+    height: 100px;
+}
+
+.content-banner-aside-b{
+
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 50%,100% 100%,0 100%);
+}
+
+.btn-banner-aside{
+    transform: translateY(-20%) translateX(-50%);
+    margin-bottom: 20px;
+    position:absolute;
+    top:0;
+    left: 50%;
+    z-index: 3;
+}
+
+@media(min-width: 762px){
+    .banner-main-b img{
+        width:100%;
+    }
+
+
+}
+
+@media(max-width: 762px){
+    .banner-main-productos{
+        margin-right: 0;
+    }
+    .dscto-banner-main {
+        top:-8%;
+        left:30%;
+    }
+
+    .banner-main-a{
+        max-height: 350px;
+    }
+    .btn-banner-main{
+        margin-bottom: 30px !important;
+    }
+
+    .banner-main-b img{
+
+    }
+
+    .banner-main-b{
+        background:linear-gradient(to bottom, var(--color-banner-b1), var(--color-banner-b2));
+    }
+}
+
+
 
 /********************************
     Nuevo Boton Comprar y checkout
@@ -1449,7 +1684,6 @@ h2.title:before {
 }
 
 .shipping {
-    background-color: #F2F2F2;
     margin-top: 40px;
     overflow: hidden;
     padding-top: 20px;

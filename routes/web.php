@@ -32,8 +32,8 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
 
     Route::get('/carrito', 'CartController@index');
     Route::post('/add_to_cart', 'CartController@addItemsToCart');
-    Route::get('/remove_on_cart/{id}', 'CartController@removeItemOnCart');
-    Route::get('/reset_on_cart/{id}', 'CartController@resetItemOnCart');
+    Route::get('/remove_on_cart/{id}/{tienda}', 'CartController@removeItemOnCart');
+    Route::get('/reset_on_cart/{id}/{tienda}', 'CartController@resetItemOnCart');
     Route::post('/add_cart_qty', 'CartController@processItemByQty');
 
     Route::get('/checkout', 'CheckoutController@index');
@@ -54,6 +54,9 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::get('/productos', 'ProductoFrontController@index');
     Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
 
+    Route::get('/blog', 'BlogController@index');
+    Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
+
 });
 
 //Auth::routes();
@@ -72,8 +75,7 @@ Route::get('/registro/checktiendadomainemail/{domain}/{email}', 'MainController@
 
 
 
-Route::get('/blog', 'BlogController@index');
-Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
+
 
 
 Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');

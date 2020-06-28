@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Comentario;
+use App\Loader;
 use App\Marca;
 use App\Post;
+use App\Producto;
 use App\SiteSocial;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ use App\TeamMember;
 class BlogController extends Controller
 {
     public function index(Request $request){
-        $query = trim($request->get('search'));
+        /*$query = trim($request->get('search'));
         $posts = Post::all();
         if($request){
             $posts = Post::where('titulo', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
@@ -32,7 +34,21 @@ class BlogController extends Controller
             'siteSocials' => SiteSocial::all()
         ];
 
-    	return view('frontend.blog.index',$data);
+    	return view('frontend.blog.index',$data);*/
+        $domain = request()->route('domain');
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                $data['posts'] = Post::where('tienda_id', $data['tienda']->id)->get();
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
+                return view('frontend.blog.index', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     public function show($id){

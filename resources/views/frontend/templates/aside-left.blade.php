@@ -45,10 +45,27 @@
 								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
 							</div>
 						</div><!--/price-range-->
+                        @isset($banner_aside)
+						<div class="shipping text-center banner-aside"><!--shipping-->
+							<div class="row banner-aside-a"  style="background-image: url('{{ asset('images/uploads/productos').'/'.$banner_aside->productos->img }}')">
+                                <div class="dscto-banner-aside">
+                                    {{ $banner_aside->dscto }}
+                                </div>
 
-						<div class="shipping text-center"><!--shipping-->
-							<img src="images/home/shipping.jpg" alt="" />
+                            </div>
+                            <div class="row banner-aside-b">
+                                <svg class="content-banner-aside-b" width="100%" height="100px">
+                                    <defs>
+                                        <linearGradient id="gradBannerAside" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:{{ $banner_aside->color_a1 }};stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:{{ $banner_aside->color_a2 }};stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect width="100%" height="100px" style="fill: url(#gradBannerAside)"></rect>
+                                </svg>
+                                <button class="btn btn-primary btn-banner-aside">{{$banner_aside->txt_btn}}</button>
+                            </div>
 						</div><!--/shipping-->
-
+                        @endisset
 					</div>
 				</div>

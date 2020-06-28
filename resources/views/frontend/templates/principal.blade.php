@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | {{ config('app.name') }}</title>
+    <title>Home | {{ $tienda->nombre }}</title>
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
@@ -18,10 +18,9 @@
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <style>
         :root{
-            --color-primary: {{ $primary ?? '#FE980F'}} ;
-            --color-secondary: {{ $secondary ?? '#efefef'}} ;
-            --color-dark: {{ $dark ?? ''}} ;
-            --color-background: {{ $background ?? '#ffffff'}} ;
+            @foreach($color_themes as $color)
+            --color-{{ $color->name }}: {{ $color->value }};
+            @endforeach
         }
     </style>
 	<link href="{{asset('css/main.css')}}" rel="stylesheet">
@@ -37,7 +36,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="tienda-id" content="{{ $tienda->id }}" >
 </head><!--/head-->
 
 <body>
@@ -160,7 +159,7 @@
                                     <a class="{{ Request::segment(1) === 'carrito' ? 'active' : null }}"  href="{{url('/carrito')}}">
                                         <i class="fa fa-shopping-cart"></i>
                                         Carrito
-                                        <span id="badge-carrito" class="badge" style="background-color: red;">{{Session::has('cart') ? Session::get('cart')->cantidadTotal : ''}}</span>
+                                        <span id="badge-carrito" class="badge" style="background-color: red;">{{Session::has($cartname) ? Session::get($cartname)->cantidadTotal : ''}}</span>
                                     </a>
 
                                 </li>

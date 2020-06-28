@@ -48,17 +48,21 @@ $(document).ready(function () {
 
     $('.btn-submit-add-cart').click(function(){
         var id = $(this).data('id');
-        addToCartFromAjax(id);
+        var tiendaId = $('meta[name="tienda-id"]').attr('content');
+        //alert(" " + tiendaId);
+        addToCartFromAjax(id, tiendaId);
     });
 
     $('.btn-submit-remove-on-cart').click(function(){
         var id = $(this).data('id');
-        removeOnCartFromAjax(id);
+        var tiendaId = $('meta[name="tienda-id"]').attr('content');
+        removeOnCartFromAjax(id, tiendaId);
     });
 
     $('.btn-submit-reset-on-cart').click(function(){
         var id = $(this).data('id');
-        resetOnCartFromAjax(id);
+        var tiendaId = $('meta[name="tienda-id"]').attr('content');
+        resetOnCartFromAjax(id, tiendaId);
     });
 
     /*$('.btn-plus-cart').click(function(){
@@ -92,8 +96,9 @@ $(document).ready(function () {
     $(document).on('change','.input-item-cart',function(){
        var id = $(this).data('id');
        var cant = $(this).val();
+       var tiendaId = $('meta[name="tienda-id"]').attr('content');
        if(cant > 0 && cant < 10){
-           addToCartByQty(id, cant);
+           addToCartByQty(id, cant, tiendaId);
        }else{
            alert('Ha sobrepasado el limite de stock');
         }
@@ -124,9 +129,10 @@ function resetColorStar() {
 }*/
 
 //ADD CART BUTTON FN
-function addToCartFromAjax(id) {
+function addToCartFromAjax(id, tienda) {
     var data = new FormData();
     data.append('id', id);
+    data.append('tienda', tienda);
 
     $.ajax({
         headers: {
@@ -198,13 +204,13 @@ function addToCartFromAjax(id) {
 }
 
 //REMOVE CART BUTTON FN
-function removeOnCartFromAjax(id) {
+function removeOnCartFromAjax(id, tienda) {
 
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url:'/remove_on_cart/' + id,
+        url:'/remove_on_cart/' + id + '/'+ tienda,
         processData:false,
         contentType:false,
         cache:false,
@@ -230,10 +236,11 @@ function removeOnCartFromAjax(id) {
 }
 
 //ADD CART BY QUANTITY
-function addToCartByQty(idProd, cant){
+function addToCartByQty(idProd, cant, tienda){
     var data = new FormData();
     data.append('id', idProd);
     data.append('cantidad', cant);
+    data.append('tienda', tienda);
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -280,12 +287,12 @@ function addToCartByQty(idProd, cant){
     });
 }
 
-function resetOnCartFromAjax(id) {
+function resetOnCartFromAjax(id, tienda) {
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url:'/reset_on_cart/' + id,
+        url:'/reset_on_cart/' + id + '/' + tienda,
         processData:false,
         contentType:false,
         cache:false,

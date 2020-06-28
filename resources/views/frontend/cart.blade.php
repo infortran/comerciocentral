@@ -10,7 +10,8 @@
 
                 <div class="col-md-9">
                     <h2 class="title text-center">Productos en carrito</h2>
-                    @if(Session::has('cart'))
+
+                    @if(Session::has($cartname))
 
 
                            <table class="table table-striped" style="position: relative">
@@ -59,7 +60,7 @@
                                             <strong id="total-producto-{{$producto['item']['id']}}">$ {{number_format($producto['precio'], 0, '', '.')}}</strong>
                                         </td>
                                         <td>
-                                            <i onclick="resetOnCartFromAjax({{$producto['item']['id']}})" class="reset-item-cart fa fa-window-close fa-2x" style="color: red;cursor:pointer"></i>
+                                            <i class="reset-item-cart fa fa-window-close fa-2x btn-submit-reset-on-cart" style="color: red;cursor:pointer" data-id="{{$producto['item']['id']}}"></i>
                                         </td>
                                     </tr>
                                @endforeach
@@ -92,25 +93,25 @@
                                 </tr>
                             </table>
 
-                            <div id="panel-envio" class="panel panel-default {{Session::has('envio') ? '':' d-none'}}">
+                            <div id="panel-envio" class="panel panel-default {{Session::has($envioname) ? '':' d-none'}}">
                                  <div class="panel-heading">
                                       <i class="fa fa-shipping-fast"></i>
                                       Coste de envio
                                  </div>
                                  <div class="panel-body text-center">
 
-                                         @if(Session::has('envio') && Session::get('envio')->precio == 0)
+                                         @if(Session::has($envioname) && Session::get($envioname)->precio == 0)
                                              <div id="precio-envio" style="font-size: 18px;font-weight: bold">
                                                  <i style="color: green">GRATIS</i>
                                              </div>
                                          @else
-                                             <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{Session::has('envio') ? number_format(Session::get('envio')->precio,0,'','.') : 0}}</div>
+                                             <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{Session::has($envioname) ? number_format(Session::get($envioname)->precio,0,'','.') : 0}}</div>
                                          @endif
-                                         <div id="descripcion-envio">{{Session::has('envio') ? Session::get('envio')->descripcion : ''}}</div>
+                                         <div id="descripcion-envio">{{Session::has($envioname) ? Session::get($envioname)->descripcion : ''}}</div>
                                  </div>
                             </div>
 
-                            <div id="panel-sin-envio" class="panel panel-default {{Session::has('envio') ? ' d-none':''}}">
+                            <div id="panel-sin-envio" class="panel panel-default {{Session::has($envioname) ? ' d-none':''}}">
                                 <div class="panel-heading">
                                     <i class="fa fa-store-alt"></i>
                                     Retiro en tienda

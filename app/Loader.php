@@ -17,28 +17,19 @@ class Loader{
     public function getData()
     {
         $tienda = Tienda::where('dominio', $this->dominio)->first();
-        //Session::put('tienda', $tienda);
         $data = [
             'domain' => $this->dominio,
+            'cartname' => 'cart-' . $tienda->id,
+            'envioname' => 'envio-' . $tienda->id,
             'tienda' => $tienda,
             'members' => TeamMember::where('tienda_id', $tienda->id),
             'siteSocials' => SiteSocial::where('tienda_id', $tienda->id),
-            'is_owner' => $this->isOwner
+            'is_owner' => $this->isOwner,
+            'color_themes' => $tienda->colorthemes,
+            'banners' => $tienda->banners
         ];
-        foreach($tienda->colorthemes as $color){
-            switch($color->name){
-                case 'primary':
-                    $data['primary'] = $color->value; break;
-                case 'secondary':
-                    $data['secondary'] = $color->value; break;
-                case 'dark':
-                    $data['dark'] = $color->value; break;
-                case 'light':
-                    $data['light'] = $color->value; break;
-                case 'background':
-                    $data['background'] = $color->value; break;
-                default: break;
-            }
+        foreach($tienda->banners as $banner){
+            $data[$banner->nombre] = $banner;
         }
         return $data;
     }
@@ -52,11 +43,10 @@ class Loader{
     }
 
     public function checkDominioAdmin(){
-        $check = Tienda::where('dominio', $this->dominio)->get();
-        $tienda = $check->first();
+        $tienda = Tienda::where('dominio', $this->dominio)->first();
         //dd($tienda);
         if(Auth::check()){
-            if(count($check) > 0 && $tienda->user_id === Auth::user()->id){
+            if(count($tienda) > 0 && $tienda->user_id === Auth::user()->id){
                 $this->isOwner = true;
                 return true;
             }

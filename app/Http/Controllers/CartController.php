@@ -42,7 +42,9 @@ class CartController extends Controller
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
-                if(!Session::has('cart')){
+                $cartName = $data['cartname'];
+                $envioName = $data['envioname'];
+                if(!Session::has($cartName)){
 
                     $data['cart_productos'] = null;
                     $data['precio_total'] = 0;
@@ -51,17 +53,17 @@ class CartController extends Controller
                     return view('frontend.cart', $data);
                 }
 
-                $oldCart = Session::get('cart');
+                $oldCart = Session::get($cartName);
                 $cart = new Cart($oldCart);
 
-                $this->calcularEnvio($cart->precioTotal);
-                $total_mas_envio = Session::has('envio') ? $cart->precioTotal + Session::get('envio')->precio : $cart->precioTotal;
+                $this->calcularEnvio($cart->precioTotal, $data['tienda']->id);
+                $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
 
                 $data['cart'] = $cart;
                 $data['cart_productos'] = $cart->items;
                 $data['precio_total'] = $cart->precioTotal;
                 $data['total_mas_envio'] = $total_mas_envio;
-                $data['envio'] = Session::has('envio') ? Session::get('envio') : null;
+                $data['envio'] = Session::has($envioName) ? Session::get($envioName) : null;
 
                 return view('frontend.cart', $data);
             }
@@ -79,19 +81,20 @@ class CartController extends Controller
         return $envioReturn;
     }
 
-    public function calcularEnvio($precioTotal){
+    public function calcularEnvio($precioTotal, $tienda){
+        $envioName = 'envio-' . $tienda;
         //FUNCION que calcula si el total tiene envio y lo almacena en session
-        $enviosMinPrice = Envio::where('min_price', '<=', $precioTotal);
+        $enviosMinPrice = Envio::where('min_price', '<=', $precioTotal)->where('tienda_id', $tienda);
         $envioMax = $this->isMax($enviosMinPrice);
         if($envioMax){
-            Session::put('envio', $envioMax);
+            Session::put($envioName, $envioMax);
         }else{
             $envio = Envio::where('min_price', '<=', $precioTotal)
-                ->where('max_price', '>=', $precioTotal);
+                ->where('max_price', '>=', $precioTotal)->where('tienda_id', $tienda);
             if($envio->first()){
-                Session::put('envio', $envio->first());
+                Session::put($envioName, $envio->first());
             }else{
-                Session::forget('envio');
+                Session::forget($envioName);
             }
         }
     }
@@ -99,14 +102,16 @@ class CartController extends Controller
 
 
     public function addItemsToCart(Request $request){
-
         $producto = Producto::find($request->get('id'));
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $tienda = $request->get('tienda');
+        //dd($tienda);
+        $cartName = 'cart-'. $tienda;
+        $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
         $cart->add($producto, $producto->id);
 
-        $request->session()->put('cart', $cart);
-        $this->calcularEnvio($cart->precioTotal);
+        $request->session()->put($cartName, $cart);
+        $this->calcularEnvio($cart->precioTotal, $tienda);
         return response()->json([
             'status'=>'ok',
             'cantidad_total' => $cart->cantidadTotal,
@@ -114,21 +119,22 @@ class CartController extends Controller
             'cantidad_producto' => $cart->items[$request->get('id')]['cantidad']]);
     }
 
-    public function removeItemOnCart(Request $request, $id){
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    public function removeItemOnCart(Request $request, $domain, $id, $tienda){
+        $cartName = 'cart-' . $tienda;
+        $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
         $cart->removeItem($id);
         if(count($cart->items) > 0){
-            Session::put('cart', $cart);
+            Session::put($cartName, $cart);
         }else{
-            Session::forget('cart');
+            Session::forget($cartName);
         }
         $cantidadProducto = 0;
 
         if(isset($cart->items[$id]) && $cart->items[$id] != null){
             $cantidadProducto = $cart->items[$id]['cantidad'];
         }
-        $this->calcularEnvio($cart->precioTotal);
+        $this->calcularEnvio($cart->precioTotal, $tienda);
         return response()->json([
             'status'=>'ok',
             'cantidad_total' => $cart->cantidadTotal,
@@ -136,27 +142,29 @@ class CartController extends Controller
             'cantidad_producto' => $cantidadProducto]);
     }
 
-    public function resetItemOnCart(Request $request, $id){
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    public function resetItemOnCart(Request $request, $domain, $id, $tienda){
+        $cartName = 'cart-' . $tienda;
+        $envioName = 'envio-' . $tienda;
+        $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
 
         $cart->resetItem($id);
 
         if(count($cart->items) > 0){
-            Session::put('cart', $cart);
+            Session::put($cartName, $cart);
         }else{
-            Session::forget('cart');
+            Session::forget($cartName);
         }
 
-        $this->calcularEnvio($cart->precioTotal);
-        $total_mas_envio = Session::has('envio') ? $cart->precioTotal + Session::get('envio')->precio : $cart->precioTotal;
+        $this->calcularEnvio($cart->precioTotal, $tienda);
+        $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
 
         $data = [
             'cart' => $cart,
             'cart_productos' => $cart->items,
             'precio_total' => $cart->precioTotal,
             'total_mas_envio' => $total_mas_envio,
-            'envio' => Session::has('envio') ? Session::get('envio') : null,
+            'envio' => Session::has($envioName) ? Session::get($envioName) : null,
         ];
 
         return response()->json([
@@ -166,27 +174,30 @@ class CartController extends Controller
     }
 
     public function processItemByQty(Request $request){
+        $tienda = $request->get('tienda');
+        $cartName = 'cart-' . $tienda;
+        $envioName = 'envio-' . $tienda;
         $cantidad = $request->get('cantidad');
         $id = $request->get('id');
         $producto = Producto::find($id);
 
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
 
         $cart->addByQty($producto, $producto->id, $cantidad);
 
         if(count($cart->items) > 0){
-            Session::put('cart', $cart);
+            Session::put($cartName, $cart);
         }else{
-            Session::forget('cart');
+            Session::forget($cartName);
         }
         $cantidadProducto = 0;
         if(isset($cart->items[$id]) && $cart->items[$id] != null){
             $cantidadProducto = $cart->items[$id]['cantidad'];
         }
 
-        $this->calcularEnvio($cart->precioTotal);
-        $total_mas_envio = Session::has('envio') ? $cart->precioTotal + Session::get('envio')->precio : $cart->precioTotal;
+        $this->calcularEnvio($cart->precioTotal, $tienda);
+        $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
 
         return response()->json([
             'cantidad_total' => $cart->cantidadTotal,
@@ -195,9 +206,9 @@ class CartController extends Controller
             'total_producto' => number_format($cart->items[$id]['precio'], 0, '', '.'),
             'precio_total' => number_format($cart->precioTotal, 0, '','.'),
             'total_mas_envio' => number_format($total_mas_envio, 0, '', '.'),
-            'envio' => Session::has('envio'),
-            'descripcion_envio' => Session::has('envio') ? Session::get('envio')->descripcion : '',
-            'precio_envio' => Session::has('envio') ? number_format(Session::get('envio')->precio, 0, '', '.') : 0
+            'envio' => Session::has($envioName),
+            'descripcion_envio' => Session::has($envioName) ? Session::get($envioName)->descripcion : '',
+            'precio_envio' => Session::has($envioName) ? number_format(Session::get($envioName)->precio, 0, '', '.') : 0
             ]);
     }
 }

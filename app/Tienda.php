@@ -21,4 +21,8 @@ class Tienda extends Model
     public function colorthemes(){
         return $this->hasMany('App\ColorTheme', 'tienda_id');
     }
+
+    public function banners(){
+        return $this->hasMany('App\Banner', 'tienda_id');
+    }
 }

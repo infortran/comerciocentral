@@ -5,11 +5,13 @@ namespace App;
 
 class Cart
 {
+
     public $items = null;
     public $cantidadTotal = 0;
     public $precioTotal = 0;
 
-    public function __construct($oldCart){
+    public function __construct( $oldCart){
+
         if($oldCart){
             $this->items = $oldCart->items;
             $this->cantidadTotal = $oldCart->cantidadTotal;

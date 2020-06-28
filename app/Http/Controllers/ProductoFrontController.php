@@ -27,7 +27,7 @@ class ProductoFrontController extends Controller
     }
 
     public function index(Request $request){
-        dd('se fue pa otro lado');
+        /*dd('se fue pa otro lado');
         $query = trim($request->get('search'));
         if($request){
             $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')
@@ -41,7 +41,24 @@ class ProductoFrontController extends Controller
             $this->data['productos'] = Producto::where('id_categoria', $request->get('categoria'))->orderBy('id', 'asc')->paginate(9);
         }
         $this->data['search'] = $query;
-        return view('frontend.productos', $this->data);
+        return view('frontend.productos', $this->data);*/
+        $domain = request()->route('domain');
+        //dd($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
+                $data['productos'] = Producto::where('tienda_id', $data['tienda']->id)->get();
+                $data['producto_banner_primary'] = Producto::find(4);
+                //dd($data['productos']);
+                return view('frontend.productos', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     public function single(Request $request, $domain, $id){
