@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::domain('{domain}.comerciocentral.chi')->group(function () {
+Route::domain('{domain}.salty-spire-92714.herokuapp.com/')->group(function () {
     Route::get('/', 'InicioController@index');
     Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
     //Route::post('/', 'InicioController@indexAdm');
