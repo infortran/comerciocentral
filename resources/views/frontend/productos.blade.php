@@ -20,18 +20,18 @@
 
 
 
-                        <svg class="circle-a hidden-xs" height="210" width="100%">
+                        <svg class="svg circle-a hidden-xs" height="210" width="100%">
                             <circle cx="50%" cy="-6%" r="70%"/>
                         </svg>
 
-                        <svg class="circle-b hidden-sm hidden-md hidden-lg" height="100%" width="100%">
+                        <svg class="svg circle-b hidden-sm hidden-md hidden-lg" height="100%" width="100%">
                             <circle cx="50%" cy="50%" r="50%"/>
                         </svg>
-                        <svg class="circle-b hidden-sm hidden-md hidden-lg" height="100%" width="100%">
+                        <svg class="svg circle-b hidden-sm hidden-md hidden-lg" height="100%" width="100%">
                             <circle cx="50%" cy="50%" r="60%"/>
                         </svg>
 
-                        <svg class="circle-c hidden-xs" height="100%" width="100%">
+                        <svg class="svg circle-c hidden-xs" height="100%" width="100%">
                             <circle cx="50%" cy="20" r="70%"/>
                         </svg>
 

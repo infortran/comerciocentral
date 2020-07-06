@@ -74,8 +74,8 @@ class ProductoFrontController extends Controller
                 $producto = Producto::find($id);
                 //dd($producto);
                 $data['rating'] = 0;
-                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id);
-                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id);
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
                 $data['producto'] = $producto;
                 return view('frontend.producto-detalle', $data);
             }

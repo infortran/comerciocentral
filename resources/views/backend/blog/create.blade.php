@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="container" action="/admin/blog" method="POST" enctype="multipart/form-data">
+<form class="container" action="{{url('/admin/blog')}}" method="POST" enctype="multipart/form-data">
 	@csrf
 	<h1>Nueva entrada <button type="submit" class="addButton float-right"><i class="fa fa-save"></i> Guardar</button></h1>
 	<div class="row">
@@ -21,9 +21,9 @@
 	<div style="margin-top: 20px" class="row">
 		<div class="col-8">
 			<div class="card">
-				
+
 				<div class="card-body">
-					
+
 						<div class="form-group">
 						    <label for="">Titulo</label>
 						    <input name="titulo" type="text" class="form-control">
@@ -32,12 +32,12 @@
 						    <label for="">Contenido</label>
 						    <textarea name="contenido" class="form-control" style="min-height: 300px"></textarea>
 						</div>
-						
-						
-					
+
+
+
 				</div>
 			</div>
-			
+
 		</div>
 
 		<div class="col-4">

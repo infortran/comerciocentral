@@ -33,6 +33,7 @@ class InicioController extends Controller
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
+                //dd($data['siteSocials']);
                 $data['cartname'] = 'cart-'. $data['tienda']->id;
                 $data['slides'] = Slide::where('tienda_id', $data['tienda']->id)->get();
                 $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();

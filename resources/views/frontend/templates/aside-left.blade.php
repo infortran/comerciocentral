@@ -54,7 +54,7 @@
 
                             </div>
                             <div class="row banner-aside-b">
-                                <svg class="content-banner-aside-b" width="100%" height="100px">
+                                <svg class="svg content-banner-aside-b" width="100%" height="100px">
                                     <defs>
                                         <linearGradient id="gradBannerAside" x1="0%" y1="0%" x2="100%" y2="0%">
                                             <stop offset="0%" style="stop-color:{{ $banner_aside->color_a1 }};stop-opacity:1" />

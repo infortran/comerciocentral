@@ -46,6 +46,52 @@
 		</div>
 	</section><!--====================/FIN CARRUSEL==============================-->
 
+
+            <!--===========================================
+					CERTIFICACION PUNTAJE Y DUEÑO
+			=============================================-->
+    <section>
+        <div class="container">
+            <div class="row evaluacion text-center">
+                <div class="col-xs-12 col-lg-4 eval eval-certificacion">
+                    <div class="icon-certificacion">
+                        <svg class="icon-certificacion-svg" width="80" height="80">
+                            <circle r="38" cx="40" cy="40" style="fill: {{ $certificacion ? '#68ca00' : 'yellow' }}"></circle>
+                        </svg>
+                        <i class="fa fa-store-alt store" style="color: {{ $certificacion ? 'white' : 'black' }}"></i>
+                        <i class="fa fa-{{ $certificacion ? 'check' : 'times' }}-circle check" style="color:{{ $certificacion ? '#0f9500' :'red' }}"></i>
+                    </div>
+
+                    <div class="title">{{$certificacion ? 'Certificada' : 'No Certificada'}}</div>
+                    <a href="{{ url('/certificados') }}">Ver detalles</a>
+                </div>
+                <div class="col-xs-12 col-lg-4 eval eval-puntuacion">
+                    <div class="title">Puntuacion</div>
+                    <div class="points">4.5</div>
+                    <div class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <div class="users-votes">
+                        <i class="fa fa-user"></i>
+                        12.872
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-4 eval eval-owner">
+
+                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $owner->img }}" alt="">
+                    <div class="owner-name">{{ $owner->name. ' '. $owner->lastname }}</div>
+                    <div class="owner-position">Representante</div>
+                </div>
+            </div>
+        </div>
+    </section><!--====================/CERT PUNTAJE DUEÑO==============================-->
+
+
+
 	<section>
 		<div class="container">
 			<div class="row">
@@ -53,6 +99,19 @@
 				<!--===========================================
 									ASIDE
 				=============================================-->
+                <!-- ============================
+                         FORMULARIO DE BUSQUEDA
+                    ================================= -->
+                @if(isset($search))
+                    <div class="col-sm-4" style="margin-top: 20px">
+                        <form class="search-form">
+                            <input name="search" type="text" class="textbox" placeholder="Buscar">
+                            <button title="Search" value="" type="submit" class="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+            @endif
 				@include('frontend.templates.aside-left')
 				<!--====================FIN ASIDE===========================-->
 

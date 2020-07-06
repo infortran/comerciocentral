@@ -56,7 +56,19 @@ class ProductoController extends Controller
 
     //abre la vista crear producto
     public function create(){
-    	return view('backend.productos.create', ['categorias' => $this->categorias, 'marcas' => $this->marcas]);
+        $domain = request()->route('domain');
+        ($domain);
+        if($domain) {
+            $loader = new Loader($domain);
+            //dd($loader->checkDominio());
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
+                return view('backend.productos.create',$data);
+            }
+        }
+
     }
 
     //guarda el nuevo producto en db
@@ -92,23 +104,6 @@ class ProductoController extends Controller
 
         return redirect('/admin/productos');
     }
-
-    //muestra la vista FRONTEND PRODUCTOS
-    /*public function show(Request $request){
-        $query = trim($request->get('search'));
-        if($request){
-            $this->data['productos'] = Producto::where('nombre', 'LIKE', '%' . $query . '%')
-                ->orWhere('descripcion', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
-        }
-        if(request('categoria')){
-            $this->data['productos'] = Producto::where('id_categoria', request('categoria'))->orderBy('id', 'asc')->paginate(9);
-        }
-        if(request('marca')){
-            $this->data['productos'] = Producto::where('id_marca', request('marca'))->orderBy('id', 'asc')->paginate(9);
-        }
-        $this->data['search'] = $query;
-        return view('frontend.productos', $this->data);
-    }*/
 
 
 

@@ -26,8 +26,8 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     //Route::get('/cuenta', 'UserController@index');
 
     Route::get('/admin/productos', 'ProductoController@index');
-    Route::get('/admin/categorias', 'CategoriaController@index');
-    Route::get('/admin/marcas', 'MarcaController@index');
+    Route::get('/admin/productos/categorias', 'CategoriaController@index');
+    Route::get('/admin/productos/marcas', 'MarcaController@index');
     Route::get('/admin/blog', 'BlogAdminController@index');
 
     Route::get('/carrito', 'CartController@index');
@@ -45,7 +45,7 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
     Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
 
-    Route::resource('/admin', 'AdminController');
+    //Route::resource('/admin', 'AdminController');
     Route::resource('admin/productos', 'ProductoController');
     Route::resource('admin/categorias', 'CategoriaController');
     Route::resource('admin/marcas', 'MarcaController');
@@ -57,9 +57,20 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::get('/blog', 'BlogController@index');
     Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
 
+
+    Route::get('/admin/ordenes', 'OrdenController@index');
+    Route::get('/admin/orden/{id}', 'OrdenController@show');
+    Route::post('/ajax/ordenes', 'OrdenController@showAll');
+
+
+    Route::get('/admin', 'AdminController@index');
+    Route::post('/admin/update', 'AdminController@update');
+
 });
 
 //Auth::routes();
+
+Route::get('/dominio/{dir}', 'MainController@checkDomain');
 
 Route::get('/', 'MainController@index');
 Route::get('/tienda', 'MainController@tienda');
@@ -105,8 +116,7 @@ Route::resource('user', 'UserController');
 
 
 
-Route::get('/admin/ordenes', 'OrdenController@index');
-Route::get('/admin/orden/{id}', 'OrdenController@show');
+
 
 Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
 Route::put('/admin/comentarios/ban/{id}', 'ComentarioController@ban')->name('comentario.ban');
@@ -127,7 +137,7 @@ Route::post('/cuenta/password/check', 'UserController@checkPassword')->name('use
 Route::post('/cuenta/password/update', 'UserController@updatePassword')->name('user.changepass');
 Route::get('/cuenta/password/reset', 'UserController@resetCheckPassword');
 
-Route::get('admin/users', 'AdminController@show');
+
 Route::post('admin/users/ban/{id}', 'AdminController@banUser');
 Route::post('admin/users/unlock/{id}', 'AdminController@unlockUser');
 

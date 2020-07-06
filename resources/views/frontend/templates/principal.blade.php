@@ -117,7 +117,7 @@
 							LOGOTIPO
 							===============-->
 						<div class="logo pull-left">
-							<a href="/"><img src="{{asset('images/system').'/'.$tienda->img}}" alt="" /></a>
+							<a href="/"><img style="max-height:60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->dominio. '.png'}}" alt="" /></a>
 						</div>
 						<div class="btn-group pull-right clearfix">
 
@@ -152,8 +152,8 @@
 							<ul class="nav navbar-nav">
 								<li><a class="{{ Request::segment(1) === 'cuenta' ? 'active' : null }}" href="{{url('/cuenta')}}"><i class="fa fa-user"></i> Cuenta</a></li>
 
-                                @if(Auth::check() && Session::has('cart'))
-								<li><a class="{{ Request::segment(1) === 'checkout' ? 'active' : null }}"  href="{{url('/checkout')}}"><i class="fa fa-cash-register"></i> Checkout</a></li>
+                                @if(Session::has($cartname))
+								<li><a class="{{ Request::segment(1) === 'checkout' ? 'active' : null }}"  href="{{url('/checkout')}}"><i class="fa fa-shopping-bag"></i> Finalizar Compra</a></li>
                                 @endif
 								<li>
                                     <a class="{{ Request::segment(1) === 'carrito' ? 'active' : null }}"  href="{{url('/carrito')}}">
@@ -167,7 +167,7 @@
 								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
                                     @if(Auth::check() && Auth::user()->role=='admin' && $is_owner)
-                                    <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Administracion</a></li>
+                                    <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Admin</a></li>
                                     @endif
 								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a></li>
@@ -194,7 +194,7 @@
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-7 col-md-9">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
@@ -212,25 +212,72 @@
 							</ul>
 						</div>
 					</div>
-                    <!-- ============================
-                         FORMULARIO DE BUSQUEDA
-                    ================================= -->
-                    @if(isset($search))
-                    <div class="col-sm-4" style="margin-top: 20px">
-                        <form class="search-form">
-                            <input name="search" type="text" class="textbox" placeholder="Buscar">
-                            <button title="Search" value="" type="submit" class="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </form>
+
+                    <div class="col-xs-8 col-sm-5 col-md-3 hidden-xs">
+                        @if(url()->current() === url('/'))
+                        <div class="certificado">
+                            <div class="cert-icon">
+                                <svg class="" width="50" height="50">
+                                    <circle cy="25" cx="25" r="20" style="fill: {{ $certificacion ? '#68ca00' : 'yellow' }}"></circle>
+                                </svg>
+
+                                <i class="fa fa-store-alt store" style="color:{{ $certificacion ? 'white' : 'black' }}"></i>
+
+                                <i class="fa fa-{{ $certificacion ? 'check' : 'times' }}-circle check" style="color:{{ $certificacion ? '#0f9500' :'red' }}"></i>
+
+                            </div>
+                            <div class="cert-text">
+                                <div class="cert-title">
+                                    {{ $certificacion ? 'Tienda Certificada' : 'Sin Cetificacion' }}
+                                </div>
+                                <div class="cert-details">Pulsa para ver detalles</div>
+                            </div>
+
+                        </div>
+                            @else
+
+                                <form class="search-form">
+                                    <input name="search" type="text" class="textbox" placeholder="Buscar">
+                                    <button title="Search" value="" type="submit" class="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </form>
+
+                        @endif
                     </div>
-                    @endif
+
 
 
                 <!--.fin FORM busqueda-->
 				</div>
 			</div>
 		</div><!--/header-bottom-->
+
+        <div class="container hidden-sm hidden-md hidden-lg" style="margin-bottom:50px">
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div class="certificado">
+                        <div class="cert-icon">
+                            <svg class="" width="50" height="50">
+                                <circle cy="25" cx="25" r="20" style="fill: {{ $certificacion ? '#68ca00' : 'yellow' }}"></circle>
+                            </svg>
+
+                            <i class="fa fa-store-alt store" style="color:{{ $certificacion ? 'white' : 'black' }}"></i>
+
+                            <i class="fa fa-{{ $certificacion ? 'check' : 'times' }}-circle check" style="color:{{ $certificacion ? '#0f9500' :'red' }}"></i>
+
+                        </div>
+                        <div class="cert-text">
+                            <div class="cert-title">
+                                {{ $certificacion ? 'Tienda Certificada' : 'Sin Cetificacion' }}
+                            </div>
+                            <div class="cert-details">Pulsa para ver detalles</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--FIN NAVBAR PRINCIPAL-->
 
         @if(isset($search) && $search)
@@ -248,7 +295,7 @@
 				<div class="row">
 					<div class="col-sm-2">
 						<div class="companyinfo">
-							<h2><img src="{{asset('images/system') .'/'. $tienda->img}}"></h2>
+							<h2><img style="max-height: 60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->dominio. '.png'}}"></h2>
 							<p>{{$tienda->info}}</p>
 						</div>
 					</div>

@@ -38,7 +38,7 @@ class AdminController extends Controller
             if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 $id = $data['tienda']->id;
-                $data['socials'] = Social::where('tienda_id', $id)->get();
+                $data['socials'] = Social::all();
                 $data['site_socials'] = SiteSocial::where('tienda_id', $id)->get();
                 $data['slides'] = Slide::where('tienda_id', $id)->get();
                 $data['envios'] = Envio::where('tienda_id', $id)->get();
@@ -68,7 +68,8 @@ class AdminController extends Controller
 
     }*/
 
-    public function show(Request $request){
+    /*public function show(Request $request){
+        dd('se vino al show no se por que');
         $query = trim($request->get('search'));
         if($request){
             $this->users = User::where('name', 'LIKE', '%' . $query . '%')
@@ -83,7 +84,7 @@ class AdminController extends Controller
             'users' => $this->users
         ];
         return view('backend.users.index', $data);
-    }
+    }*/
 
     public function banUser($id){
         $user = User::find($id);

@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Loader{
 
-    private $dominio, $isOwner;
+    private $dominio, $isOwner, $certificado;
 
     public function __construct($dominio){
         $this->dominio = $dominio;
         $this->isOwner = false;
+        $this->certificado = true;
     }
 
     public function getData()
@@ -19,12 +20,15 @@ class Loader{
         $tienda = Tienda::where('dominio', $this->dominio)->first();
         $data = [
             'domain' => $this->dominio,
+            'domain_owner' => false,
+            'certificacion' => $this->certificado,
             'cartname' => 'cart-' . $tienda->id,
             'envioname' => 'envio-' . $tienda->id,
             'tienda' => $tienda,
-            'members' => TeamMember::where('tienda_id', $tienda->id),
-            'siteSocials' => SiteSocial::where('tienda_id', $tienda->id),
+            'members' => TeamMember::where('tienda_id', $tienda->id)->get(),
+            'siteSocials' => SiteSocial::where('tienda_id', $tienda->id)->get(),
             'is_owner' => $this->isOwner,
+            'owner' => $tienda->users,
             'color_themes' => $tienda->colorthemes,
             'banners' => $tienda->banners
         ];
@@ -43,10 +47,11 @@ class Loader{
     }
 
     public function checkDominioAdmin(){
-        $tienda = Tienda::where('dominio', $this->dominio)->first();
+        $check = Tienda::where('dominio', $this->dominio)->get();
+        $tienda = $check->first();
         //dd($tienda);
         if(Auth::check()){
-            if(count($tienda) > 0 && $tienda->user_id === Auth::user()->id){
+            if(count($check) > 0 && $tienda->user_id === Auth::user()->id){
                 $this->isOwner = true;
                 return true;
             }

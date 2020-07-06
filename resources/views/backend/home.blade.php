@@ -299,75 +299,7 @@
                             </div>
                           </div><!--.card3-->
 
-                        <!--========================
-                               CARD SOCIALS
-                        =========================-->
-   <!--.card4-->          <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <button style="font-size: 18px"  class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSocials" aria-expanded="false" aria-controls="collapseTwo">
-                                            <i class="fa fa-users"></i>
-                                            Redes sociales
 
-                                        </button>
-                                    </div>
-                                    <div class="col-2" style="display:flex;align-items: center">
-                                        <span style="font-size: 14px" class="badge badge-pill badge-primary float-right">{{$socials->count()}}</span>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div id="collapseSocials" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSocials">
-                                <ul class="list-group list-group-flush">
-                                    <li id="btn-create-social" class="list-group-item text-center" style="color: #afafaf;cursor:pointer">
-                                        <i class="fa fa-plus-circle"></i>
-                                        Agregar nueva red social
-                                    </li>
-                                    {!! Form::open(['url' => 'admin/socials']) !!}
-                                    <li style="display: none" class="list-group-item" id="form-agregar-social">
-                                        <div class="row">
-                                            <div class="col-10">
-                                                <input name="nombre" type="text "class="form-control" placeholder="Nombre de la red">
-                                            </div>
-                                            <div class="col-2">
-                                                <h2 id="btn-back-social" style="cursor: pointer"><i class="fa fa-angle-up"></i></h2>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin-top: 10px">
-                                            <div class="col-10">
-                                                <input name="url" type="text" class="form-control" placeholder="URL de la red">
-                                            </div>
-                                            <div class="col-2" style="display: flex; align-items: center">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    {!! Form::close() !!}
-                                    @foreach($socials as $social)
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-10">
-                                                    <i class="fab fa-{{$social->nombre}}"></i>
-                                                    {{$social->url}}
-                                                </div>
-                                                <div class="col-2" style="display: flex; align-items: center">
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['socials.destroy', $social->id]]) !!}
-                                                    <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
-                                                        <i class="fa fa-minus-circle"></i>
-                                                    </button>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div><!--.card4-->
 
 
                         <!--========================
@@ -451,24 +383,6 @@
                                               </tbody>
                                           </table>
                                       </li>
-
-                                          <!--li class="list-group-item">
-                                              <div class="row">
-                                                  <div class="col-4">
-                                                      <i class="fab fa-"></i>
-
-                                                  </div>
-                                                  <div class="col-2" style="display: flex; align-items: center">
-                                                      {!! Form::open(['method' => 'DELETE', 'route' => ['envios.destroy', 1]]) !!}
-                                                      <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
-                                                          <i class="fa fa-minus-circle"></i>
-                                                      </button>
-                                                      {!! Form::close() !!}
-                                                  </div>
-                                              </div>
-
-                                          </li-->
-
                                   </ul>
                               </div>
                             </div>
@@ -490,11 +404,11 @@
         @include('backend.templates.modal-confirmar-password')
         <div class="col-md-4">
 
-            <form action="{{ route('admin.update',['domain' => $domain, Auth::user()->id]) }}" enctype="multipart/form-data" class="card" >
+            <form action="{{ url('admin/update',['domain' => $domain, Auth::user()->id]) }}" enctype="multipart/form-data" class="card" >
               <div class="card-header">
                 <strong><i class="fa fa-user-cog"></i> Datos del Administrador</strong>
               </div><!--.card-header-->
-              <img id="img_admin" style="max-height: 300px;-o-object-fit: contain;object-fit: contain;" src="{{asset('images/uploads/users') .'/'. Auth::user()->img}}" class="card-img-top img-thumbnail" alt="...">
+              <img id="img_admin" style="max-height: 200px;-o-object-fit: contain;object-fit: contain;" src="{{asset('images/uploads/users') .'/'. Auth::user()->img}}" class="card-img-top img-thumbnail" alt="...">
               <div class="card-body">
 
                 <div class="container">
@@ -541,29 +455,8 @@
                     <button id="btn_cancel_edit_admin" type="button" class="btn btn-danger btn-block">Cancelar</button>
                   </div>
                 </div>
-
-
-
               </div>
-
             </form><!--.Form User-->
-
-
-            <!--div class="card">
-                <div class="card-header">
-                    Redes sociales del administrador
-                    <button title="Agregar " class="btn btn-primary float-right" style="padding:0;border-radius: 50%;width: 30px; height: 30px" >
-                        <i class="fa fa-plus-circle"></i>
-                    </button>
-
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
-
-                </ul>
-
-            </div-->
             <div class="accordion" id="accordionSocials">
                 <div class="card">
                     <div class="card-header" id="headingOne">

@@ -18,6 +18,14 @@ class MainController extends Controller
         //Session::save();
     }
 
+    public function checkDomain($dir){
+        if(checkdnsrr($dir, 'ANY')){
+            echo 'Ya existe';
+        }else{
+            echo 'Disponible';
+        }
+    }
+
     public function index(Request $request){
         if(Auth::check()){
             $domain = Auth::user()->tiendas()->first()->dominio ?? null;

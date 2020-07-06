@@ -8,8 +8,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="tienda-id" content="{{ $tienda->id }}">
 
-    <title>Administracion | {{ config('app.name')}}</title>
+    <title>Administracion | {{ strtoupper($domain)}}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -104,6 +105,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
     <div id="app">
         <div class="wrapper">
 
@@ -224,25 +226,23 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
                 <a href="{{ url('/admin') }}" class="brand-link">
-                    <img src="{{ asset('/images/system').'/' }}" alt="AdminLTE Logo" class="brand-image "
-                        style="opacity: .8">
-                    <span class="brand-text font-weight-light">Admin</span>
+                    <img src="{{ asset('/images/system/navbar-new2.png') }}" alt="AdminLTE Logo" class="mx-auto d-block"
+                        style="opacity: .8;max-height: 90px">
+
                 </a>
 
                 <!-- Sidebar -->
-                <div class="sidebar">
+                <div class="sidebar" style="height:calc(100% - 9em);overflow-y: scroll;">
                     <!-- Sidebar user panel (optional) -->
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            <img src="{{asset('images/uploads/users').'/'. Auth::user()->img}}" class="img-circle elevation-2" alt="User Image">
+                    <div class="mt-3 pb-3 mb-3">
+                        <div class="text-center">
+                            <img style="max-height: 60px" src="{{asset('images/uploads/tiendas/navbar').'/'. $domain . '.png'}}" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">
-                                @guest
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
-                                @else
-                                {{ Auth::user()->name }}
-                                <a class="defaultButton" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
+                            <div class="text-center">
+                                <span style="color: #b3a9ff" class="mt-3 mb-3 d-block">{{ $domain_owner ? $domain .'.cl' : $domain . '.comerciocentral.cl' }}</span>
+
+                                <a class="btn btn-dark" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">
                                     Cerrar Sesión
                                 </a>
@@ -251,9 +251,7 @@
                                     style="display: none;">
                                     @csrf
                                 </form>
-
-                                @endguest
-                            </a>
+                            </div>
                         </div>
                     </div>
 
@@ -263,99 +261,136 @@
                             data-accordion="false">
 
                             <li class="nav-item">
-                                <a href="{{url('/admin')}}" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
-                                    <i class="nav-icon fas fa-home"></i>
-                                    <p>Inicio</p>
+                                <a href="{{url('/admin/ordenes')}}" class="{{ Request::path() === 'admin/ordenes' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-cash-register"></i>
+                                    <p>Ordenes de compra</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{url('admin/ordenes')}}"
-                                   class="{{ Request::path() === 'ordenes' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="{{url('admin/clientes')}}"
+                                   class="{{ Request::path() === 'clientes' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
+                                    <p>Clientes</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item has-treeview {{ Request::path() === 'admin/productos' || Request::path() === 'admin/productos/categorias' || Request::path() === 'admin/productos/marcas' ? 'menu-open active' : '' }}">
+                                <a href="{{url('admin/productos')}}"
+                                    class="{{ Request::path() === 'productos' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-shopping-bag"></i>
                                     <p>
-                                        Ordenes
-                                        <?php use App\Orden; $orden_count = Orden::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $orden_count ?? '' }}</span>
+                                        Productos</p>
+                                </a>
+
+                            <ul class="nav nav-treeview ">
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/productos')}}"
+                                            class="{{ Request::path() === 'admin/productos' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-book-open nav-icon"></i>
+                                            <p>Catalogo</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/productos/categorias')}}"
+                                            class="{{ Request::path() === 'admin/productos/categorias' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-list nav-icon"></i>
+                                            <p>Categorias</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/productos/marcas')}}"
+                                            class="{{ Request::path() === 'admin/productos/marcas' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="far fa-copyright nav-icon"></i>
+                                            <p>Marcas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{url('/admin/promociones')}}" class="{{ Request::path() === 'promociones' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-gift"></i>
+                                    <p>
+                                        Promociones
+
                                     </p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{url('admin/users')}}"
-                                    class="{{ Request::path() === 'usuarios' ? 'nav-link active' : 'nav-link' }}">
-                                    <i class="nav-icon fas fa-users"></i>
+                                <a href="{{url('/admin/banners')}}" class="{{ Request::path() === 'banners' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-images"></i>
                                     <p>
-                                        Usuarios
-                                        <?php use App\User; $users_count = User::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $users_count ?? '' }}</span>
+                                        Publicidad
+
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{url('/admin/blog')}}" class="{{ Request::path() === 'admin/blog' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-newspaper"></i>
+                                    <p>
+                                        Blog de noticias
 
+                                    </p>
+                                </a>
+                            </li>
                             <li class="nav-item has-treeview">
-                                <a href="{{url('/admin/productos')}}" class="nav-link">
-                                    <i class="nav-icon fa fa-box-open"></i>
+                                <a href="{{url('/admin/config')}}" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-cogs"></i>
                                     <p>
-                                        Productos
-                                        <?php use App\Producto; $productos_count = Producto::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $productos_count ?? '0' }}</span>
+                                        Configuracion
+
                                     </p>
                                 </a>
-                                <!--ul class="nav nav-treeview">
+
+                            <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="notas/todas"
-                                            class="{{ Request::path() === 'notas/todas' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Todas</p>
+                                            class="{{ Request::path() === 'config/main' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-cog nav-icon"></i>
+                                            <p>General</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="notas/favoritas"
-                                            class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Favoritas</p>
+                                            class="{{ Request::path() === 'config/cert' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-award nav-icon"></i>
+                                            <p>Certificacion</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="notas/archivadas"
-                                            class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link' }}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Archivadas</p>
+                                            class="{{ Request::path() === 'config/socials' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-thumbs-up nav-icon"></i>
+                                            <p>Redes sociales</p>
                                         </a>
                                     </li>
-                                </ul-->
-                            </li>
+                                    <li class="nav-item">
+                                        <a href="notas/archivadas"
+                                           class="{{ Request::path() === 'config/themes' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-palette nav-icon"></i>
+                                            <p>Temas y colores</p>
+                                        </a>
+                                    </li>
 
-                            <li class="nav-item">
-                                <a href="{{url('/admin/categorias')}}" class="nav-link">
-                                    <i class="nav-icon fa fa-copy"></i>
-                                    <p>
-                                        Categorias
-                                        <?php use App\Categoria; $categorias_count = Categoria::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $categorias_count ?? '0' }}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('/admin/marcas')}}" class="nav-link">
-                                    <i class="nav-icon fa fa-copyright"></i>
-                                    <p>
-                                        Marcas
-                                        <?php use App\Marca; $marcas_count = Marca::all()->count(); ?>
-                                        <span class="right badge badge-danger">{{ $marcas_count ?? '0' }}</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('/admin/blog')}}" class="nav-link">
-                                    <i class="nav-icon fa fa-file-alt"></i>
-                                    <p>
-                                        Blog
-                                        <?php //use App\Producto; $productos_count = Producto::all()->count(); ?>
-                                        <!--span class="right badge badge-danger">{{ $productos_count ?? '0' }}</span-->
-                                    </p>
-                                </a>
+                                    <li class="nav-item">
+                                        <a href="notas/archivadas"
+                                           class="{{ Request::path() === 'config/user' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-user nav-icon"></i>
+                                            <p>Perfil de usuario</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="notas/archivadas"
+                                           class="{{ Request::path() === 'config/upgrade' ? 'nav-link active' : 'nav-link' }}">
+                                            <i class="fa fa-magic nav-icon"></i>
+                                            <p>Comprar mejoras</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
 

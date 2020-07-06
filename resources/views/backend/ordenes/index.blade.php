@@ -72,6 +72,16 @@
             <div class="alert alert-info">Resultados para la orden  <strong>"N°{{$search}}"</strong></div>
     @endif
     <!--.fin FORM busqueda-->
+        <div class="container" style="margin:25px 10px">
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group">
+                        <button id="btn-ordenes-hoy" class="btn btn-primary active">Ordenes de hoy</button>
+                        <button id="btn-ordenes-all" class="btn btn-primary">Todas las ordenes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <table class="table table-bordered">
@@ -86,7 +96,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="tbody-ordenes">
                     @foreach($ordenes as $orden)
                         <tr>
                             <td>{{$orden->id}}</td>

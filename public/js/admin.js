@@ -91,7 +91,29 @@ $(document).ready(function(){
         $('#form-agregar-social-site').fadeOut(500);
     });
 
+    $('#btn-ordenes-hoy').click(function(){
 
+    });
+
+    $('#btn-ordenes-all').click(function(){
+        var data = new FormData();
+        var tienda = $('meta[name="tienda-id"]').attr('content');
+        data.append('tienda', tienda);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:data,
+            contentType:false,
+            processData:false,
+            type:'post',
+            url:'/ajax/ordenes',
+            success:function(dat){
+                //alert(dat);
+                $('#tbody-ordenes').html(dat);
+            }
+        })
+    });
 });
 
 function readURL(input, selector) {

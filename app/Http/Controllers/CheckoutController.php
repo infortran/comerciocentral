@@ -31,12 +31,12 @@ class CheckoutController extends Controller
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
-                if(Session::has('cart')){
+                if(Session::has($data['cartname'])){
 
-                    $cart = Session::get('cart');
+                    $cart = Session::get($data['cartname']);
                     $total = $cart->precioTotal;
-                    if(Session::has('envio')){
-                        $total = $cart->precioTotal + Session::get('envio')->precio;
+                    if(Session::has($data['envioname'])){
+                        $total = $cart->precioTotal + Session::get($data['envioname'])->precio;
                     }
 
                     $data['cart'] = $cart;

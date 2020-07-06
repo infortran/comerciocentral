@@ -23,9 +23,9 @@ class BlogAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $domain)
     {
-        $domain = request()->route('domain');
+        //$domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
@@ -48,9 +48,16 @@ class BlogAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($domain)
     {
-        return view('backend.blog.create',['textarea' => true]);
+        if($domain) {
+            $loader = new Loader($domain);
+            if ($loader->checkDominio()) {
+                $data = $loader->getData();
+                return view('backend.blog.create', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     /**
@@ -88,14 +95,12 @@ class BlogAdminController extends Controller
      */
     public function show(Request $request, $domain, $id)
     {
-        $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $data = $loader->getData();
                 $post = Post::where('tienda_id', $data['tienda']->id )->findOrFail($id);
-
                 $data['post'] = $post;
                 $data['user_post'] = User::findOrFail($post->id);
                 $data['comentarios'] = Comentario::where('id_post', $post->id)->get();
