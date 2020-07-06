@@ -47,9 +47,9 @@ class MainController extends Controller
     }
 
     public function login(Request $request){
-        //return view('main.login');
-        $data['color'] = '#afafaf';
-        return view('welcome', $data);
+        return view('main.login');
+        //$data['color'] = '#afafaf';
+        //return view('welcome', $data);
     }
 
 
