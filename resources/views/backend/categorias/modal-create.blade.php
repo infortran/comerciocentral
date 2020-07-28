@@ -16,6 +16,7 @@
                     <div class="form-group">
                         <label for="categoria-input">Ingrese el nombre de la categoria</label>
                         <input name="categoria" type="text" class="form-control" id="categoria-input" >
+                        <input type="hidden" name="tienda" value="{{ $tienda->id }}">
                     </div>
                 </div>
                 <div class="col">
@@ -32,15 +33,15 @@
             </div>
         </div>
 
-        
-        
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="defaultButton" data-dismiss="modal">Cancelar</button>
-        
+
         <button type="submit" class="addButton"><i class="fas fa-save"></i> Guardar</button>
         {!! Form::close() !!}
-        
+
       </div>
     </div>
   </div>

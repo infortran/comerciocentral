@@ -10,13 +10,13 @@
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
-                            @foreach($slides as $key => $slide)
+                            @foreach($tienda->slides as $key => $slide)
 							<li data-target="#slider-carousel" data-slide-to="{{$key}}" class="{{$key == 0 ? 'active' : ''}}"></li>
                             @endforeach
 						</ol>
 
 						<div class="carousel-inner">
-                            @foreach($slides as $key => $slide)
+                            @foreach($tienda->slides as $key => $slide)
 							<div class="item {{$key == 0 ? 'active' : ''}}">
 								<div class="col-sm-6">
                                     <img src="{{asset('images/uploads/slides').'/'. $slide->logo}}" alt="">
@@ -62,28 +62,69 @@
                         <i class="fa fa-{{ $certificacion ? 'check' : 'times' }}-circle check" style="color:{{ $certificacion ? '#0f9500' :'red' }}"></i>
                     </div>
 
-                    <div class="title">{{$certificacion ? 'Certificada' : 'No Certificada'}}</div>
-                    <a href="{{ url('/certificados') }}">Ver detalles</a>
+                    <div class="title">{{$certificacion ? 'Tienda Certificada' : 'Tienda No Certificada'}}</div>
+                    <a href="{{ url('/certificaciones') }}">Ver detalles</a>
                 </div>
                 <div class="col-xs-12 col-lg-4 eval eval-puntuacion">
-                    <div class="title">Puntuacion</div>
-                    <div class="points">4.5</div>
+                    <div class="title">Puntuación</div>
+                    <div class="points">{{ number_format($puntaje, 1) }}</div>
                     <div class="stars">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+                        @if($puntaje > 0.4 && $puntaje < 1)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 1 ? '#ffab00' : ''}}"></i>
+                        @endif
+
+                        @if($puntaje > 1.4 && $puntaje < 2)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 2 ? '#ffab00' : ''}}"></i>
+                        @endif
+
+                            @if($puntaje > 2.4 && $puntaje < 3)
+                                <div class="media-estrella">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half"></i>
+                                </div>
+                                @else
+                                <i class="fa fa-star" style="color:{{ $puntaje >= 3 ? '#ffab00' : ''}}"></i>
+                                @endif
+
+
+                        @if($puntaje > 3.4 && $puntaje < 4)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 4 ? '#ffab00' : ''}}"></i>
+                        @endif
+                            @if($puntaje > 4.4 && $puntaje < 5)
+                                <div class="media-estrella">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half"></i>
+                                </div>
+                                @else
+                                <i class="fa fa-star" style="color:{{ $puntaje >= 5 ? '#ffab00' : ''}}"></i>
+                                @endif
+
                     </div>
                     <div class="users-votes">
-                        <i class="fa fa-user"></i>
-                        12.872
+                        <i class="fa fa-users"></i>
+                        <strong>{{ count($tienda->ratings) }}</strong>
+                        <div><small>votos</small></div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-lg-4 eval eval-owner">
 
-                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $owner->img }}" alt="">
-                    <div class="owner-name">{{ $owner->name. ' '. $owner->lastname }}</div>
+                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $tienda->users->img }}" alt="">
+                    <div class="owner-name">{{ $tienda->users->name. ' '. $tienda->users->lastname }}</div>
                     <div class="owner-position">Representante</div>
                 </div>
             </div>
@@ -102,16 +143,9 @@
                 <!-- ============================
                          FORMULARIO DE BUSQUEDA
                     ================================= -->
-                @if(isset($search))
-                    <div class="col-sm-4" style="margin-top: 20px">
-                        <form class="search-form">
-                            <input name="search" type="text" class="textbox" placeholder="Buscar">
-                            <button title="Search" value="" type="submit" class="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </form>
-                    </div>
-            @endif
+
+
+
 				@include('frontend.templates.aside-left')
 				<!--====================FIN ASIDE===========================-->
 
@@ -131,13 +165,30 @@
                                 </ul>
                             </div>
                         @endif
+                        <div class="row prod-container" >
+
+                            @if(count($productos) == 0)
+                            <div class="producto-notfound col-lg-12">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <div>
+                                    <div class="title">No hemos encontrado productos</div>
+                                    <div><small>Prueba buscando con otros terminos de busqueda</small></div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="loading-productos display-none">
+                                <div class="loading-icon">
+                                    <i class="fa fa-circle-notch fa-spin"></i>
+                                    <div>Buscando</div>
+                                </div>
+                            </div>
                         @foreach($productos as $producto)
                             @if($producto->is_available)
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<img style="max-width:255px;max-height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+											<img style="max-width:255px;height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 											<h2>$ {{number_format($producto->precio, 0, '', '.')}}</h2>
 											<p>{{$producto->nombre}}</p>
 											<button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
@@ -167,21 +218,21 @@
 						</div>
                             @endif
                         @endforeach
-
+                        </div>
 
 					</div><!--FIN PRODUCTOS-->
-
+                    {{ $productos->links() }}
 
 
 
 
                     <!--=======================================0
                             PRODUCTOS POR MARCAS
-                    ===========================================-->
-					<div class="category-tab"><!--category-tab-->
+                    ===========================================->
+					<div class="category-tab"><-category-tab->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-                                @foreach($marcas as $key => $marca)
+                                @foreach($tienda->marcas as $key => $marca)
                                     @if($marca->productos->count() > 0)
                                     <li class="{{$key == 0 ? 'active' : ''}}"><a href="#marca-tab-{{$marca->id}}" data-toggle="tab">{{$marca->marca}}</a></li>
                                     @endif
@@ -189,7 +240,7 @@
 							</ul>
 						</div>
 						<div class="tab-content">
-                            @foreach($marcas as $keym => $marca)
+                            @foreach($tienda->marcas as $keym => $marca)
 							<div class="tab-pane fade {{$keym == 0 ? 'active in' : ''}}" id="marca-tab-{{$marca->id}}" >
                                 @foreach($marca->productos as $producto)
 								<div class="col-sm-3">
@@ -210,72 +261,42 @@
 
 							</div>
                             @endforeach
-
-
-
-
-							<div class="tab-pane fade" id="poloshirt" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div><!--/category-tab-->
 
 
 
 				</div><!--.col-9 content-->
+
 			</div><!--.row-->
-		</div>
+            <div class="recommended_items"><!--recommended_items-->
+                <h2 class="title text-center">ultimas noticias</h2>
+                        @foreach($tienda->posts->take(3) as $noticia)
+
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="{{ asset('images/uploads/blog').'/' .$noticia->img }}" alt="" />
+                                            <h4 style="color:var(--color-primary) !important">{{ $noticia->titulo }}</h4>
+                                            <div class="cont-noticia" >{{ $noticia->contenido }}</div>
+                                            <a href="{{route('post', [$domain, $noticia->id])}}">Ver mas</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @endforeach
+                    </div>
+                </div>
+            </div><!--/recommended_items-->
+            <div class="row">
+                <div class="banner">
+
+                </div>
+            </div>
+		</div><!-- FIN CONTAINER-->
 	</section>
 
 	@endsection

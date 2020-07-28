@@ -19,26 +19,16 @@ use Illuminate\Support\Facades\Auth;
 class InicioController extends Controller
 {
 
-	/*================================
-			HOME FRONTEND
-	==================================*/
-
-
-    public function index(Request $request){
-
-        $domain = request()->route('domain');
+    public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
-                //dd($data['siteSocials']);
-                $data['cartname'] = 'cart-'. $data['tienda']->id;
-                $data['slides'] = Slide::where('tienda_id', $data['tienda']->id)->get();
-                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
-                $data['productos'] = Producto::where('tienda_id', $data['tienda']->id)->get();
-                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
+                $query = trim($request->get('search'));
+                if($request){
+                    $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%'. $query . '%')->paginate(9);
+                }
                 return view('frontend.inicio', $data);
             }
         }

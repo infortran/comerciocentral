@@ -11,15 +11,16 @@
       </div>
       <div class="modal-body">
 
-        Esta seguro que desea eliminar permanentemente el producto N°{{$producto->id}}
+        Esta seguro que desea eliminar permanentemente el producto?
+          <div><strong>"{{$producto->nombre}}"</strong></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 
 
-        <form action="{{ route('productos.destroy', ['domain' => $domain, $producto->id]) }}">
+        <form action="{{ route('productos.destroy', ['domain' => $domain, $producto->id]) }}" method="POST">
             @csrf
-
+            @method('DELETE')
             <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
         </form>
 

@@ -32,13 +32,10 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($domain)
     {
-        $domain = request()->route('domain');
-        //dd($domain);
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();

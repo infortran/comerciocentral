@@ -13,4 +13,8 @@ class Orden extends Model
     public function comprobantes(){
         return $this->hasOne('App\Comprobante', 'id_orden');
     }
+
+    public function tienda(){
+        return $this->hasOne('App\Tienda');
+    }
 }

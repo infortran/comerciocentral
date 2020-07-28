@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | {{ $tienda->nombre }}</title>
+    <title>{{ url()->current() === url('/')? 'Inicio': ucfirst(Request::segment(1)) }} | {{ $tienda->nombre }}</title>
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
@@ -82,7 +82,7 @@
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-xs-12 col-md-10 text-center">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
 								<li><a href="{{url('/contacto')}}"><i class="fa fa-phone"></i> {{$tienda->telefono}}</a></li>
@@ -90,11 +90,11 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
+					<div class="col-xs-12 col-md-2 text-center">
+						<div class="social-icons">
 							<ul class="nav navbar-nav">
-                                @foreach($siteSocials as $social)
-								<li><a href="http://{{$social->socials->url.'/'.$social->uri}}"><i class="fab fa-{{strtolower($social->socials->nombre)}}"></i></a></li>
+                                @foreach($tienda->socials as $social)
+								<li><a href="http://{{$social->url.'/'.$social->uri}}"><i class="fab fa-{{strtolower($social->nombre)}}"></i></a></li>
                                 @endforeach
 							</ul>
 						</div>
@@ -166,13 +166,13 @@
 								@guest
 								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
-                                    @if(Auth::check() && Auth::user()->role=='admin' && $is_owner)
-                                    <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Admin</a></li>
-                                    @endif
+
 								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i> Logout</a></li>
 
-
+                                    @if(Auth::check() && Auth::user()->role=='admin' && $is_owner)
+                                        <li><a href="{{url('/admin')}}"><i class="fa fa-user-cog"></i> Admin</a></li>
+                                    @endif
 
                                 <form id="logout-form" action="{{ route('logout', ['domain' => $domain]) }}" method="POST"
                                     style="display: none;">
@@ -191,6 +191,7 @@
                 NAVBAR PRINCIPAL (inicio, productos, blog, contacto)
         =======================================-->
 
+
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
@@ -207,7 +208,8 @@
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="/" class="{{ url()->current() === url('/') ? 'active' : null }}">Inicio</a></li>
 								<li><a href="/productos" class="{{ Request::segment(1) === 'productos' || Request::segment(1) === 'producto' ? 'active' : null }}">Productos</a></li>
-								<li><a href="/blog" class="{{ Request::segment(1) === 'blog' ? 'active' : null }}">Noticias</a></li>
+								<li><a href="/noticias" class="{{ Request::segment(1) === 'noticias' ? 'active' : null }}">Noticias</a></li>
+                                <li><a href="/certificaciones" class="{{ Request::segment(1) === 'certificaciones' ? 'active' : null }}">Certificaciones</a></li>
 								<li><a href="/contacto" class="{{ Request::segment(1) === 'contacto' ? 'active' : null }}">Contacto</a></li>
 							</ul>
 						</div>
@@ -215,6 +217,7 @@
 
                     <div class="col-xs-8 col-sm-5 col-md-3 hidden-xs">
                         @if(url()->current() === url('/'))
+                            <a href="{{ url('/certificaciones') }}">
                         <div class="certificado">
                             <div class="cert-icon">
                                 <svg class="" width="50" height="50">
@@ -234,6 +237,7 @@
                             </div>
 
                         </div>
+                            </a>
                             @else
 
                                 <form class="search-form">
@@ -256,6 +260,8 @@
         <div class="container hidden-sm hidden-md hidden-lg" style="margin-bottom:50px">
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">
+                    @if(url()->current() === url('/'))
+                    <a href="{{ url('/certificaciones') }}">
                     <div class="certificado">
                         <div class="cert-icon">
                             <svg class="" width="50" height="50">
@@ -275,16 +281,14 @@
                         </div>
 
                     </div>
+                    </a>
+                        @endif
                 </div>
             </div>
         </div>
         <!--FIN NAVBAR PRINCIPAL-->
 
-        @if(isset($search) && $search)
-            <div class="container">
-                <div class="alert alert-info">Resultados para tu busqueda <strong>"{{$search}}"</strong></div>
-            </div>
-        @endif
+
 	</header><!--/header-->
 
 	@yield('content')
@@ -301,7 +305,7 @@
 					</div>
 					<div class="col-sm-7">
 
-						@foreach($members as $member)
+						@foreach($tienda->teammembers as $member)
 						<div class="col-sm-3">
 							<div class="video-gallery text-center">
 								<a href="#">
@@ -324,7 +328,12 @@
 					<div class="col-sm-3">
 						<div class="address">
 							<img src="{{asset('images/home/map.png')}}" alt="" />
-							<p>{{$tienda->direccion}}</p>
+							<p>
+                                @if($tienda->direccion->first())
+                                {{$tienda->direccion->first()->calle.' '. $tienda->direccion->first()->numero}}
+                            {{$tienda->direccion->first()->poblacion.' '. $tienda->direccion->first()->ciudad}}
+                                    @endif
+                            </p>
 						</div>
 					</div>
 				</div>
@@ -351,8 +360,8 @@
 						<div class="single-widget">
 							<h2>Redes sociales</h2>
 							<ul class="nav nav-pills nav-stacked">
-                                @foreach($siteSocials as $social)
-								<li><a href="http://{{$social->socials->url.'/'.$social->uri}}">{{$social->socials->nombre}}</a></li>
+                                @foreach($tienda->socials as $social)
+								<li><a href="http://{{$social->url.'/'.$social->uri}}">{{$social->nombre}}</a></li>
                                 @endforeach
 							</ul>
 						</div>

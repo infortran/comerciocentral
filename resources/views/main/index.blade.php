@@ -9,7 +9,7 @@
                     <div class="col-12 text-center">
                         <div class="slider_text">
                             <!--img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop-optimized.png')}}" alt=""-->
-                            <h3>Ahora puedes crear tu tienda online <strong>GRATIS</strong> y en minutos</h3>
+                            <h3>La nueva tienda virtual de confianza <strong>GRATIS</strong> y <strong>CERTIFICADA</strong></h3>
                         </div>
                     </div>
                     <div class="col-12 col-lg-10 col-xl-8">
@@ -24,7 +24,7 @@
                         @endif
                         <form action="{{ route('main.register') }}" method="POST" class="input-group mb-3">
                             @csrf
-                            <input name="domain" autofocus type="text" class="form-control input-main" placeholder="Ingresa el nombre de tu tienda" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <input name="domain" autofocus type="text" class="form-control input-main" placeholder="Ingresa el nombre de tu tienda" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                             <div class="input-group-append">
                                 <button class="input-group-text btn-input-main btn-hover color-1" id="basic-addon2">
                                         <i class="fa fa-shopping-cart" style="margin-right:10px"></i>

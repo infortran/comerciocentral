@@ -14,21 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Route::get('/tienda', 'InicioController@index')->name('inicio.index');
+Route::domain('godmode.comerciocentral.chi')->group(function(){
+    Route::get('/', 'GodModeController@index');
+});
 
 
-
-Route::domain('{domain}.salty-spire-92714.herokuapp.com/')->group(function () {
+Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::get('/', 'InicioController@index');
     Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
-    //Route::post('/', 'InicioController@indexAdm');
     Auth::routes();
-    Route::get('/contacto', 'ContactoController@index');
-    //Route::get('/cuenta', 'UserController@index');
+
+    Route::get('/admin', 'AdminController@index');
+    Route::get('/admin/config', 'AdminController@config');
+    Route::post('/admin/update', 'AdminController@update');
 
     Route::get('/admin/productos', 'ProductoController@index');
     Route::get('/admin/productos/categorias', 'CategoriaController@index');
     Route::get('/admin/productos/marcas', 'MarcaController@index');
+    Route::get('/admin/banners', 'BannerController@index');
+    Route::post('/admin/banners/aside', 'BannerController@updateAside');
+    Route::post('/admin/banners/productos', 'BannerController@updateProducto');
     Route::get('/admin/blog', 'BlogAdminController@index');
+    Route::get('/admin/ordenes', 'OrdenController@index');
+    Route::get('/admin/orden/{id}', 'OrdenController@show');
+    Route::post('/ajax/ordenes', 'OrdenController@showAll');
+    Route::get('/admin/clientes', 'UserController@clientes');
+    Route::get('/admin/promociones', 'TiendaController@promos');
 
     Route::get('/carrito', 'CartController@index');
     Route::post('/add_to_cart', 'CartController@addItemsToCart');
@@ -45,27 +56,29 @@ Route::domain('{domain}.salty-spire-92714.herokuapp.com/')->group(function () {
     Route::post('/payment/final', 'CheckoutController@finalPaymentProcess');
     Route::post('/payment/final_deposito', 'CheckoutController@finalDepositoProcess');
 
-    //Route::resource('/admin', 'AdminController');
+
+
+    Route::get('/productos', 'ProductoFrontController@index');
+    Route::post('/rangoprecios', 'ProductoFrontController@rangoPrecios');
+    Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
+    Route::post('admin/productos/set_availability/{id}', 'ProductoController@setAvailability');
+
+    Route::get('/noticias', 'BlogController@index');
+    Route::get('/noticias/post/{id}', 'BlogController@show')->name('post');
+
+    Route::get('/contacto', 'ContactoController@index');
+
+    Route::get('/certificaciones', 'CertController@index');
+
+
+
+
+
+
     Route::resource('admin/productos', 'ProductoController');
     Route::resource('admin/categorias', 'CategoriaController');
     Route::resource('admin/marcas', 'MarcaController');
     Route::resource('admin/blog', 'BlogAdminController');
-
-    Route::get('/productos', 'ProductoFrontController@index');
-    Route::get('/producto/{id}', 'ProductoFrontController@single')->name('producto.single');
-
-    Route::get('/blog', 'BlogController@index');
-    Route::get('/blog/post/{id}', 'BlogController@show')->name('post');
-
-
-    Route::get('/admin/ordenes', 'OrdenController@index');
-    Route::get('/admin/orden/{id}', 'OrdenController@show');
-    Route::post('/ajax/ordenes', 'OrdenController@showAll');
-
-
-    Route::get('/admin', 'AdminController@index');
-    Route::post('/admin/update', 'AdminController@update');
-
 });
 
 //Auth::routes();
@@ -85,38 +98,13 @@ Route::get('/registro/checktiendaemail/{email}', 'MainController@checkTiendaEmai
 Route::get('/registro/checktiendadomainemail/{domain}/{email}', 'MainController@checkTiendaDomainEmail');
 
 
-
-
-
-
 Route::post('/direccion', 'UserController@addDireccion')->name('user.addDireccion');
-
-
-
-
-
-
-
-
-
 
 Route::resource('comentario', 'ComentarioController');
 
 Route::resource('user', 'UserController');
 
 //Route::get('/.well-known/pki-validation/{key}', 'InicioController@pkiValidation');
-
-
-
-
-
-
-
-
-
-
-
-
 
 Route::get('/admin/comentarios' ,'ComentarioAdminController@index');
 Route::put('/admin/comentarios/ban/{id}', 'ComentarioController@ban')->name('comentario.ban');
@@ -141,25 +129,9 @@ Route::get('/cuenta/password/reset', 'UserController@resetCheckPassword');
 Route::post('admin/users/ban/{id}', 'AdminController@banUser');
 Route::post('admin/users/unlock/{id}', 'AdminController@unlockUser');
 
-Route::post('admin/productos/set_available/{id}', 'ProductoController@setAvailable');
-Route::post('admin/productos/set_not_available/{id}', 'ProductoController@setNotAvailable');
 
-
-
-
-
-
-Route::resource('admin/headerfrontend', 'HeaderFrontendController');
-
-Route::resource('admin/footerinfo', 'FooterInfoController');
 
 Route::resource('admin/teammember', 'TeamMemberController');
-
-
-
-
-
-
 
 Route::resource('admin/slides', 'SlideController');
 

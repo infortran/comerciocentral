@@ -6,6 +6,7 @@ use App\Comprobante;
 use App\Direccion;
 use App\Loader;
 use App\Orden;
+use App\Tienda;
 use App\WebpayOrden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,22 +16,20 @@ use Session;
 
 class CheckoutController extends Controller
 {
-    private $data;
+    private $data, $ordername;
 
     public function __construct(){
         /*$data = new Loader();
         $this->data = $data->getData();*/
     }
 
-    public function index(Request $request){
-        $domain = request()->route('domain');
-        //dd($domain);
+    public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
+                //dd(Session::has($data['cartname']));
                 if(Session::has($data['cartname'])){
 
                     $cart = Session::get($data['cartname']);
@@ -51,77 +50,90 @@ class CheckoutController extends Controller
 
     }
 
-    public function getPaymentProcess(Request $request){
-        $dir_string = null;
-        $nombre = null;
-        $envio = null;
-        if(!Session::has('cart')){
-            return redirect('/carrito');
-        }
+    public function getPaymentProcess(Request $request, $domain){
+        if($domain){
+            $loader = new Loader($domain);
+            if($loader->checkDominio()){
+                $data = $loader->getData();
+                if($data['tienda']->id == $request->get('tienda')){
+                    $cartname = 'cart-'. $request->get('tienda');
+                    $envioname = 'envio-'. $request->get('tienda');
+                    $envio = null;
+                    $dir_string = null;
+                    $nombre = null;
+                    if(!Session::has($cartname)){
+                        return redirect('/carrito');
+                    }
 
-        if(Session::has('envio')){
-            $envio = Session::get('envio')->precio;
-            if(Auth::check()){
-                $direccion = Direccion::find($request->get('direccion_envio'));
-                $dir_string = $direccion->calle.' / ';
-                $dir_string .= $direccion->numero. ' / ';
-                $dir_string .= $direccion->departamento ? $direccion->departamento.' / ' : '' ;
-                $dir_string .= $direccion->poblacion. ' / ';
-                $dir_string .= $direccion->ciudad. '.';
-            }else{
-                $request->validate([
-                    'calle' => 'required',
-                    'numero' => 'required',
-                    'poblacion' => 'required',
-                    'ciudad' => 'required']);
-                $dir_string = $request->get('calle').' / ';
-                $dir_string .= $request->get('numero'). ' / ';
-                $dir_string .= $request->get('departamento') ? $request->get('departamento').' / ' : '' ;
-                $dir_string .= $request->get('poblacion'). ' / ';
-                $dir_string .= $request->get('ciudad'). '.';
+                    if(Session::has($envioname)){
+                        $envio = Session::get($envioname)->precio;
+                        if(Auth::check() && $data['tienda']->direcciones){
+                            $direccion = Direccion::find($request->get('direccion_envio'));
+                            $dir_string = $direccion->calle.' / ';
+                            $dir_string .= $direccion->numero. ' / ';
+                            $dir_string .= $direccion->departamento ? $direccion->departamento.' / ' : '' ;
+                            $dir_string .= $direccion->poblacion. ' / ';
+                            $dir_string .= $direccion->ciudad. '.';
+                        }else{
+                            $request->validate([
+                                'calle' => 'required',
+                                'numero' => 'required',
+                                'poblacion' => 'required',
+                                'ciudad' => 'required']);
+                            $dir_string = $request->get('calle').' / ';
+                            $dir_string .= $request->get('numero'). ' / ';
+                            $dir_string .= $request->get('departamento') ? $request->get('departamento').' / ' : '' ;
+                            $dir_string .= $request->get('poblacion'). ' / ';
+                            $dir_string .= $request->get('ciudad'). '.';
+                        }
+                    }
+                    if(!Auth::check()){
+                        $request->validate([
+                            'nombre' => 'required',
+                            'email' => 'required|email',
+                            'telefono' => 'required',
+                        ]);
+                    }else{
+                        $nombre = Auth::user()->name.' '.Auth::user()->lastname;
+                    }
+
+                    $cart = Session::get($cartname);
+                    $total = $envio ? $cart->precioTotal + $envio : $cart->precioTotal;
+                    $orden = new Orden();
+                    $orden->nombre = $nombre ? $nombre : $request->get('nombre');
+                    $orden->email = Auth::check() ? Auth::user()->email : $request->get('email');
+                    $orden->telefono = Auth::check() ? Auth::user()->telefono : $request->get('telefono');
+                    $orden->id_user = Auth::check() ? Auth::user()->id : null;
+                    $orden->cart = serialize($cart);
+                    $orden->total = $cart->precioTotal;
+                    $orden->envio = $envio;
+                    $orden->direccion = $dir_string ? $dir_string : null;
+
+
+                    //PAYMENT SELECTOR
+                    if($request->get('forma_pago') == 'webpay'){
+                        $orden->tipo_pago = 'webpay';
+                        $data['tienda']->ordenes()->save($orden);
+                        if($this->getWebpay($total, $orden->id)){
+                            $data['form_action'] = $this->data['form_action'];
+                            $data['token_ws'] = $this->data['token_ws'];
+                            return view('frontend.templates.payment_process', $data);
+                        }else{
+                            return redirect('checkout')->withErrors("Error en la autorizacion de WEBPAY");
+                        }
+                    }else{
+                        $orden->tipo_pago = 'deposito';
+                        $this->ordername = 'orden-'. $request->get('tienda');
+                        Session::put($this->ordername, $orden);
+                        return redirect('/payment/deposito');
+                    }
+                }
             }
-        }
-        if(!Auth::check()){
-            $request->validate([
-                'nombre' => 'required',
-                'email' => 'required|email',
-                'telefono' => 'required',
-            ]);
-        }else{
-            $nombre = Auth::user()->name.' '.Auth::user()->lastname;
-        }
-
-        $cart = Session::get('cart');
-        $total = $envio ? $cart->precioTotal + $envio : $cart->precioTotal;
-        $orden = new Orden();
-        $orden->nombre = $nombre ? $nombre : $request->get('nombre');
-        $orden->email = Auth::check() ? Auth::user()->email : $request->get('email');
-        $orden->telefono = Auth::check() ? Auth::user()->telefono : $request->get('telefono');
-        $orden->id_user = Auth::check() ? Auth::user()->id : null;
-        $orden->cart = serialize($cart);
-        $orden->total = $cart->precioTotal;
-        $orden->envio = $envio;
-        $orden->direccion = $dir_string ? $dir_string : null;
-
-
-        //PAYMENT SELECTOR
-        if($request->get('forma_pago') == 'webpay'){
-            $orden->tipo_pago = 'webpay';
-            $orden->save();
-            if($this->getWebpay($total, $orden->id)){
-                return view('frontend.templates.payment_process', $this->data);
-            }else{
-                return redirect('checkout')->withErrors("Error en la autorizacion de WEBPAY");
-            }
-        }else{
-            $orden->tipo_pago = 'deposito';
-            Session::put('orden', $orden);
-            return redirect('/payment/deposito');
         }
     }
 
     public function getDepositoPaymentProcess(Request $request){
-        if (Session::has('orden')){
+        if (Session::has($this->ordername)){
             return view('frontend.templates.deposito', $this->data);
         }else{
             return redirect('/');
@@ -224,13 +236,20 @@ class CheckoutController extends Controller
 
     }
 
-    public function finalPaymentProcess(Request $request){
+    public function finalPaymentProcess(Request $request, $domain){
         //BORRAR LA ORDEN QUE NO FUE PROCESADA
-        if($request->get('TBK_TOKEN')){
-            $orden = Orden::findOrFail($request->get('TBK_ORDEN_COMPRA'));
-            $orden->delete();
+        if($domain){
+            $loader = new Loader($domain);
+            if($loader->checkDominio()){
+                $data = $loader->getData();
+                if($request->get('TBK_TOKEN')){
+                    $orden = Orden::findOrFail($request->get('TBK_ORDEN_COMPRA'));
+                    $orden->delete();
+                }
+                return view('frontend.final', $data);
+            }
         }
-        return view('frontend.final', $this->data);
+
     }
 
     public function getRetryPayment(){

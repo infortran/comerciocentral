@@ -12,7 +12,7 @@ class Social extends Model
         return $this->belongsToMany(User::class)->withPivot('uri');
     }
 
-    public function siteSocials(){
-        return $this->hasMany('App\SiteSocial');
+    public function tienda(){
+        return $this->belongsToMany('App\Tienda', 'site_socials');
     }
 }

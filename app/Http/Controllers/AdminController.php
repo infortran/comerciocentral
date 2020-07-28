@@ -28,39 +28,38 @@ class AdminController extends Controller
 
     public function __construct(){
     	$this->middleware('admin');
+        if(Session::has('auth_change_pass')){
+            Session::remove('auth_change_pass');
+        }
+    }
+
+    public function config($domain){
+        if($domain) {
+            $loader = new Loader($domain);
+            if ($loader->checkDominioAdmin()) {
+                $data = $loader->getData();
+                $data['socials'] = Social::all();
+                return view('backend.config.index', $data);
+            }
+            return redirect('http://'. $domain.'.comerciocentral.chi');
+        }
+
+        return view('frontend.templates.site-not-found');
     }
 
     public function index(Request $request){
         $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
-                $id = $data['tienda']->id;
                 $data['socials'] = Social::all();
-                $data['site_socials'] = SiteSocial::where('tienda_id', $id)->get();
-                $data['slides'] = Slide::where('tienda_id', $id)->get();
-                $data['envios'] = Envio::where('tienda_id', $id)->get();
                 return view('backend.home', $data);
             }
             return redirect('http://'. $domain.'.comerciocentral.chi');
         }
 
         return view('frontend.templates.site-not-found');
-        /*$data = [
-            'header' => HeaderFrontend::findOrFail(1),
-            'footer' => FooterInfo::findOrFail(1),
-            'members' => TeamMember::all(),
-            'slides' => Slide::all(),
-            'socials' => Social::all(),
-            'site_socials' => SiteSocial::all(),
-            'envios' => Envio::all()
-        ];*/
-
-        if(Session::has('auth_change_pass')){
-            Session::remove('auth_change_pass');
-        }
 
     }
 

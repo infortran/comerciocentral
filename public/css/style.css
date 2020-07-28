@@ -18,6 +18,8 @@
     margin:100px 0;
 }
 
+
+
 /*********************
     elMago
  *********************/
@@ -1997,6 +1999,7 @@ h3 {
 /* line 1, ../../Arafath/CL/December/234. Finance/HTML/scss/_slider.scss */
 .slider_bg_1 {
   background-image: url(../images/system/comercio.jpg);
+
 }
 
 /* line 4, ../../Arafath/CL/December/234. Finance/HTML/scss/_slider.scss */
@@ -3150,8 +3153,7 @@ input[type=checkbox] + label:active:before {
 
 /* line 32, ../../Arafath/CL/December/234. Finance/HTML/scss/_check.scss */
 input[type=checkbox]:checked + label:before {
-  background-color: #F91842;
-  border-color: #F91842;
+  background-color: #714ace;
   color: #fff;
 }
 
@@ -5407,11 +5409,7 @@ h6 {
 
 /* line 720, ../../Arafath/CL/December/234. Finance/HTML/scss/_elements.scss */
 .confirm-switch input + label {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+
   width: 100%;
   height: 100%;
 }

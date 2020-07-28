@@ -4,8 +4,8 @@
 @extends('backend.layout')
 
 @section('content')
-<form class="container"  action="{{route('productos.update', $producto->id)}}" method="POST" enctype="multipart/form-data">
-	<h2>Editar un producto </h2>
+<form class="container"  action="{{route('productos.update', [$domain, $producto->id])}}" method="POST" enctype="multipart/form-data">
+	<h2>{{ $producto->nombre }} </h2>
 	<div class="row">
 		<div class="col-6">
 			@if ($errors->any())
@@ -18,11 +18,11 @@
 			    </div>
 			@endif
 		</div>
-		
+
 	</div>
 	<div class="row">
-		
-		
+
+
 		<div class="col-md-7">
 			<div class="card">
 				<div class="card-body">
@@ -40,8 +40,8 @@
 				  <div class="form-group">
 						<label for="categoria">Categoria</label>
 						<select class="form-control" style="width: 200px" name="categoria" id="categoria">
-							@foreach($categorias as $categoria)
-								<option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+							@foreach($tienda->categorias as $categoria)
+								<option value="{{$categoria->id}}" {{ $producto->categoria == $categoria ? 'selected':'' }}>{{$categoria->categoria}}</option>
 							@endforeach
 
 
@@ -51,8 +51,8 @@
 					<div class="form-group">
 						<label for="categoria">Marca</label>
 						<select class="form-control" style="width: 200px" name="marca" id="categoria">
-							@foreach($marcas as $marca)
-								<option value="{{$marca->id}}">{{$marca->marca}}</option>
+							@foreach($tienda->marcas as $marca)
+								<option value="{{$marca->id}}" {{ $producto->marca == $marca ? 'selected': ''}}>{{$marca->marca}}</option>
 							@endforeach
 
 
@@ -72,27 +72,27 @@
 
 				</div>
 			</div>
-			
-				
-			  
+
+
+
 		</div>
 		<div class="col-md-5">
 			<div class="card" style="width: 25rem;">
-			  
+
 			  <img id="img-create-producto" class="card-img-top" src="{{asset('images/uploads/productos') .'/'.$producto->img}}" alt="Imagen producto">
 			  <div class="card-body">
 			    <h5 class="card-title">Subir una imagen</h5>
-			    
-			    	
+
+
 			    	<input type="file" name="img" id="img-input-producto">
 			    <!--button class="btn btn-primary" style="margin-top:5px" type="submit"><i class="fas fa-save"> </i> Subir</button-->
-			    
-			    
+
+
 			  </div>
 			</div>
 		</div>
 		<button type="submit" class="addButton">Aplicar cambios</button>
-		
+
 	</div>
 
 </form>

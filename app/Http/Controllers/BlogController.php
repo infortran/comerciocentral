@@ -17,32 +17,13 @@ use App\TeamMember;
 
 class BlogController extends Controller
 {
-    public function index(Request $request){
-        /*$query = trim($request->get('search'));
-        $posts = Post::all();
-        if($request){
-            $posts = Post::where('titulo', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
-        }
-        $data = [
-            'header' => HeaderFrontend::findOrFail(1),
-            'footer' => FooterInfo::findOrFail(1),
-            'members' => TeamMember::all(),
-            'categorias' => Categoria::all(),
-            'marcas' => Marca::all(),
-            'search' => $query,
-            'posts' => $posts,
-            'siteSocials' => SiteSocial::all()
-        ];
-
-    	return view('frontend.blog.index',$data);*/
-        $domain = request()->route('domain');
+    public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
-                $data['posts'] = Post::where('tienda_id', $data['tienda']->id)->get();
+                $data['posts'] = Post::where('tienda_id', $data['tienda']->id)->orderBy('id','DESC')->paginate(5);
                 $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
                 $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
                 return view('frontend.blog.index', $data);
@@ -51,21 +32,26 @@ class BlogController extends Controller
         return view('frontend.templates.site-not-found');
     }
 
-    public function show($id){
-        $post = Post::findOrFail($id);
-        $data = [
-            'header' => HeaderFrontend::findOrFail(1),
-            'footer' => FooterInfo::findOrFail(1),
-            'members' => TeamMember::all(),
-            'categorias' => Categoria::all(),
-            'marcas' => Marca::all(),
-            'post' => $post,
-            'siteSocials' => SiteSocial::all(),
-            'user_post' => User::findOrFail($post->id_usuario),
-            'comentarios' => Comentario::where('id_post', $post->id)->get()
-        ];
+    public function show($domain, $id){
+        if($domain) {
+            $loader = new Loader($domain);
+            if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                $post = Post::findOrFail($id);
+                $data['post'] = $post;
+                $data['user_post'] = User::findOrFail($post->id_usuario);
+                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
+                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
 
-    	return view('frontend.blog.blog-single',$data);
+                $data['comentarios'] = Comentario::where('id_post', $post->id)->get();
+
+
+                return view('frontend.blog.blog-single',$data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
+
     }
 
 }

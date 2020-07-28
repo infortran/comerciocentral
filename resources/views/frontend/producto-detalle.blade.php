@@ -55,11 +55,13 @@
 								<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
 								<h2>{{$producto->nombre}}</h2>
 								<p>{{$producto->descripcion}}</p>
-                                <div class="rating-bar">
+                                <div id="rating-bar-producto" class="rating-bar">
 
-                                    @for($i = 1; $i <= 5; $i++)
-                                        <i class="fa fa-star fa-2x" style="color: {{$i <= round($rating) ? '#fd7600': '#3e3e3e'}}"></i>
-                                    @endfor
+                                    <i class="fa fa-star fa-2x" data-value="1"></i>
+                                    <i class="fa fa-star fa-2x" data-value="2"></i>
+                                    <i class="fa fa-star fa-2x" data-value="3"></i>
+                                    <i class="fa fa-star fa-2x" data-value="4"></i>
+                                    <i class="fa fa-star fa-2x" data-value="5"></i>
 
 
 
@@ -94,7 +96,7 @@
                                 @endif
                                 </p>
 								<!--p><b>Condition:</b> New</p-->
-								<p><b>Marca:</b> {{$producto->marcas->marca}}</p>
+								<p><b>Marca:</b> {{$producto->marca->marca}}</p>
 								<a href=""><img src="{{asset('images/product-details/share.png')}}" class="share img-responsive"  alt="" /></a>
 							</div><!--/product-information-->
 						</div>

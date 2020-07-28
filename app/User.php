@@ -41,11 +41,11 @@ class User extends Authenticatable
     }
 
     public function ratings(){
-        return $this->belongsToMany('App\Rating', 'ratings')->withPivot('voto');
+        return $this->belongsToMany('App\RatingProducto', 'ratings')->withPivot('voto');
     }
 
-    public function direccions(){
-        return $this->hasMany('App\Direccion');
+    public function direcciones(){
+        return $this->belongsToMany('App\Direccion');
     }
 
     public function comentarios(){
@@ -54,5 +54,9 @@ class User extends Authenticatable
 
     public function tiendas(){
         return $this->hasMany('App\Tienda', 'user_id');
+    }
+
+    public function posts(){
+        return $this->hasMany('App\Post');
     }
 }

@@ -9,6 +9,6 @@ class Marca extends Model
     public $timestamps = false;
 
     public function productos(){
-        return $this->hasMany('App\Producto', 'id_marca');
+        return $this->hasMany('App\Producto');
     }
 }

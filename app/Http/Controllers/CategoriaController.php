@@ -4,27 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Loader;
+use App\Tienda;
 use Illuminate\Http\Request;
 use App\Producto;
 //use Illuminate\Support\Facades\File;
 
 class CategoriaController extends Controller
 {
-    private $data;
     public function __construct(){
-        /*$this->middleware('admin');
-        $loader = new Loader();
-        $this->data = $loader->getData();
-        $this->data['categorias'] = Categoria::all();*/
+        $this->middleware('admin');
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $domain)
     {
-        $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 $query = trim($request->get('search'));
                 if($request){
@@ -42,13 +37,14 @@ class CategoriaController extends Controller
         $request->validate([
             'categoria' => 'required|max:50'
         ]);
+        $tienda = Tienda::findOrFail($request->get('tienda'));
         $categoria = new Categoria();
         $categoria->categoria = request('categoria');
-        $categoria->save();
+        $tienda->categorias()->save($categoria);
         return redirect('/admin/categorias');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$domain, $id)
     {
         $categoria = Categoria::findOrFail($id);
         $request->validate([

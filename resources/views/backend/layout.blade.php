@@ -14,7 +14,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
 
     <!-- Font Awesome Icons -->
@@ -218,7 +218,7 @@
                 <!--=====================================
                         BOTONES DE VISTA DE PAGINA
                 ==========================================-->
-               <a href="/" class="ml-auto"> <button class="btn btn-warning">Ir al sitio</button></a>
+               <a href="/" class="ml-auto"> <button class="btn btn-warning">Ir a <strong>{{ $tienda->nombre }}</strong></button></a>
             </nav>
             <!--............. /.fin navbar............. -->
 
@@ -242,7 +242,7 @@
                             <div class="text-center">
                                 <span style="color: #b3a9ff" class="mt-3 mb-3 d-block">{{ $domain_owner ? $domain .'.cl' : $domain . '.comerciocentral.cl' }}</span>
 
-                                <a class="btn btn-dark" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
+                                <a class="btn-comerciocentral-dark" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">
                                     Cerrar Sesión
                                 </a>
@@ -269,24 +269,24 @@
 
                             <li class="nav-item">
                                 <a href="{{url('admin/clientes')}}"
-                                   class="{{ Request::path() === 'clientes' ? 'nav-link active' : 'nav-link' }}">
+                                   class="{{ Request::path() === 'admin/clientes' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>Clientes</p>
                                 </a>
                             </li>
 
                             <li class="nav-item has-treeview {{ Request::path() === 'admin/productos' || Request::path() === 'admin/productos/categorias' || Request::path() === 'admin/productos/marcas' ? 'menu-open active' : '' }}">
-                                <a href="{{url('admin/productos')}}"
-                                    class="{{ Request::path() === 'productos' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="{{url('admin/productos')}}" onclick="event.stopPropagation()"
+                                    class="nav-link {{ Request::path() === 'admin/productos' ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-shopping-bag"></i>
                                     <p>
                                         Productos</p>
                                 </a>
 
-                            <ul class="nav nav-treeview ">
+                                <ul class="nav nav-treeview ">
                                     <li class="nav-item">
                                         <a href="{{url('admin/productos')}}"
-                                            class="{{ Request::path() === 'admin/productos' ? 'nav-link active' : 'nav-link' }}">
+                                            class="nav-link {{ Request::path() === 'admin/productos' ? 'active' : '' }}">
                                             <i class="fa fa-book-open nav-icon"></i>
                                             <p>Catalogo</p>
                                         </a>
@@ -309,7 +309,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{url('/admin/promociones')}}" class="{{ Request::path() === 'promociones' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="{{url('/admin/promociones')}}" class="{{ Request::path() === 'admin/promociones' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fa fa-gift"></i>
                                     <p>
                                         Promociones
@@ -419,7 +419,7 @@
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <!-- NO QUITAR -->
-                <strong>Infortran
+                <strong>Comercio Central
                     <div class="float-right d-none d-sm-inline-block">
                         <b>Version</b> 1.0
                     </div>
@@ -433,8 +433,10 @@
         </div>
     </div>
 
-
+    <script src="{{asset('js/areyousure.js')}}" defer></script>
+    <script src="{{asset('js/ays-beforeunload-shim.js')}}" defer></script>
     <script src="{{asset('js/admin.js')}}" defer></script>
+
     <!-- Select2 Dependencies js -->
 
 

@@ -169,7 +169,7 @@
         width: 100%;
     }
     .mainmenu ul li {
-        background: rgba(0, 0, 0, 0.5);
+        color:#bfbfbf;
         padding-top: 15px;
         padding-bottom: 0;
     }
@@ -177,7 +177,7 @@
         padding-bottom: 15px;
     }
     .mainmenu ul li a {
-        color: #fff;
+        color: #afafaf;
     }
     .navbar-collapse.in {
         overflow: inherit;

@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+    $('form').areYouSure(
+        {'message':'Hay datos sin guardar!, estas seguro que quieres salir?'}
+    );
+
     jQuery('.productos-list-slide-create').select2({
         placeholder:'Seleccione un producto',
         allowClear:true

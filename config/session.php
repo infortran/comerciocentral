@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.salty-spire-92714.herokuapp.com/'),
+    'domain' => env('SESSION_DOMAIN', '.comerciocentral.chi'),
 
     /*
     |--------------------------------------------------------------------------

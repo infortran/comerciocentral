@@ -18,6 +18,7 @@ class ContactoController extends Controller
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
+                $loader->checkDominioAdmin();
                 $data = $loader->getData();
                 return view('frontend.contacto', $data);
             }

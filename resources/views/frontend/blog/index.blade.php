@@ -3,7 +3,7 @@
 <section>
 
 		<div class="container">
-            <h1 class="titulo-principal">Noticias y novedades</h1>
+            <h1 class="titulo-principal">Blog de Noticias</h1>
             <hr>
 			<div class="row">
 
@@ -33,7 +33,7 @@
 										<i class="fa fa-star-half-o"></i>
 								</span 847x392-->
 							</div>
-							<a href="">
+							<a href="{{url('noticias/post'.'/'.$post->id)}}">
 								<img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
 							</a>
 							<p class="block-ellipsis">{{$post->contenido}}</p>
@@ -57,6 +57,7 @@
 					</div>
 				</div>
 			</div>
+            {{ $posts->links() }}
 		</div>
 	</section>
 

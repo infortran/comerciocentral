@@ -5,17 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Login | Comercio Central</title>
 
     <link href="{{ asset('css/bootstrap4.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <style>
         html{
             height: 100%;
         }
         body{
             background-size: cover;
-            background: linear-gradient(to bottom, #22007a, #8f30b6);
-            background-repeat: no-repeat;
             height:100%;
         }
 
@@ -26,7 +25,7 @@
             color:#fff;
         }
         .login input::placeholder{
-            color: #d0a2ff;
+            color: #ffffff;
         }
 
         .login input:focus{
@@ -41,6 +40,8 @@
 
         .link-login{
             color: #420063;
+            margin-top: 20px;
+            display:block;
         }
         .link-login:hover{
             color: #510041;
@@ -82,7 +83,7 @@
         }
     </style>
 </head>
-<body>
+<body class="slider_bg_1">
     <div class="container">
         <div class="row">
 
@@ -90,19 +91,22 @@
                 <form action="{{ route('main.login.auth') }}" class="card" method="POST">
                     {{ csrf_field() }}
                     <div class="card-header text-center">
-                        <img class="mx-auto" src="{{ asset('images/system/navbar.png') }}" alt="">
+                        <img class="mx-auto" src="{{ asset('images/system/navbar-new2.png') }}" alt="">
                     </div>
 
 
-                    <div class="card-body login text-center">
-                        <h2>Ingresar</h2>
-                        <hr>
+                    <div class="card-body login text-center mt-50">
+
                         <input name="email" class="form-control" type="text" placeholder="Correo electronico">
                         <br>
                         <input name="password" class="form-control" type="password" placeholder="Contraseña">
                         <br>
-                        <input name="remember" type="checkbox">
-                        <label for="">Mantener mi sesion iniciada</label>
+
+                        <div class="confirm-switch" style="display:inline-block;margin-right: 5px">
+                            <input name="remember" type="checkbox" id="confirm-switch">
+                            <label for="confirm-switch"></label>
+                        </div>
+                        <div style="color: #fff;display: inline-block">Recordarme</div>
                         <br>
                         <a class="link-login" href="">Olvide mi contraseña?</a>
                         <hr>

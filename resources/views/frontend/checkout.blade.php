@@ -5,6 +5,7 @@
     <section>
         <form class="container" action="{{url('/payment')}}" method="POST">
             @csrf
+            <input type="hidden" name="tienda" value="{{ $tienda->id }}">
             <h1 class="titulo-principal">
                 Revisa y confirma tu orden
             </h1>
@@ -12,9 +13,9 @@
 
 
             <div class="row">
-                @if(Session::has('envio'))
+                @if(Session::has('envio-'.$tienda->id))
                 <div class="col-md-6">
-                    @if(Auth::check())
+                    @if(Auth::check() && $tienda->direcciones)
                         <div class="panel panel-default"   style="background: #fafafa">
                             <div class="panel-heading">
                                 <h4>
@@ -53,7 +54,8 @@
                                 <h4>Direccion de envio</h4>
                                 <hr>
                                 <div class="list-group">
-                                    @foreach(Auth::user()->direccions as $key => $direccion)
+
+                                    @foreach(Auth::user()->direcciones as $key => $direccion)
                                     <div class="list-group-item list-group-item-checkout">
                                         <div>
                                             <input type="radio" value="{{$direccion->id}}" name="direccion_envio" {{$key == 0?'checked':''}}>
@@ -77,7 +79,8 @@
 
                             </div>
                         </div>
-                    @else
+
+                        @else
                         <div class="panel panel-default"   style="background: #fafafa">
                             <div class="panel-heading">
                                 <h4>
@@ -90,7 +93,28 @@
                             <div class="panel-body">
                                 <h4>Tus datos personales</h4>
                                 <hr>
-
+                                @if(Auth::check())
+                                    <div class="list-group">
+                                        <div class="list-group-item list-group-item-checkout" style="padding:20px">
+                                            <div>
+                                                <img class="img-rounded" style="max-height: 50px" src="{{asset('images/uploads/users') .'/'. Auth::user()->img}}" alt="">
+                                            </div>
+                                            <div>
+                                                <h4>{{Auth::user()->name}} {{Auth::user()->lastname}}</h4>
+                                            </div>
+                                            <div>
+                                                <p>
+                                                    <i class="fa fa-phone"></i>
+                                                    {{Auth::user()->telefono}}
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-envelope"></i>
+                                                    {{Auth::user()->email}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @else
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -124,7 +148,7 @@
                                     </div>
                                 </div>
 
-
+                                @endif
                                 <hr>
                                 <h4>Direccion de envio</h4>
                                 <hr>
@@ -324,8 +348,8 @@
                                                 COSTE DE ENVIO
                                             </div>
                                             <div class="td-checkout">
-                                                @if(Session::has('envio'))
-                                                    @if(Session::get('envio')->precio > 0)
+                                                @if(Session::has('envio-'.$tienda->id))
+                                                    @if(Session::get('envio-'.$tienda->id)->precio > 0)
                                                         <strong>$ {{number_format(Session::get('envio')->precio, 0, '', '.')}}</strong>
                                                     @else
                                                         <strong style="color: green">GRATIS</strong>

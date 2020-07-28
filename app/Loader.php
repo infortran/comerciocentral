@@ -25,17 +25,29 @@ class Loader{
             'cartname' => 'cart-' . $tienda->id,
             'envioname' => 'envio-' . $tienda->id,
             'tienda' => $tienda,
-            'members' => TeamMember::where('tienda_id', $tienda->id)->get(),
-            'siteSocials' => SiteSocial::where('tienda_id', $tienda->id)->get(),
             'is_owner' => $this->isOwner,
-            'owner' => $tienda->users,
             'color_themes' => $tienda->colorthemes,
-            'banners' => $tienda->banners
+            'puntaje' => $this->getPuntajeTienda($tienda->id)
         ];
-        foreach($tienda->banners as $banner){
-            $data[$banner->nombre] = $banner;
-        }
         return $data;
+    }
+
+    public function getPuntajeTienda($id_tienda){
+        $tienda = Tienda::findOrFail($id_tienda);
+        $votos = $tienda->ratings;
+        $suma = 0;
+        foreach($votos as $voto){
+            $suma += $voto->voto;
+        }
+        $resultado = 0;
+        if($suma > 0){
+            $resultado = $suma / count($votos);
+        }
+        return $resultado;
+    }
+
+    public function getTiendaByDomain($dominio){
+        return Tienda::where('dominio', $this->dominio)->first();
     }
 
     public function checkDominio(){

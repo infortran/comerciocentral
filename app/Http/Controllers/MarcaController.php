@@ -4,26 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Loader;
 use App\Marca;
+use App\Tienda;
 use Illuminate\Http\Request;
 use App\Producto;
 
 class MarcaController extends Controller
 {
-    private $data;
     public function __construct(){
-        /*$this->middleware('admin');
-        $loader = new Loader();
-        $this->data = $loader->getData();
-        $this->data['marcas'] = Marca::all();*/
+        $this->middleware('admin');
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $domain)
     {
-        $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 $query = trim($request->get('search'));
                 if($request){
@@ -41,10 +36,10 @@ class MarcaController extends Controller
         $request->validate([
             'marca' => 'required|max:50'
         ]);
-
+        $tienda = Tienda::findOrFail($request->get('tienda'));
         $marca = new Marca();
         $marca->marca = request('marca');
-        $marca->save();
+        $tienda->marcas()->save($marca);
 
         return redirect('/admin/marcas');
     }

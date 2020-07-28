@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="container" action="{{url('/admin/blog')}}" method="POST" enctype="multipart/form-data">
+<form id="form-admin-blog" class="container" action="{{url('/admin/blog')}}" method="POST" enctype="multipart/form-data">
 	@csrf
 	<h1>Nueva entrada <button type="submit" class="addButton float-right"><i class="fa fa-save"></i> Guardar</button></h1>
 	<div class="row">
@@ -26,11 +26,11 @@
 
 						<div class="form-group">
 						    <label for="">Titulo</label>
-						    <input name="titulo" type="text" class="form-control">
+						    <input name="titulo" type="text" class="form-control" value="{{ old('titulo') }}">
 						</div>
 						<div class="form-group">
 						    <label for="">Contenido</label>
-						    <textarea name="contenido" class="form-control" style="min-height: 300px"></textarea>
+						    <textarea name="contenido" class="form-control" style="min-height: 300px">{{ old('contenido') }}</textarea>
 						</div>
 
 
@@ -45,7 +45,7 @@
 				<img  src="{{asset('images/semantic/image.png')}} " alt="" class="card-img-top">
 				<div class="card-body">
 					<h2 class="card-title">Subir imagen a entrada</h2>
-					<input name="img" type="file">
+					<input name="img" type="file" value="{{ old('img') }}">
 
 					<small>La imagen debe ser mayor de 1000x800 pixeles</small>
 				</div><!---->

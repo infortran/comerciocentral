@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class TeamMember extends Model
 {
     public $timestamps = false;
+
+    public function tienda(){
+        return $this->belongsTo('App\Tienda');
+    }
 }

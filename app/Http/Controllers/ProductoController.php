@@ -8,6 +8,7 @@ use App\HeaderFrontend;
 use App\Http\Requests\ProductosFormRequest;
 use App\Loader;
 use App\TeamMember;
+use App\Tienda;
 use Illuminate\Http\Request;
 use App\Producto;
 use Illuminate\Support\Facades\File;
@@ -18,34 +19,20 @@ use Session;
 
 class ProductoController extends Controller
 {
-    private $data;
-
 
     public function __construct()
     {
-        /*$this->middleware('admin');
-        $loader = new Loader();
-        $this->data = $loader->getData();
-        $this->data['categorias'] = Categoria::all();
-        $this->data['marcas'] = Marca::all();
-        $this->data['productos'] = Producto::all();*/
-
+        $this->middleware('admin');
     }
 
-    public function index(Request $request){
-        //dd('que pasa');
-        $domain = request()->route('domain');
-        ($domain);
+    public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
-
-                $id = $data['tienda']->id;
                 $query = trim($request->get('search'));
                 if($request){
-                    $data['productos'] = Producto::where('tienda_id', $id)->where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
+                    $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(5);
                 }
                 $data['search'] = $query;
                 return view('backend.productos.index', $data);
@@ -55,24 +42,20 @@ class ProductoController extends Controller
     }
 
     //abre la vista crear producto
-    public function create(){
-        $domain = request()->route('domain');
-        ($domain);
+    public function create($domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
-                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
-                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
                 return view('backend.productos.create',$data);
             }
         }
-
+        return view('frontend.templates.site-not-found');
     }
 
     //guarda el nuevo producto en db
-    public function store(Request $request){
+    public function store(Request $request, $domain){
+        $tienda = Tienda::findOrFail($request->get('tienda'));
         $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'nombre' => 'required|max:255',
@@ -94,13 +77,13 @@ class ProductoController extends Controller
         $producto->precio = request('precio');
         $producto->img = $imageName;
         if(request('categoria')){
-            $producto->id_categoria = request('categoria');
+            $producto->categoria_id = request('categoria');
         }
         if(request('marca')){
-            $producto->id_marca = request('marca');
+            $producto->marca_id = request('marca');
         }
 
-        $producto->save();
+        $tienda->productos()->save($producto);
 
         return redirect('/admin/productos');
     }
@@ -108,12 +91,20 @@ class ProductoController extends Controller
 
 
     //muestra la vista editar
-    public function edit($id){
-        $this->data['producto'] = Producto::find($id);
-        return view('backend.productos.edit', $this->data);
+    public function edit(Request $request, $domain, $id){
+        if($domain){
+            $loader = new Loader($domain);
+            if($loader->checkDominio()){
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                $data['producto'] = Producto::find($id);
+                return view('backend.productos.edit', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
     //edita y guarda el registro en db
-    public function update(Request $request, $id){
+    public function update(Request $request,$domain, $id){
         $producto = Producto::findOrFail($id);
 
         if($request->img){
@@ -123,9 +114,13 @@ class ProductoController extends Controller
                 'descripcion' => 'required|max:255',
                 'precio' => 'required'
             ]);
-            $imageName = time().'.'.$request->img->extension();
 
-            $request->img->move(public_path('images/uploads/productos'), $imageName);
+            $img = $request->file('img');
+            $imageName = time().'.'.$img->extension();
+            $imgResize = Image::make($img->path());
+            $imgResize->fit(800,600, function($constraint) {
+                $constraint->upsize();
+            })->save(public_path('images/uploads/productos').'/'. $imageName);
 
             $img_delete = 'images/uploads/productos/'. $producto->img;
             if(File::exists(public_path($img_delete))) {
@@ -147,10 +142,10 @@ class ProductoController extends Controller
 
         $producto->precio = $request->get('precio');
         if($request->get('categoria')){
-            $producto->id_categoria = $request->get('categoria');
+            $producto->categoria_id = $request->get('categoria');
         }
         if(request('marca')){
-            $producto->id_marca = request('marca');
+            $producto->marca_id = request('marca');
         }
 
 
@@ -158,12 +153,10 @@ class ProductoController extends Controller
 
         return redirect('/admin/productos');
 
-
-
     }
 
     //eliminar un productos
-    public function destroy($id){
+    public function destroy($domain, $id){
         $producto = Producto::findOrFail($id);
         $img_delete = 'images/uploads/productos/'. $producto->img;
         if(File::exists(public_path($img_delete))) {
@@ -171,23 +164,20 @@ class ProductoController extends Controller
                 File::delete($img_delete);
             }
         }
+        if($producto->slide){
+            $producto->slide->delete();
+        }
+        if($producto->productobanner){
+            $producto->productobanner->producto_id = null;
+        }
         $producto->delete();
 
         return redirect('/admin/productos');
-
-
     }
 
-    public function setNotAvailable($id){
+    public function setAvailability($domain, $id){
         $producto = Producto::find($id);
-        $producto->is_available = false;
-        $producto->save();
-        return redirect('admin/productos');
-    }
-
-    public function setAvailable($id){
-        $producto = Producto::find($id);
-        $producto->is_available = true;
+        $producto->is_available = $producto->is_available ? false : true;
         $producto->save();
         return redirect('admin/productos');
     }

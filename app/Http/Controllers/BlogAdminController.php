@@ -25,7 +25,6 @@ class BlogAdminController extends Controller
      */
     public function index(Request $request, $domain)
     {
-        //$domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
@@ -52,7 +51,7 @@ class BlogAdminController extends Controller
     {
         if($domain) {
             $loader = new Loader($domain);
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 return view('backend.blog.create', $data);
             }
@@ -66,25 +65,33 @@ class BlogAdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $domain)
     {
-        $request->validate([
-            'titulo' => 'required|max:50',
-            'contenido' => 'required|max:500',
-            'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
-        $img = $request->file('img');
-        $imageName = time().'.'.$img->extension();
-        $imgResize = Image::make($img->path());
-        $imgResize->fit(847,392, function($constraint) {
-            $constraint->upsize();
-        })->save(public_path('images/uploads/blog').'/'. $imageName);
-        $post = new Post();
-        $post->titulo = request('titulo');
-        $post->contenido = request('contenido');
-        $post->img = $imageName;
-        $post->id_usuario = Auth::user()->id;
-        $post->save();
-        return redirect('/admin/blog');
+        if($domain){
+            $loader = new Loader($domain);
+            if ($loader->checkDominioAdmin()) {
+                $data = $loader->getData();
+                $tienda = $data['tienda'];
+                $request->validate([
+                    'titulo' => 'required|max:50',
+                    'contenido' => 'required|max:500',
+                    'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=500,min_height=500']);
+                $img = $request->file('img');
+                $imageName = time().'.'.$img->extension();
+                $imgResize = Image::make($img->path());
+                $imgResize->fit(847,392, function($constraint) {
+                    $constraint->upsize();
+                })->save(public_path('images/uploads/blog').'/'. $imageName);
+                $post = new Post();
+                $post->titulo = request('titulo');
+                $post->contenido = request('contenido');
+                $post->img = $imageName;
+                $post->id_usuario = Auth::user()->id;
+                $tienda->posts()->save($post);
+                return redirect('/admin/blog');
+            }
+        }
+        return view('frontend.templates.site-not-found');
     }
 
     /**
@@ -100,9 +107,9 @@ class BlogAdminController extends Controller
             //dd($loader->checkDominio());
             if ($loader->checkDominio()) {
                 $data = $loader->getData();
-                $post = Post::where('tienda_id', $data['tienda']->id )->findOrFail($id);
+                $post = Post::findOrFail($id);
                 $data['post'] = $post;
-                $data['user_post'] = User::findOrFail($post->id);
+                $data['user_post'] = User::findOrFail($post->users->id);
                 $data['comentarios'] = Comentario::where('id_post', $post->id)->get();
                 return view('backend.blog.post', $data);
             }
@@ -118,17 +125,13 @@ class BlogAdminController extends Controller
      */
     public function edit(Request $request, $domain ,$id)
     {
-        $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             //dd($loader->checkDominio());
-            if ($loader->checkDominio()) {
+            if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
-
-                $posts = Post::where('tienda_id', $data['tienda']->id )->first();
-
-                $data['post'] = $posts;
-
+                $post = Post::findOrFail($id);
+                $data['post'] = $post;
                 return view('backend.blog.edit', $data);
             }
         }
@@ -150,28 +153,21 @@ class BlogAdminController extends Controller
                 'titulo' => 'required|max:50',
                 'contenido' => 'required|max:500',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
-
             $img = $request->file('img');
-
             $imageName = time().'.'.$img->extension();
-
             $imgResize = Image::make($img->path());
             $imgResize->fit(847,392, function($constraint) {
                 $constraint->upsize();
             })->save(public_path('images/uploads/blog').'/'. $imageName);
-             $post->img = $imageName;
+            $post->img = $imageName;
         }else{
             $request->validate([
                 'titulo' => 'required|max:50',
                 'contenido' => 'required|max:500']);
         }
-
-
         $post->titulo = request('titulo');
         $post->contenido = request('contenido');
-
         $post->update();
-
         return redirect('/admin/blog');
     }
 

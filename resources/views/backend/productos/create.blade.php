@@ -15,10 +15,10 @@
 			    </div>
 			@endif
 		</div>
-		
+
 	</div>
 	<div style="margin-top: 20px" class="row">
-		
+
 		<div class="col-md-7">
 			<div class="card">
 				<div class="card-body">
@@ -34,7 +34,7 @@
 					<div class="form-group">
 						<label for="categoria">Categoria</label>
 						<select class="form-control" style="width: 200px" name="categoria" id="categoria">
-							@foreach($categorias as $categoria)
+							@foreach($tienda->categorias as $categoria)
 								<option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
 							@endforeach
 
@@ -45,7 +45,7 @@
 					<div class="form-group">
 						<label for="categoria">Marca</label>
 						<select class="form-control" style="width: 200px" name="marca" id="categoria">
-							@foreach($marcas as $marca)
+							@foreach($tienda->marcas as $marca)
 								<option value="{{$marca->id}}">{{$marca->marca}}</option>
 							@endforeach
 
@@ -64,28 +64,28 @@
 					    </div>
 					</div>
 				</div>
-			
+
 				@csrf
-			  
-			  
-			  
-			
+
+            <input type="hidden" name="tienda" value="{{ $tienda->id }}">
+
+
 		</div>
 		<div class="col-md-5">
 			<div class="card">
-			  
+
 			  <img id="img-create-producto" class="card-img-top" src="{{asset('images/semantic/image.png')}}" alt="Imagen producto">
 			  <div class="card-body">
 			    <h5 class="card-title">Subir una imagen</h5>
-			    
-			    	
+
+
 			    	<input type="file" name="img" id="img-input-producto">
 			    <!--button class="btn btn-primary" style="margin-top:5px" type="submit"><i class="fas fa-save"> </i> Subir</button-->
-			    
-			    
+
+
 			  </div>
 			</div>
-			
+
 		</div>
 
 	</div><!--.row-->

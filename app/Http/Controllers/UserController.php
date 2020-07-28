@@ -25,7 +25,7 @@ class UserController extends Controller
         }
     }
 
-    public function index(){
+    public function index($domain){
         if(!Auth::check()){
             if(!session()->has('from')){
                 session()->put('from', url()->current());
@@ -33,10 +33,10 @@ class UserController extends Controller
             return redirect('/login');
         }
 
-        $domain = request()->route('domain');
         if($domain) {
             $loader = new Loader($domain);
             if($loader->checkDominio()){
+                $loader->checkDominioAdmin();
                 $data = $loader->getData();
                 $data['compras'] = Orden::where('id_user', Auth::user()->id)->get();
                 return view('frontend.user', $data);
@@ -127,7 +127,8 @@ class UserController extends Controller
         $direccion->poblacion = $request->get('poblacion');
         $direccion->ciudad = $request->get('ciudad');
 
-        $user->direccions()->save($direccion);
+        //TODO:Relacion no corresponde con Many to Many
+        // $user->direcciones()->save($direccion);
 
         return redirect('/cuenta');
     }
@@ -166,5 +167,24 @@ class UserController extends Controller
         $user->password = Hash::make($request->get('newpass'));
         $user->save();
         return redirect('/cuenta');
+    }
+
+    public function clientes(Request $request, $domain){
+        if($domain){
+            $loader = new Loader($domain);
+            if($loader->checkDominioAdmin()){
+                $data = $loader->getData();
+                $search = trim($request->get('search'));
+                if($request){
+                    $clientes = User::where('name', 'LIKE', '%'.$search.'%')
+                        ->orWhere('lastname', 'LIKE', '%'.$search.'%')->paginate(10);
+                }
+                $data['search'] = $search;
+                $data['clientes'] = $clientes;
+                return view('backend.users.index', $data);
+            }
+        }
+
+        return view('frontend.templates.site-not-found');
     }
 }

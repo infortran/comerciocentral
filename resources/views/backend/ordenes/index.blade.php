@@ -1,7 +1,7 @@
 @extends('backend.layout')
 
 @section('content')
-    <section>
+
         <h1>Estado de Ordenes</h1>
 
         <div class="container">
@@ -112,5 +112,5 @@
                 {{$ordenes->links()}}
             </div>
         </div>
-    </section>
+
 @endsection
