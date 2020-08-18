@@ -86,7 +86,7 @@ class BlogAdminController extends Controller
                 $post->titulo = request('titulo');
                 $post->contenido = request('contenido');
                 $post->img = $imageName;
-                $post->id_usuario = Auth::user()->id;
+                $post->user_id = Auth::user()->id;
                 $tienda->posts()->save($post);
                 return redirect('/admin/blog');
             }

@@ -43,14 +43,14 @@
                         <div class="dscto-banner-main">
                             <span>{{ $tienda->productobanner->dscto ?? '10% DSCTO'}}</span>
                         </div>
-                        <img class="center-block" src="{{asset('images/uploads/productos').'/'. ($tienda->productobanner->producto->img ?? 'image.png')}}" alt="">
+                        <img class="center-block img-responsive" src="{{asset('images/uploads/productos').'/'. ($tienda->productobanner->producto->img ?? 'image.png')}}" alt="">
                     </div>
                 </div>
             </div>
 
             <div class="hidden-xs col-md-4 pull-right banner-secondary-productos">
 
-                <div class="row banner-sec-a text-center"  style="background-image: url('{{ asset('images/uploads/productos').'/' }}')">
+                <div class="row banner-sec-a text-center"  style="background-image: url('{{ asset('images/uploads/productos/image.png')}}')">
                     <div class="col-md-12">
                         <div class="titulo-banner-sec">
                             Producto
@@ -119,7 +119,7 @@
                                     <div class="single-products">
                                         <div class="productinfo text-center">
                                             <img style="height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
-                                            <h2>$ {{$producto->precio}}</h2>
+                                            <h2>$ {{number_format($producto->precio,0,'','.')}}</h2>
                                             <p class="cont-noticia">{{$producto->nombre}}</p>
                                             <button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
                                                 <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
@@ -129,7 +129,7 @@
                                         </div>
                                         <div class="product-overlay">
                                             <div class="overlay-content">
-                                                <h2>$ {{$producto->precio}}</h2>
+                                                <h2>$ {{number_format($producto->precio,0,'','.')}}</h2>
                                                 <p class="cont-noticia">{{$producto->nombre}}</p>
                                                 <button id="btn-cart-{{$producto->id}}" type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" >
                                                     <i id="check1-{{$producto->id}}" class="fa fa-check" style="color: #72c400 !important;display: none"></i>
@@ -140,7 +140,7 @@
                                         </div>
                                     </div>
                                     <div class="choose">
-                                        <ul class="nav nav-pills nav-justified">
+                                        <ul class="nav nav-pills nav-justified text-center">
                                             <li><a href="{{route('producto.single', [$domain, $producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
                                         </ul>
                                     </div>

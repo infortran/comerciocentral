@@ -8,7 +8,7 @@
 
             <div class="row">
 
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <h2 class="title text-center">Productos en carrito</h2>
 
                     @if(Session::has($cartname))
@@ -74,13 +74,13 @@
                         </a>
                 </div>
 
-                <div class="col-md-3" style="position: relative">
+                <div class="col-md-4" style="position: relative">
                     <div class="loading-aside-cart">
                         <div class="loading-cart"></div>
                     </div>
                     <div class="card" style="margin-top: 20px">
                         <div class="card-body">
-                            <strong>RESUMEN DE SU COMPRA</strong>
+                            <strong style="font-size: 20px;">RESUMEN DE SU COMPRA</strong>
                             <hr style="border-color: #d5d5d5">
                             <table class="table borderless">
                                 <tr>
@@ -113,21 +113,21 @@
 
                             <div id="panel-sin-envio" class="panel panel-default {{Session::has($envioname) ? ' d-none':''}}">
                                 <div class="panel-heading">
-                                    <i class="fa fa-store-alt"></i>
-                                    Retiro en tienda
+
+                                    No hay envio disponible
                                 </div>
                                 <div class="panel-body text-center">
-                                    <div id="precio-envio">
-
-                                        No hay envio disponible</div>
+                                    <div id="precio-envio" style="color:var(--color-primary);font-weight: bolder">
+                                        <i class="fa fa-store-alt"></i>
+                                        Retiro en tienda</div>
                                 </div>
                             </div>
 
 
                             <hr style="border-color: #d5d5d5">
                             <div class="panel panel-default text-center">
-                                <div class="panel-heading" style="font-size: 17px">TOTAL</div>
-                                <div class="panel-body " style="font-size: 22px">
+                                <div class="panel-heading" style="font-size: 17px;font-weight: bold">TOTAL</div>
+                                <div class="panel-body " style="font-size: 22px;color:var(--color-primary)">
                                     <strong id="total-mas-envio">$ {{number_format($total_mas_envio, 0, '', '.')}}</strong>
                                 </div>
                             </div>

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Transbank\Webpay\Configuration;
 use Transbank\Webpay\Webpay;
 use Session;
+use Khipu;
 
 class CheckoutController extends Controller
 {
@@ -29,6 +30,7 @@ class CheckoutController extends Controller
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
+                //dd($this->generateOrdenNumber($data['tienda']));
                 //dd(Session::has($data['cartname']));
                 if(Session::has($data['cartname'])){
 
@@ -51,10 +53,12 @@ class CheckoutController extends Controller
     }
 
     public function getPaymentProcess(Request $request, $domain){
+
         if($domain){
             $loader = new Loader($domain);
             if($loader->checkDominio()){
                 $data = $loader->getData();
+
                 if($data['tienda']->id == $request->get('tienda')){
                     $cartname = 'cart-'. $request->get('tienda');
                     $envioname = 'envio-'. $request->get('tienda');
@@ -100,27 +104,32 @@ class CheckoutController extends Controller
                     $cart = Session::get($cartname);
                     $total = $envio ? $cart->precioTotal + $envio : $cart->precioTotal;
                     $orden = new Orden();
+                    $orden->number = $this->generateOrdenNumber($data['tienda']);
                     $orden->nombre = $nombre ? $nombre : $request->get('nombre');
                     $orden->email = Auth::check() ? Auth::user()->email : $request->get('email');
                     $orden->telefono = Auth::check() ? Auth::user()->telefono : $request->get('telefono');
-                    $orden->id_user = Auth::check() ? Auth::user()->id : null;
+                    $orden->user_id = Auth::check() ? Auth::user()->id : null;
                     $orden->cart = serialize($cart);
                     $orden->total = $cart->precioTotal;
                     $orden->envio = $envio;
-                    $orden->direccion = $dir_string ? $dir_string : null;
+                    $orden->direccion = $dir_string ?? null;
 
 
                     //PAYMENT SELECTOR
-                    if($request->get('forma_pago') == 'webpay'){
+                    if($request->get('forma_pago') == 'webpay') {
                         $orden->tipo_pago = 'webpay';
                         $data['tienda']->ordenes()->save($orden);
-                        if($this->getWebpay($total, $orden->id)){
+                        if ($this->getWebpay($total, $orden->number)) {
                             $data['form_action'] = $this->data['form_action'];
                             $data['token_ws'] = $this->data['token_ws'];
                             return view('frontend.templates.payment_process', $data);
-                        }else{
+                        } else {
                             return redirect('checkout')->withErrors("Error en la autorizacion de WEBPAY");
                         }
+                    }elseif($request->get('forma_pago') == 'khipu'){
+                        //$orden->tipo_pago = 'khipu';
+                        //$data['tienda']->ordenes()->save($orden);
+                        return view('frontend.khipu', $data);
                     }else{
                         $orden->tipo_pago = 'deposito';
                         $this->ordername = 'orden-'. $request->get('tienda');
@@ -130,6 +139,65 @@ class CheckoutController extends Controller
                 }
             }
         }
+    }
+
+    public function generateOrdenNumber($tienda){
+        if(count($tienda->ordenes) > 0){
+            $ultima = $tienda->ordenes->last();
+            return $ultima->number + 1;
+            //ver si existe l primera orden
+            //si ya hay una orden leer el ID
+            // al ID leido sumarle 1
+        }else{
+            //si no existe genearar el ID 1
+            return 1;
+        }
+    }
+
+    public function showKhipuPayment(Request $request, $domain){
+        if($domain){
+            $loader = new Loader($domain);
+            if($loader->checkDominio()){
+                $loader->checkDominioAdmin();
+                $data = $loader->getData();
+                return view('frontend.khipu', $data);
+            }
+        }
+        return view('frontend.templates.site-not-found');
+    }
+    public function getKhipuPayment(){
+        $receiverId = 307097;
+        $secretKey = '90725e38aaf5dbb47d4783dffc26bd23ed53f24b';
+
+        $configuration = new Khipu\Configuration();
+        $configuration->setReceiverId($receiverId);
+        $configuration->setSecret($secretKey);
+// $configuration->setDebug(true);
+
+        $client = new Khipu\ApiClient($configuration);
+        $payments = new Khipu\Client\PaymentsApi($client);
+
+        try {
+            $opts = array(
+                "transaction_id" => "MTI-100",
+                "return_url" => "http://mi-ecomerce.com/backend/return",
+                "cancel_url" => "http://mi-ecomerce.com/backend/cancel",
+                "picture_url" => "http://mi-ecomerce.com/pictures/foto-producto.jpg",
+                "notify_url" => "http://mi-ecomerce.com/backend/notify",
+                "notify_api_version" => "1.3"
+            );
+            $response = $payments->paymentsPost(
+                "Compra de prueba de la API", //Motivo de la compra
+                "CLP", //Monedas disponibles CLP, USD, ARS, BOB
+                100.0, //Monto. Puede contener ","
+                $opts //campos opcionales
+            );
+
+            print_r($response);
+        } catch (\Khipu\ApiException $e) {
+            echo print_r($e->getResponseBody(), TRUE);
+        }
+
     }
 
     public function getDepositoPaymentProcess(Request $request){
@@ -163,7 +231,7 @@ class CheckoutController extends Controller
         $orden->comprobantes()->save($comprobante);
         $this->data['nombre'] = $orden->nombre;
         $this->data['direccion'] = $orden->direccion;
-        $this->data['nro_orden'] = 'N°'.$orden->id;
+        $this->data['nro_orden'] = 'N°'.$orden->number;
         $this->data['monto'] = $orden->envio ? $orden->envio + $orden->total : $orden->total;
         Session::forget('orden');
         Session::forget('cart');
@@ -212,7 +280,7 @@ class CheckoutController extends Controller
             $webpayOrden->amount = $output->amount;
             $webpayOrden->shares_number = $output->sharesNumber;
             $webpayOrden->commerce_code = $output->commerceCode;
-            $orden = Orden::find($output->buyOrder);
+            $orden = Orden::where('number', $output->buyOrder)->first();
             //CAMBIAR EL ESTADO DE ORDEN A CONFIRMADO
             $orden->estado = 'pagado';
             $orden->save();
@@ -243,8 +311,9 @@ class CheckoutController extends Controller
             if($loader->checkDominio()){
                 $data = $loader->getData();
                 if($request->get('TBK_TOKEN')){
-                    $orden = Orden::findOrFail($request->get('TBK_ORDEN_COMPRA'));
-                    $orden->delete();
+                    $orden = Orden::where('number', $request->get('TBK_ORDEN_COMPRA'))->first();
+                    $orden->estado = 'rechazado';
+                    $orden->save();
                 }
                 return view('frontend.final', $data);
             }

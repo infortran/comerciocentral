@@ -40,13 +40,13 @@ class ComentarioController extends Controller
         ]);
         $comentario = new Comentario();
 
-        $comentario->id_user = request('id_user');
-        $comentario->id_post = request('id_post');
+        $comentario->user_id = request('id_user');
+        $comentario->post_id = request('id_post');
         $comentario->comentario = request('comentario');
 
         $comentario->save();
 
-        $redirect = '/blog/post/' . $request->get('id_post');
+        $redirect = '/noticias/post/' . $request->get('id_post');
 
         return redirect($redirect);
     }

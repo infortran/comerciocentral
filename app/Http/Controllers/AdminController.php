@@ -47,43 +47,18 @@ class AdminController extends Controller
         return view('frontend.templates.site-not-found');
     }
 
-    public function index(Request $request){
-        $domain = request()->route('domain');
+    public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
             if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
-                $data['socials'] = Social::all();
                 return view('backend.home', $data);
             }
-            return redirect('http://'. $domain.'.comerciocentral.chi');
+            return redirect('http://'. $domain.'.comerciocentral.chi')->withErrors('No tienes permiso par acceder a este sitio');
         }
-
         return view('frontend.templates.site-not-found');
-
     }
 
-    /*public function store(){
-
-    }*/
-
-    /*public function show(Request $request){
-        dd('se vino al show no se por que');
-        $query = trim($request->get('search'));
-        if($request){
-            $this->users = User::where('name', 'LIKE', '%' . $query . '%')
-                ->orWhere('lastname', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(10);
-        }
-        $data = [
-            'header' => HeaderFrontend::findOrFail(1),
-            'footer' => FooterInfo::findOrFail(1),
-            'socials' => Social::all(),
-            'siteSocials' => SiteSocial::all(),
-            'search' => $query,
-            'users' => $this->users
-        ];
-        return view('backend.users.index', $data);
-    }*/
 
     public function banUser($id){
         $user = User::find($id);
@@ -157,19 +132,6 @@ class AdminController extends Controller
     }
 
     public function changePassword(Request $request){
-        if(Session::has('auth_change_pass') && Session::get('auth_change_pass')){
-            $data = [
-                'header' => HeaderFrontend::findOrFail(1),
-                'footer' => FooterInfo::findOrFail(1),
-                'members' => TeamMember::all(),
-                'slides' => Slide::all(),
-                'socials' => Social::all(),
-                'site_socials' => SiteSocial::all()
-            ];
-            return view('backend.templates.change-password', $data);
-        }else{
-            return redirect('/admin')->withErrors('Error al cambiar la contraseña');
-        }
 
     }
 

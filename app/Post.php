@@ -11,11 +11,15 @@ class Post extends Model
         return $this->belongsTo('App\Tienda', 'tienda_id');
     }
 
-    public function users(){
-        return $this->belongsTo('App\User', 'id_usuario');
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 
     public function ratings(){
         return $this->belongsToMany('App\Rating');
+    }
+
+    public function comentarios(){
+        return $this->hasMany('App\Comentario');
     }
 }

@@ -83,7 +83,7 @@
                                     </button>
 
                                     <button style="min-width: 50px" type="button" class="btn add-to-cart btn-default btn-submit-remove-on-cart" title="Quitar 1 item"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}
-                                    {{Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) && Session::get('cart')->items[$producto->id] > 0 ? '' : 'disabled'}}>
+                                    {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'disabled'}}>
                                         <i class="fa fa-times"></i>
                                     </button>
 

@@ -23,9 +23,10 @@ class BlogController extends Controller
             if ($loader->checkDominio()) {
                 $loader->checkDominioAdmin();
                 $data = $loader->getData();
-                $data['posts'] = Post::where('tienda_id', $data['tienda']->id)->orderBy('id','DESC')->paginate(5);
-                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
-                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
+                $query = trim($request->get('search'));
+                $data['posts'] = $data['tienda']->posts()->where('titulo', 'LIKE', '%'.$query.'%')
+                    ->orderBy('id','DESC')->paginate(5);
+                $data['destacados'] = $data['tienda']->posts()->where('destacado', true)->paginate(3);
                 return view('frontend.blog.index', $data);
             }
         }
@@ -40,13 +41,6 @@ class BlogController extends Controller
                 $data = $loader->getData();
                 $post = Post::findOrFail($id);
                 $data['post'] = $post;
-                $data['user_post'] = User::findOrFail($post->id_usuario);
-                $data['categorias'] = Categoria::where('tienda_id', $data['tienda']->id)->get();
-                $data['marcas'] = Marca::where('tienda_id', $data['tienda']->id)->get();
-
-                $data['comentarios'] = Comentario::where('id_post', $post->id)->get();
-
-
                 return view('frontend.blog.blog-single',$data);
             }
         }

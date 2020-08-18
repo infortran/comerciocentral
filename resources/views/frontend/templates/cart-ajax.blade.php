@@ -6,7 +6,7 @@
 
         <div class="col-md-9">
             <h2 class="title text-center">Productos en carrito</h2>
-            @if(Session::has('cart'))
+            @if(Session::has($cartname))
 
 
                 <table class="table table-striped" style="position: relative">

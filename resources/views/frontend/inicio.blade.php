@@ -123,8 +123,8 @@
                 </div>
                 <div class="col-xs-12 col-lg-4 eval eval-owner">
 
-                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $tienda->users->img }}" alt="">
-                    <div class="owner-name">{{ $tienda->users->name. ' '. $tienda->users->lastname }}</div>
+                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $tienda->user->img }}" alt="">
+                    <div class="owner-name">{{ $tienda->user->name. ' '. $tienda->user->lastname }}</div>
                     <div class="owner-position">Representante</div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<img style="max-width:255px;height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+											<img style="height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 											<h2>$ {{number_format($producto->precio, 0, '', '.')}}</h2>
 											<p>{{$producto->nombre}}</p>
 											<button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
@@ -210,7 +210,7 @@
 										</div>
 								</div>
 								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
+									<ul class="nav nav-pills nav-justified text-center" >
 										<li><a href="{{route('producto.single', [$domain ,$producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
 									</ul>
 								</div>
@@ -278,9 +278,12 @@
                                     <div class="single-products">
                                         <div class="productinfo text-center">
                                             <img src="{{ asset('images/uploads/blog').'/' .$noticia->img }}" alt="" />
-                                            <h4 style="color:var(--color-primary) !important">{{ $noticia->titulo }}</h4>
-                                            <div class="cont-noticia" >{{ $noticia->contenido }}</div>
-                                            <a href="{{route('post', [$domain, $noticia->id])}}">Ver mas</a>
+                                            <div class="text-productinfo ">
+                                                <h4>{{ $noticia->titulo }}</h4>
+                                                <div class="cont-noticia" >{{ $noticia->contenido }}</div>
+                                                <a href="{{route('post', [$domain, $noticia->id])}}">Ver mas</a>
+                                            </div>
+
                                         </div>
 
                                     </div>

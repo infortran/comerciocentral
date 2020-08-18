@@ -12,10 +12,31 @@ var RGBChange = function () {
 /*scroll to top*/
 
 $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     $('#sl2').slider().on('slideStop', function(e){
         $('.min-precio').html('$ '+formatNumber(e.value[0]));
         $('.max-precio').html('$ '+formatNumber(e.value[1]));
         rangoPrecios(e.value[0], e.value[1]);
+    });
+
+    $('.icon-cont').click(function(){
+       var motivo = $(this).data('motivo');
+       $('#motivo-'+motivo).prop('checked', true);
+       if(motivo == 'consulta'){
+           $('.sugerencia').removeClass('sugerencia-active');
+           $('.reclamo').removeClass('reclamo-active');
+       }
+       if(motivo == 'sugerencia'){
+           $('.consulta').removeClass('consulta-active');
+           $('.reclamo').removeClass('reclamo-active');
+       }
+
+       if(motivo == 'reclamo'){
+           $('.sugerencia').removeClass('sugerencia-active');
+           $('.consulta').removeClass('consulta-active');
+       }
+
+       $(this).addClass(motivo+'-active');
     });
     $("#input-img-user").change(function(){
         var selector = $('#img-user');
@@ -93,11 +114,6 @@ $(document).ready(function () {
         }
     });
 
-    /*$('.reset-item-cart').click(function(){
-        var id = $(this).data('id');
-        resetOnCartFromAjax(id);
-    });*/
-
     $(document).on('change','.input-item-cart',function(){
        var id = $(this).data('id');
        var cant = $(this).val();
@@ -110,7 +126,54 @@ $(document).ready(function () {
 
     });
 
+    $('#btn-switch-cliente').click(function(){
+        switchCliente();
+    });
 });
+
+function switchCliente(){
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url:'switch_cliente',
+        type:'POST',
+        contentType:false,
+        processData:false,
+        cache:false,
+        beforeSend:function(){
+          $('#btn-switch-cliente >i').removeClass('fa-users').addClass('fa-circle-notch fa-spin');
+        },
+        success:function(data){
+            if(data === 'new'){
+                showSnackBar('Bienvenido como nuevo cliente de esta tienda', 1500);
+                $('#btn-switch-cliente').addClass('btn-comerciocentral').removeClass('btn-cliente');
+                $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+            }else{
+                if(data === 'on'){
+                    showSnackBar('Bienvenido nuevamente a esta tienda como cliente', 1500);
+                    $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+                }else{
+                    showSnackBar('Has dejado de ser cliente de esta tienda', 1500);
+                    $('#btn-switch-cliente >i').addClass('fa-users').removeClass('fa-circle-notch fa-spin');
+                }
+            }
+
+        },
+        error:function(x,y,z){
+            $('#btn-switch-cliente >i').addClass('fa-users').removeClass('fa-circle-notch fa-spin');
+            alert('error');
+        }
+    });
+
+}
+
+function showSnackBar(mensaje, duracion){
+    $('#snackbar').addClass('show-snackbar').html(mensaje);
+    setTimeout(function(){
+        $('#snackbar').removeClass('show-snackbar');
+    },duracion);
+}
 
 function rangoPrecios(min, max){
     var data = new FormData();
@@ -168,15 +231,11 @@ function addToCartFromAjax(id, tienda) {
             $('.btn-default').prop('disabled', true);
         },
         success:function(data){
-
-            $('#badge-carrito').html(data.cantidad_total);
             addCantidadProducto(data.id_producto, data.cantidad_producto);
-
-
-            // Add the "show" class to DIV
-
-            // After 3 seconds, remove the show class from DIV
             setTimeout(function(){
+                $('.badge-carrito').html(data.cantidad_total);
+                $('.checkout-link').removeClass('display-none-imp');
+                $('.precio-total-float p').html('$ '+data.total_mas_envio);
                 //DESACTIVAR TODOS LOS BOTONES ADD-CART
                 $('.btn-default').prop('disabled', false);
                 disableRemoveBtn(data.cantidad_producto);
@@ -193,12 +252,10 @@ function addToCartFromAjax(id, tienda) {
                 $('#icon-cart1-' + data.id_producto).hide();
                 $('#btn-text-cart1-' + data.id_producto).hide();
                 //Mostrar el SNACKBAR
-                $('#snackbar').addClass('show-snackbar');
-                }, 1000);
+                showSnackBar('Producto agregado al carrito de compras', 1500);
+                }, 500);
 
             setTimeout(function(){
-                //Ocultar el SNACKBAR
-                $('#snackbar').removeClass('show-snackbar');
 
                 //Remover el LOADING y el SUCCESS
                 $('#btn-cart-2-' + data.id_producto).removeClass("loading-cart")
@@ -215,7 +272,7 @@ function addToCartFromAjax(id, tienda) {
                 $('#icon-cart1-' + data.id_producto).show();
                 $('#btn-text-cart1-' + data.id_producto).show();
 
-            },3000);
+            },1500);
         },
         error:function(){
             location.reload();
@@ -225,7 +282,6 @@ function addToCartFromAjax(id, tienda) {
 
 //REMOVE CART BUTTON FN
 function removeOnCartFromAjax(id, tienda) {
-
     $.ajax({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -239,7 +295,9 @@ function removeOnCartFromAjax(id, tienda) {
             $('.btn-default').prop('disabled', true);
         },
         success:function(data){
-            $('#badge-carrito').html(data.cantidad_total);
+            data.cantidad_total > 0 ? $('.badge-carrito').html(data.cantidad_total): $('.badge-carrito').html('');
+            data.cantidad_total > 0 ? $('.checkout-link').removeClass('display-none-imp'): $('.checkout-link').addClass('display-none-imp');
+            data.cantidad_total > 0 ? $('.precio-total-float p').html('$ '+data.total_mas_envio) : $('.precio-total-float p').html('vacio');
             addCantidadProducto(data.id_producto, data.cantidad_producto);
 
             $('#snackbar-remove').addClass('show-snackbar');
@@ -250,9 +308,11 @@ function removeOnCartFromAjax(id, tienda) {
                 //snackbar.className = snackbar.className.replace("show-snackbar", "");
                 $('.btn-default').prop('disabled', false);
                 disableRemoveBtn(data.cantidad_producto);
-            }, 3000);
+            }, 1500);
         },
-        error:function(){
+        error:function(xhr, ajaxOptions, thrownError){
+            console.log('Mostrando el error de ajax');
+            console.log(xhr.responseText);
             location.reload();
         }
     });
@@ -293,7 +353,8 @@ function addToCartByQty(idProd, cant, tienda){
                 }else{
                     $('#precio-envio').html("$ " + json.precio_envio);
                 }
-                json.cantidad_total > 0 ? $('#badge-carrito').html(json.cantidad_total) : $('#badge-carrito').html('');
+                json.cantidad_total > 0 ? $('.badge-carrito').html(json.cantidad_total) : $('.badge-carrito').html('');
+                json.cantidad_total > 0 ? $('.checkout-link').removeClass('display-none-imp'): $('.checkout-link').addClass('display-none-imp');
                 $('.loading-item-cart').fadeOut(500);
                 $('.loading-aside-cart').fadeOut(500);
                 $('#cart-cantidad-total').html(json.cantidad_total);
@@ -301,7 +362,8 @@ function addToCartByQty(idProd, cant, tienda){
                 $('#total-mas-envio').html('$ ' + json.total_mas_envio);
                 $('#total-producto-' + json.id_producto).html('$ ' + json.total_producto);
                 $('#descripcion-envio').html(json.descripcion_envio);
-            },1000);
+                $('.precio-total-float p').html('$ '+json.total_mas_envio);
+            },500);
         },
         error:function (xhr, ajaxOptions, thrownError) {
             console.log('Mostrando el error de ajax');
@@ -328,13 +390,15 @@ function resetOnCartFromAjax(id, tienda) {
         success:function(json){
             setTimeout(function(){
                 $('#cart_items').html(json.html);
-                json.cantidad_total > 0 ? $('#badge-carrito').html(json.cantidad_total): $('#badge-carrito').html('');
+                json.cantidad_total > 0 ? $('.badge-carrito').html(json.cantidad_total): $('#badge-carrito').html('');
+                json.cantidad_total > 0 ? $('.checkout-link').removeClass('display-none-imp'): $('.checkout-link').addClass('display-none-imp');
 
-            },1000);
+            },500);
         },
         error:function (xhr, ajaxOptions, thrownError) {
             console.log('Mostrando el error de ajax');
             console.log(xhr.responseText);
+            location.reload();
         }
     });
 }

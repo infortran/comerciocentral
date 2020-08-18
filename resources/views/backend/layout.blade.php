@@ -102,6 +102,19 @@
   text-overflow: ellipsis;
 }
     </style>
+
+    <style>
+        :root{
+
+            --color-primary: {{ $tienda->colortheme->primario ?? '#ffb401' }};
+            --color-secondary: {{ $tienda->colortheme->secundario ?? '#f0f0f0' }};
+            --color-background: {{ $tienda->colortheme->background ?? '#ffffff' }};
+            --color-texto: {{ $tienda->colortheme->texto ?? '#000000' }};
+            --color-texto-claro: {{ $tienda->colortheme->texto_claro ?? '#cfcfcf' }};
+            --color-texto-btn: {{ $tienda->colortheme->texto_btn ?? '#ffffff' }};
+
+}
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -232,7 +245,7 @@
                 </a>
 
                 <!-- Sidebar -->
-                <div class="sidebar" style="height:calc(100% - 9em);overflow-y: scroll;">
+                <div class="sidebar scrollbar-mini" style="height:calc(100% - 9em)">
                     <!-- Sidebar user panel (optional) -->
                     <div class="mt-3 pb-3 mb-3">
                         <div class="text-center">
@@ -259,6 +272,13 @@
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
+
+                            <li class="nav-item">
+                                <a href="{{url('/admin')}}" class="{{ Request::path() === 'admin' ? 'nav-link active' : 'nav-link' }}">
+                                    <i class="nav-icon fa fa-home"></i>
+                                    <p>Inicio</p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="{{url('/admin/ordenes')}}" class="{{ Request::path() === 'admin/ordenes' ? 'nav-link active' : 'nav-link' }}">
@@ -319,7 +339,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{url('/admin/banners')}}" class="{{ Request::path() === 'banners' ? 'nav-link active' : 'nav-link' }}">
+                                <a href="{{url('/admin/banners')}}" class="{{ Request::path() === 'admin/banners' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fa fa-images"></i>
                                     <p>
                                         Publicidad
@@ -336,8 +356,8 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item has-treeview">
-                                <a href="{{url('/admin/config')}}" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }}">
+                            <li class="nav-item has-treeview {{ Request::path()  === 'admin/config/main' || Request::path()  === 'admin/config/certs' || Request::path()  === 'admin/config/socials' || Request::path()  === 'admin/config/themes' || Request::path()  === 'admin/config/user' || Request::path()  === 'admin/config/upgrade' ? 'menu-open active' : ''}}">
+                                <a href="{{url('/admin/config/main')}}" class="{{ Request::path() === 'admin/config/main' ? 'nav-link active' : 'nav-link' }}">
                                     <i class="nav-icon fa fa-cogs"></i>
                                     <p>
                                         Configuracion
@@ -347,45 +367,45 @@
 
                             <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="notas/todas"
-                                            class="{{ Request::path() === 'config/main' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="/admin/config/main"
+                                            class="nav-link {{ Request::path() === 'admin/config/main' ? 'active' : '' }}">
                                             <i class="fa fa-cog nav-icon"></i>
                                             <p>General</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="notas/favoritas"
-                                            class="{{ Request::path() === 'config/cert' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="admin/config/certs"
+                                            class="{{ Request::path() === 'admin/config/certs' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="fa fa-award nav-icon"></i>
                                             <p>Certificacion</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="notas/archivadas"
-                                            class="{{ Request::path() === 'config/socials' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="admin/config/socials"
+                                            class="{{ Request::path() === 'admin/config/socials' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="fa fa-thumbs-up nav-icon"></i>
                                             <p>Redes sociales</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="notas/archivadas"
-                                           class="{{ Request::path() === 'config/themes' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="{{ url('admin/config/themes') }}"
+                                           class="{{ Request::path() === 'admin/config/themes' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="fa fa-palette nav-icon"></i>
-                                            <p>Temas y colores</p>
+                                            <p>Temas y Colores</p>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="notas/archivadas"
-                                           class="{{ Request::path() === 'config/user' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="admin/config/user"
+                                           class="{{ Request::path() === 'admin/config/user' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="fa fa-user nav-icon"></i>
                                             <p>Perfil de usuario</p>
                                         </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a href="notas/archivadas"
-                                           class="{{ Request::path() === 'config/upgrade' ? 'nav-link active' : 'nav-link' }}">
+                                        <a href="admin/config/upgrade"
+                                           class="{{ Request::path() === 'admin/config/upgrade' ? 'nav-link active' : 'nav-link' }}">
                                             <i class="fa fa-magic nav-icon"></i>
                                             <p>Comprar mejoras</p>
                                         </a>
@@ -423,6 +443,7 @@
                     <div class="float-right d-none d-sm-inline-block">
                         <b>Version</b> 1.0
                     </div>
+                </strong>
             </footer>
 
             <!-- Control Sidebar -->

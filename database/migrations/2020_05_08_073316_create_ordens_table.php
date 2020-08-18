@@ -15,8 +15,8 @@ class CreateOrdensTable extends Migration
     {
         Schema::create('ordens', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->string('nombre');
-            $table->integer('id_user')->nullable();
             $table->string('direccion')->nullable();
             $table->string('telefono');
             $table->string('email');
@@ -25,6 +25,7 @@ class CreateOrdensTable extends Migration
             $table->integer('envio')->nullable();
             $table->string('estado')->default('pendiente');
             $table->string('tipo_pago');
+            $table->string('entrega')->default('tienda');
             $table->timestamps();
         });
     }

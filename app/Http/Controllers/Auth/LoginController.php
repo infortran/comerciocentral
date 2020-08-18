@@ -53,20 +53,15 @@ class LoginController extends Controller
 
 
 
-    public function showLoginForm()
+    public function showLoginForm(Request $request, $domain)
     {
         if(!session()->has('from')){
             session()->put('from', url()->previous());
         }
-
-        $domain = request()->route('domain');
-        //dd($domain);
         if($domain) {
-            //dd($domain);
             $loader = new Loader($domain);
             if ($loader->checkDominio()) {
                 $data = $loader->getData();
-                $data['domain'] = $domain;
                 return view('frontend.login', $data);
             }
         }

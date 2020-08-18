@@ -49,14 +49,18 @@ class User extends Authenticatable
     }
 
     public function comentarios(){
-        return $this->hasMany('App\Comentario', 'id_user');
+        return $this->hasMany('App\Comentario');
     }
 
     public function tiendas(){
-        return $this->hasMany('App\Tienda', 'user_id');
+        return $this->hasMany('App\Tienda');
     }
 
     public function posts(){
         return $this->hasMany('App\Post');
+    }
+
+    public function mensajes(){
+        return $this->hasMany('App\Mensaje');
     }
 }

@@ -15,6 +15,10 @@ class Tienda extends Model
         return $this->hasMany('App\Slide');
     }
 
+    public function mensajes(){
+        return $this->hasMany('App\Mensaje');
+    }
+
     public function socials(){
         return $this->belongsToMany('App\Social');
     }
@@ -23,12 +27,16 @@ class Tienda extends Model
         return $this->hasMany('App\TeamMember');
     }
 
-    public function users(){
-        return $this->belongsTo('App\User', 'user_id');
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 
-    public function colorthemes(){
-        return $this->hasMany('App\ColorTheme', 'tienda_id');
+    public function clientes(){
+        return $this->belongsToMany('App\User', 'cliente_tienda')->withTimestamps()->withPivot('cliente');
+    }
+
+    public function colortheme(){
+        return $this->hasOne('App\ColorTheme');
     }
 
     public function banners(){

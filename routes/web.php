@@ -25,7 +25,7 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Auth::routes();
 
     Route::get('/admin', 'AdminController@index');
-    Route::get('/admin/config', 'AdminController@config');
+    Route::get('/admin/config/main', 'AdminController@config');
     Route::post('/admin/update', 'AdminController@update');
 
     Route::get('/admin/productos', 'ProductoController@index');
@@ -40,6 +40,11 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::post('/ajax/ordenes', 'OrdenController@showAll');
     Route::get('/admin/clientes', 'UserController@clientes');
     Route::get('/admin/promociones', 'TiendaController@promos');
+
+    Route::get('/admin/config/themes', 'ColorThemeController@index');
+    Route::post('/admin/config/themes', 'ColorThemeController@store');
+
+    Route::post('/switch_cliente', 'UserController@switchCliente');
 
     Route::get('/carrito', 'CartController@index');
     Route::post('/add_to_cart', 'CartController@addItemsToCart');
@@ -67,7 +72,7 @@ Route::domain('{domain}.comerciocentral.chi')->group(function () {
     Route::get('/noticias/post/{id}', 'BlogController@show')->name('post');
 
     Route::get('/contacto', 'ContactoController@index');
-
+    Route::post('/contacto', 'ContactoController@enviarMensaje');
     Route::get('/certificaciones', 'CertController@index');
 
 

@@ -11,8 +11,8 @@
                             </form>
                         </div>
                         <hr>
-						<h2 class="title">Categorias</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+						<h2 class="title hidden-xs">Categorias</h2>
+						<div class="panel-group category-products hidden-xs" id="accordian"><!--category-productsr-->
 
 
 							@foreach($tienda->categorias as $categoria)
@@ -28,7 +28,7 @@
 
 						</div><!--/category-products-->
 
-						<div class="brands_products"><!--brands_products-->
+						<div class="brands_products hidden-xs"><!--brands_products-->
 							<h2 class="title">Marcas</h2>
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
@@ -49,7 +49,7 @@
 							</div>
 						</div><!--/brands_products-->
 
-						<div class="price-range"><!--price-range-->
+						<div class="price-range text-center hidden-xs hidden-sm"><!--price-range-->
 							<h2 class="title">Rango de precios</h2>
 							<div class="well text-center">
 
@@ -58,7 +58,7 @@
 							</div>
 						</div><!--/price-range-->
 
-						<div class="shipping text-center banner-aside" style="background: linear-gradient(to bottom, {{ $tienda->asidebanner->color_princ_a ?? '' }}, {{ $tienda->asidebanner->color_princ_b ?? ''}});"><!--shipping-->
+						<div class="shipping text-center banner-aside" style="background: linear-gradient(to bottom, {{ $tienda->asidebanner->color_princ_a ?? '' }}, {{ $tienda->asidebanner->color_princ_b ?? ''}});"><!--aside banner-->
 							<div class="row banner-aside-a"  style="background-image: url('{{ asset('images/uploads/productos').'/'.($tienda->asidebanner->producto->img ?? '')}}')">
                                 <div class="dscto-banner-aside">
                                     {{ $tienda->asidebanner->dscto ?? ''}}
@@ -77,7 +77,7 @@
                                 </svg>
                                 <a href="{{ url('producto').'/'. ($tienda->asidebanner->producto->id ?? '')}}" class="btn btn-primary btn-banner-aside">{{$tienda->asidebanner->btn ?? ''}}</a>
                             </div>
-						</div><!--/shipping-->
+						</div><!--/aside banner-->
 
 					</div>
 				</div>

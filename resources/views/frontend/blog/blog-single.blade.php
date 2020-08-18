@@ -9,7 +9,7 @@
 				<!--=============================
 								ASIDE
 				===============================-->
-				@include('frontend.templates.aside-left')
+				@include('frontend.templates.aside-left-blog')
 				<!--=============FIN ASIDE==================-->
 				<div class="col-sm-9">
 					<div class="blog-post-area">
@@ -45,16 +45,73 @@
 
 					<div class="rating-area">
 						<ul class="ratings">
-							<li class="rate-this">Rate this item:</li>
-							<li>
+							<li class="rate-this">votos:</li>
+                            <div class="stars blog-single-stars">
+
+
+                                @if($post->ratings()->avg('voto') > 0.4 && $post->ratings()->avg('voto') < 1)
+                                    <div class="media-estrella">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                    </div>
+                                @else
+                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 1 ? '#ffab00' : ''}}"></i>
+                                @endif
+
+                                @if($post->ratings()->avg('voto') > 1.4 && $post->ratings()->avg('voto') < 2)
+                                    <div class="media-estrella">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                    </div>
+                                @else
+                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 2 ? '#ffab00' : ''}}"></i>
+                                @endif
+
+                                @if($post->ratings()->avg('voto') > 2.4 && $post->ratings()->avg('voto') < 3)
+                                    <div class="media-estrella">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                    </div>
+                                @else
+                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 3 ? '#ffab00' : ''}}"></i>
+                                @endif
+
+
+                                @if($post->ratings()->avg('voto') > 3.4 && $post->ratings()->avg('voto') < 4)
+                                    <div class="media-estrella">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                    </div>
+                                @else
+                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 4 ? '#ffab00' : ''}}"></i>
+                                @endif
+                                @if($post->ratings()->avg('voto') > 4.4 && $post->ratings()->avg('voto') < 5)
+                                    <div class="media-estrella">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                    </div>
+                                @else
+                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 5 ? '#ffab00' : ''}}"></i>
+                                @endif
+
+                            </div>
+							<!--li>
 								<i class="fa fa-star color"></i>
 								<i class="fa fa-star color"></i>
 								<i class="fa fa-star color"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
-							</li>
-							<li class="color">(6 votes)</li>
+							</li-->
+							<li class="color">({{count($post->ratings)}} {{count($post->ratings) > 1?'votos':'voto'}})</li>
 						</ul>
+                        <div class="autor pull-right">
+                            <a class="pull-left" href="#">
+                                <img style="max-width: 50px" class="media-object" src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Autor: {{$post->user->name}} {{$post->user->lastname}}</h4>
+                            </div>
+                        </div>
 						<!--ul class="tag">
 							<li>TAG:</li>
 							<li><a class="color" href="">Pink <span>/</span></a></li>
@@ -63,7 +120,7 @@
 						</ul-->
 					</div><!--/rating-area-->
 
-					<div class="socials-share">
+					<!--div class="socials-share">
 						<a href=""><img src="{{asset('images/blog/socials.png')}}" alt=""></a>
 					</div><!--/socials-share-->
 
@@ -71,35 +128,18 @@
                     <!--================================
                                    AUTOR
                     ====================================-->
-					<div class="media commnets">
-						<a class="pull-left" href="#">
-							<img style="max-width: 100px" class="media-object" src="{{asset('images/uploads/users').'/'.$user_post->img}}" alt="">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">{{$user_post->name}}</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-							<div class="blog-socials">
-								<ul>
-                                    @foreach($user_post->socials as $social)
-									<li><a href="http://{{$social->url.$social->pivot->uri}}"><i class="fab fa-{{strtolower($social->nombre)}}"></i></a></li>
-									@endforeach
-								</ul>
-								<a class="btn btn-primary" href="">Other Posts</a>
-							</div>
-						</div>
-					</div><!--/AUTOR-->
+					<!--/AUTOR-->
 
 
                     <!--==================================================00
                                 COMENTARIOS
                     ================================================-->
 					<div class="response-area">
-						<h2>Comentarios ({{$comentarios->count()}})</h2>
+						<h2>Comentarios ({{$post->comentarios()->count()}})</h2>
 						<ul class="media-list">
 
-                            <?php use App\User; ?>
-                            @foreach($comentarios as $comentario)
-                                <?php $user_post = User::findOrFail($comentario->id_user) ?>
+
+                            @foreach($post->comentarios as $comentario)
                                 @if($comentario->banned)
                                     <li class="media">
                                         <a class="pull-left" href="#">
@@ -110,21 +150,21 @@
                                             <p>El usuario no ha respetado las <a href="#">Normas de la comunidad</a></p>
                                         </div>
                                     </li>
-                                    @else
+                                @else
 							<li class="media">
 
 								<a class="pull-left" href="#">
-									<img style="max-width: 150px; min-height: 150px" class="media-object " src="{{asset('images/uploads/users').'/'.$user_post->img}}" alt="">
+									<img style="max-width: 150px; min-height: 150px" class="media-object " src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
 								</a>
 								<div class="media-body">
 									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>{{$user_post->name}}</li>
+										<li><i class="fa fa-user"></i>{{$comentario->user->name}}</li>
 										<li><i class="fa fa-clock"></i>{{$comentario->created_at->timezone('America/Santiago')->format('H:i')}}</li>
 										<li><i class="fa fa-calendar"></i>{{$comentario->created_at->timezone('America/Santiago')->format('d.m.Y')}}</li>
                                         <li><i class="fa fa-calendar"></i>{{$comentario->created_at->diffForHumans()}}</li>
 									</ul>
 									<p>{{$comentario->comentario}}</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
+									<!--a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a-->
 								</div>
 							</li>
                                     @endif
@@ -161,7 +201,7 @@
                                 <input name="id_post" type="hidden" value="{{$post->id}}">
 
                                 @guest
-                                <button class="btn btn-primary" disabled>Debes iniciar sesion</button>
+                                <a href="{{ url('/login') }}" class="btn btn-primary">Debes iniciar sesion</a>
                                 @else
                                 <button class="btn btn-primary" type="submit">Comentar</button>
                                 @endif

@@ -15,6 +15,14 @@ class Orden extends Model
     }
 
     public function tienda(){
-        return $this->hasOne('App\Tienda');
+        return $this->belongsTo('App\Tienda');
+    }
+
+    public function mensaje(){
+        return $this->hasOne('App\Mensaje');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 }

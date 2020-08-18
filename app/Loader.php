@@ -46,6 +46,10 @@ class Loader{
         return $resultado;
     }
 
+    public function getTienda(){
+        return Tienda::where('dominio', $this->dominio)->first();
+    }
+
     public function getTiendaByDomain($dominio){
         return Tienda::where('dominio', $this->dominio)->first();
     }

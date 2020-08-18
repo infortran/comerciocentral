@@ -31,7 +31,13 @@ class ProductoFrontController extends Controller
                 $data = $loader->getData();
                 $query = trim($request->get('search'));
                 if($request){
-                    $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
+                    if($request->get('categoria')) {
+                        $data['productos'] = $data['tienda']->productos()->where('categoria_id', $request->get('categoria'))->paginate(9);
+                    }elseif($request->get('marca')){
+                        $data['productos'] = $data['tienda']->productos()->where('marca_id', $request->get('marca'))->paginate(9);
+                    }else{
+                        $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%' . $query . '%')->orderBy('id', 'asc')->paginate(9);
+                    }
                 }
                 $data['search'] = $query;
                 return view('frontend.productos', $data);

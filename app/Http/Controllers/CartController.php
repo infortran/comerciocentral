@@ -77,7 +77,6 @@ class CartController extends Controller
         }
         return $envioReturn;
     }
-
     public function calcularEnvio($precioTotal, $tienda){
         $envioName = 'envio-' . $tienda;
         //FUNCION que calcula si el total tiene envio y lo almacena en session
@@ -97,27 +96,29 @@ class CartController extends Controller
     }
 
 
-
     public function addItemsToCart(Request $request){
         $producto = Producto::find($request->get('id'));
         $tienda = $request->get('tienda');
-        //dd($tienda);
         $cartName = 'cart-'. $tienda;
+        $envioName = 'envio-'. $tienda;
         $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
         $cart->add($producto, $producto->id);
 
         $request->session()->put($cartName, $cart);
         $this->calcularEnvio($cart->precioTotal, $tienda);
+        $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
         return response()->json([
             'status'=>'ok',
             'cantidad_total' => $cart->cantidadTotal,
             'id_producto' => $request->get('id'),
+            'total_mas_envio' => number_format($total_mas_envio, 0, '','.'),
             'cantidad_producto' => $cart->items[$request->get('id')]['cantidad']]);
     }
 
     public function removeItemOnCart(Request $request, $domain, $id, $tienda){
         $cartName = 'cart-' . $tienda;
+        $envioName = 'envio-'. $tienda;
         $oldCart = Session::has($cartName) ? Session::get($cartName) : null;
         $cart = new Cart($oldCart);
         $cart->removeItem($id);
@@ -132,9 +133,11 @@ class CartController extends Controller
             $cantidadProducto = $cart->items[$id]['cantidad'];
         }
         $this->calcularEnvio($cart->precioTotal, $tienda);
+        $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
         return response()->json([
             'status'=>'ok',
             'cantidad_total' => $cart->cantidadTotal,
+            'total_mas_envio' => number_format($total_mas_envio, 0, '','.'),
             'id_producto' => $id,
             'cantidad_producto' => $cantidadProducto]);
     }

@@ -17,19 +17,26 @@ class OrdenController extends Controller
     public function index(Request $request, $domain){
         if($domain) {
             $loader = new Loader($domain);
-            //dd($loader->checkDominio());
             if ($loader->checkDominioAdmin()) {
                 $data = $loader->getData();
                 if($request){
-                    $ordenes = Orden::whereDate('created_at', Carbon::today())->where('tienda_id', $data['tienda']->id)->paginate(10);
+                    $ordenes = $data['tienda']->ordenes()->whereDate('created_at', Carbon::today());
                     $countOrdenes = $ordenes->count();
+                    $data['totales'] = $this->getTotalDia($ordenes);
                     $data['search'] = null;
-                    $data['ordenes'] = $ordenes;
+                    $data['ordenes'] = $ordenes->paginate(4);
                     $data['count_ordenes'] = $countOrdenes;
+                    Carbon::setLocale('es');
+                    Carbon::setUTF8(true);
+                    setlocale(LC_ALL, 'es_MX', 'es', 'ES');
+                    $tiempo = Carbon::today();
+                    //dd($tiempo);
+                    $data['hoy'] = $tiempo->formatLocalized('%A %d de %B de %Y');
+                    //dd($data['hoy']);
                 }
                 $query = trim($request->get('search'));
                 if($query){
-                    $ordenes = Orden::where('id', $query)->orderBy('id', 'desc')->paginate(10);
+                    $ordenes = $data['tienda']->ordenes()->where('number', $query)->orderBy('number', 'desc')->paginate(4);
                     $data['search'] = $query;
                     $data['ordenes'] = $ordenes;
                 }
@@ -38,6 +45,20 @@ class OrdenController extends Controller
         }
         return view('frontend.templates.site-not-found');
     }
+
+    public function getTotalDia($ordenes){
+        $totales = [
+            'envios_dia' => 0,
+            'ventas_dia' => 0
+        ];
+        foreach ($ordenes->get() as $orden){
+            $totales['ventas_dia'] += $orden->total;
+            $totales['envios_dia'] += $orden->envio;
+        }
+        $totales['total_dia'] = $totales['ventas_dia'] + $totales['envios_dia'];
+        return $totales;
+    }
+
 
     public function show($domain ,$id){
         if($domain) {

@@ -8,7 +8,7 @@
         <div class="row">
             @if($tienda->cert)
             <div class="col-lg-8">
-                <div class="panel panel-default"  style="box-shadow: 0px 5px 10px rgba(0,0,0,.4); border-radius: 10px"  >
+                <div class="panel panel-default"  style="border:1px solid #cfcfcf; border-radius: 10px"  >
 
                     <div class="panel-body">
                         <div class="certs">
@@ -274,16 +274,56 @@
             <div class="col-md-4">
                 <div class="eval eval-puntuacion text-center">
                     <div class="title">Puntuación</div>
-                    <div class="points">{{ $puntaje }}</div>
+                    <div class="points">{{ number_format($puntaje, 1) }}</div>
                     <div class="stars">
-                        <i class="fa fa-star" style="color:{{ $puntaje >= 1 ? '#ffab00' : ''}}"></i>
-                        <i class="fa fa-star" style="color:{{ $puntaje >= 2 ? '#ffab00' : ''}}"></i>
-                        <i class="fa fa-star" style="color:{{ $puntaje >= 3 ? '#ffab00' : ''}}"></i>
-                        <i class="fa fa-star" style="color:{{ $puntaje >= 4 ? '#ffab00' : ''}}"></i>
-                        <i class="fa fa-star" style="color:{{ $puntaje >= 5 ? '#ffab00' : ''}}"></i>
+                        @if($puntaje > 0.4 && $puntaje < 1)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 1 ? '#ffab00' : ''}}"></i>
+                        @endif
+
+                        @if($puntaje > 1.4 && $puntaje < 2)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 2 ? '#ffab00' : ''}}"></i>
+                        @endif
+
+                        @if($puntaje > 2.4 && $puntaje < 3)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 3 ? '#ffab00' : ''}}"></i>
+                        @endif
+
+
+                        @if($puntaje > 3.4 && $puntaje < 4)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 4 ? '#ffab00' : ''}}"></i>
+                        @endif
+                        @if($puntaje > 4.4 && $puntaje < 5)
+                            <div class="media-estrella">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half"></i>
+                            </div>
+                        @else
+                            <i class="fa fa-star" style="color:{{ $puntaje >= 5 ? '#ffab00' : ''}}"></i>
+                        @endif
+
                     </div>
                     <div class="users-votes">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-users"></i>
                         <strong>{{ count($tienda->ratings) }}</strong>
                         <div><small>votos</small></div>
                     </div>

@@ -2,67 +2,162 @@
 
 @section('content')
 
-<div id="contact-page" class="container">
+<div id="contact-page" class="container" style="margin-bottom: 60px">
     <h1 class="titulo-principal">Contacto</h1>
     <hr>
-    	<div class="bg">
-	    	<div class="row">
-	    		<div class="col-sm-12">
-					<h2 class="title text-center"> <strong>Contáctanos</strong></h2>
-					<div id="gmap" class="contact-map">
-					</div>
-				</div>
-			</div>
-    		<div class="row">
-	    		<div class="col-sm-8">
-	    			<div class="contact-form">
-	    				<h2 class="title text-center">Get In Touch</h2>
-	    				<div class="status alert alert-success" style="display: none"></div>
-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-				            <div class="form-group col-md-6">
-				                <input type="text" name="name" class="form-control" required="required" placeholder="Name">
-				            </div>
-				            <div class="form-group col-md-6">
-				                <input type="email" name="email" class="form-control" required="required" placeholder="Email">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <input type="text" name="subject" class="form-control" required="required" placeholder="Subject">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
-				            </div>
-				            <div class="form-group col-md-12">
-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
-				            </div>
-				        </form>
-	    			</div>
-	    		</div>
-	    		<div class="col-sm-4">
-	    			<div class="contact-info">
-	    				<h2 class="title text-center">Contact Info</h2>
-	    				<address>
-	    					<p>E-Shopper Inc.</p>
-							<p>935 W. Webster Ave New Streets Chicago, IL 60614, NY</p>
-							<p>Newyork USA</p>
-							<p>Mobile: +2346 17 38 93</p>
-							<p>Fax: 1-714-252-0026</p>
-							<p>Email: info@e-shopper.com</p>
-	    				</address>
-	    				<div class="social-networks">
-	    					<h2 class="title text-center">Redes Sociales</h2>
-							<ul>
-                                @foreach($siteSocials as $social)
-								<li>
-									<a href="http://{{$social->socials->url.'/'.$social->uri}}"><i class="fa fa-{{strtolower($social->socials->nombre)}}"></i></a>
-								</li>
-                                @endforeach
+    <div class="row">
+        <div class="col-lg-7">
+            <form class="mensaje-form" action="{{ url('/contacto') }}" method="POST">
+                @csrf
+                <h1 style="margin:0">Necesitas contactarnos?</h1>
+                <hr>
+                <label>MOTIVO DEL MENSAJE</label>
+                <div class="motivo-mensaje-container">
+                    <div class="consulta icon-cont active" data-motivo="consulta">
+                        <input class="display-none" type="radio" name="motivo" value="consulta" id="motivo-consulta">
+                        <div class="icon">
+                            <i class="fa fa-question"></i>
+                        </div>
+                        <div class="text">
+                            Consulta
+                        </div>
+                    </div>
+                    <div class="sugerencia icon-cont" data-motivo="sugerencia">
+                        <input class="display-none" type="radio" name="motivo" value="sugerencia" id="motivo-sugerencia">
+                        <div class="icon">
+                            <i class="fa fa-user-edit"></i>
+                        </div>
+                        <div class="text">
+                            Sugerencia
+                        </div>
+                    </div>
+                    <div class="reclamo icon-cont" data-motivo="reclamo">
+                        <input class="display-none" type="radio" name="motivo" value="reclamo" id="motivo-reclamo">
+                        <div class="icon">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="text">
+                            Reclamo
+                        </div>
+                    </div>
+                </div>
+                @if($errors->has('motivo'))
+                <p style="color:red">Debes seleccionar un motivo para tu mensaje</p>
+                @endif
+                <hr>
+                <label class="">DATOS DEL CLIENTE</label>
+                @if(!Auth::check())
+                <div class="form-group">
+                    <input name="name" class="form-control" type="text" placeholder="Tu nombre" value="{{old('name')}}">
+                    <input name="lastname" class="form-control" type="text" placeholder="tu apellido" value="{{old('lastname')}}">
+                </div>
+                @error('name')
+                    <p style="color:red">{{$message}}</p>
+                    @enderror
+                    @error('lastname')
+                    <p style="color:red">{{$message}}</p>
+                    @enderror
+                <div class="form-group">
+                    <input name="email" class="form-control" type="text" placeholder="tu correo" value="{{old('email')}}">
+                    <input name="telefono" class="form-control" type="text" placeholder="tu telefono" value="{{old('telefono')}}">
+                </div>
+                    @error('email')
+                    <p style="color:red">{{$message}}</p>
+                    @enderror
+                    @error('telefono')
+                    <p style="color:red">{{$message}}</p>
+                    @enderror
+                @else
+                <div class="list-group">
+                    <div class="list-group-item">
+                        Nombre: {{ Auth::user()->name.' '.Auth::user()->lastname }}
+                    </div>
+                    <div class="list-group-item">
+                        Email: {{ Auth::user()->email }}
+                    </div>
+                    <div class="list-group-item">
+                        Telefono: {{ Auth::user()->telefono }}
+                    </div>
+                </div>
+                @endif
+                <hr>
+                <label class="">MENSAJE</label>
+                <div class="form-group">
+                    <input name="asunto" class="form-control" type="text" placeholder="Asunto">
+                </div>
+                @error('asunto')
+                <p style="color:red">{{$message}}</p>
+                @enderror
+                <div class="form-group">
+                    <input class="form-control" type="number" placeholder="N° Orden de Compra (Opcional)" name="orden">
+                </div>
+                <div class="textarea-contacto">
+                    <textarea class="form-control" name="mensaje" id="" rows="6" placeholder="Su mensaje"></textarea>
+                </div>
+                @error('mensaje')
+                <p style="color:red">{{$message}}</p>
+                @enderror
 
-							</ul>
-	    				</div>
-	    			</div>
-    			</div>
-	    	</div>
-    	</div>
-    </div><!--/#contact-page-->
+                <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-envelope-open-text"></i>
+                    Enviar Mensaje</button>
+
+            </form>
+        </div>
+        <div class="col-lg-5">
+            <div class="col-sm-12">
+                <h2 class="title text-center"> <strong>Ubicanos</strong></h2>
+                <div id="gmap" class="contact-map">
+                </div>
+            </div>
+            <hr>
+            <div class="col-sm-12 contacto-card">
+                <div class="icon dir-icon">
+                    <i class="fa fa-map-marker-alt marker"></i>
+                </div>
+                @if($tienda->cert)
+                <div class="cert">
+                    <i class="fa fa-{{ $tienda->cert->ubicacion ? 'check' : 'times' }}-circle check" style="color:{{ $tienda->cert->ubicacion ? '#0f9500' :'red' }}"></i>
+                </div>
+                @endif
+                <div class="text">
+                    @if(count($tienda->direccion)>0)
+                    <div>{{ ($tienda->direccion[0]->calle ?? '').' '.($tienda->direccion[0]->numero ?? '') }}</div>
+                    <div>{{$tienda->direccion[0]->poblacion ?? ''}}</div>
+                    <div>{{$tienda->direccion[0]->ciudad ?? ''}}</div>
+                        @else
+                        <div><strong>Esta tienda no posee dirección física</strong></div>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-12 contacto-card">
+                <div class="icon">
+                    <i class="fa fa-phone"></i>
+                </div>
+                @if($tienda->cert)
+                <div class="cert">
+                    <i class="fa fa-{{ $tienda->cert->telefonico ? 'check' : 'times' }}-circle check" style="color:{{ $tienda->cert->telefonico ? '#0f9500' :'red' }}"></i>
+                </div>
+                @endif
+                <div class="text">
+                    <p>{{ $tienda->telefono }}</p>
+                </div>
+            </div>
+            <div class="col-sm-12 contacto-card">
+                <div class="icon">
+                    <i class="fa fa-envelope"></i>
+                </div>
+                @if($tienda->cert)
+                    <div class="cert">
+                        <i class="fa fa-check-circle check" style="color:transparent !important"></i>
+                    </div>
+                @endif
+                <div class="text">
+                    <p>{{ $tienda->email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/#contact-page-->
 
     @endsection

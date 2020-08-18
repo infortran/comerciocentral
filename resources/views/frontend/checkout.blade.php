@@ -350,7 +350,7 @@
                                             <div class="td-checkout">
                                                 @if(Session::has('envio-'.$tienda->id))
                                                     @if(Session::get('envio-'.$tienda->id)->precio > 0)
-                                                        <strong>$ {{number_format(Session::get('envio')->precio, 0, '', '.')}}</strong>
+                                                        <strong>$ {{number_format(Session::get('envio-'.$tienda->id)->precio, 0, '', '.')}}</strong>
                                                     @else
                                                         <strong style="color: green">GRATIS</strong>
                                                     @endif
@@ -380,6 +380,18 @@
                                                 <strong>Pago con Webpay</strong>
                                             </div>
                                         </div>
+                                        <!--div class="list-group-item list-group-item-checkout">
+                                            <div>
+                                                <input type="radio" value="khipu" name="forma_pago">
+                                            </div>
+                                            <div>
+                                                <img style="max-height: 80px" src="{{asset('images/system/khipu.png')}}" alt="">
+                                            </div>
+                                            <div>
+                                                <strong>Pago con Khipu</strong>
+                                            </div>
+                                            <div id="khipu-chrome-extension-div" style="display: none"></div>
+                                        </div-->
 
                                         <div class="list-group-item list-group-item-checkout">
                                             <div>

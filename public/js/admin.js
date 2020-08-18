@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    $('[data-toggle="tooltip"]').tooltip();
     $('form').areYouSure(
         {'message':'Hay datos sin guardar!, estas seguro que quieres salir?'}
     );

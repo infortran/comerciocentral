@@ -46,6 +46,32 @@ class UserController extends Controller
 
     }
 
+    public function switchCliente(Request $request, $domain){
+        if($request->ajax()){
+            if($domain){
+                $loader = new Loader($domain);
+                if($loader->checkDominio()){
+                    $loader->checkDominioAdmin();
+                    $data = $loader->getData();
+                    if($data['tienda']->clientes->contains(Auth::user()->id)){
+                        $rel = $data['tienda']->clientes()->where('user_id', Auth::user()->id)->first();
+                        if($rel->pivot->cliente){
+                            $data['tienda']->clientes()->updateExistingPivot(Auth::user()->id, ['cliente' => false]);
+                            return 'off';
+                        }else{
+                            $data['tienda']->clientes()->updateExistingPivot(Auth::user()->id, ['cliente' => true]);
+                            return 'on';
+                        }
+                    }else{
+                        $data['tienda']->clientes()->attach(Auth::user()->id);
+                        return 'new';
+                    }
+                }
+            }
+        }
+        return view('frontend.templates.site-not-found');
+    }
+
     public function update(Request $request, $id){
         $user = User::findOrFail($id);
         if($request->img){

@@ -6,12 +6,419 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+.borde-r{
+    border:1px solid red;
+}
+/************************************
+        HOME
+ **********************************/
+.card-admin{
+    background: #fcfcfc;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.4);
+    padding:10px 20px;
+    border-radius: 10px;
+    display:flex;
+    align-items: center;
+}
+.tablero-home{
+    display:flex;
+    align-items: center;
+}
 
+.card-admin.tab-2{
+    margin:0 15px;
+}
 
+.icon-container{
+    position:relative;
+}
 
+.icon-container .icon{
+    width:70px;
+    height:70px;
+    background: linear-gradient(to right, #5d5dff, #d24dff);
+    border-radius: 50%;
+}
 
+.card-admin i{
+    position: absolute;
+    color:#fff;
+    font-size: 30px;
+}
+
+.icon-container.new-users i{
+    top:27%;
+    left:24%;
+}
+.icon-container.msjes i{
+    top:25%;
+    left:29%;
+}
+.icon-container.puntaje i{
+    top:27%;
+    left:26%;
+}
+.icon-container.ordenes-del-dia i{
+    top:25%;
+    left:34%;
+}
+.icon-container.ordenes-pendientes i{
+    top:25%;
+    left:25%;
+}
+.icon-container.total-dia i{
+    top:25%;
+    left:29%;
+}
+.pedidos-home i{
+    top:25%;
+    left:34%;
+}
+.evals-home i{
+    top:25%;
+    left:34%;
+}
+
+.card-admin .text-container{
+    margin-left: 10px;
+    display:inline-block;
+
+}
+
+.card-admin .text-container .numero-cont{
+    display: flex;
+    align-items: baseline;
+    padding:0;
+}
+
+.text-container .numero{
+    font-size: 28px;
+    line-height: 25px;
+    color:#4f4f4f;
+}
+
+.card-admin .text-container .text{
+    font-weight: bold;
+    margin-left: 4px;
+    color:#6f6f6f;
+}
+
+.card-admin .text-container .subtext{
+    color:#7f7f7f;
+    margin-left: 8px;
+    font-size: 12px;
+}
+.pedidos-home{
+    display:block;
+}
+.pedidos-home .text{
+    font-size: 22px;
+}
+.pedidos-home .numero{
+    font-size: 40px;
+    margin-left: auto;
+}
+.pedido-card{
+    display:flex;
+    align-items: center;
+    border:1px solid #cfcfcf;
+    background: #ffffff;
+    padding:5px 15px;
+    border-radius: 10px;
+}
+.pedido-card img{
+    max-height:60px;
+}
+.pedido-card .img-container{
+    text-align: center;
+}
+.pedido-card .user-name{
+    font-weight: bolder;
+}
+.pedido-card .user-img{
+    border-radius: 50%;
+    overflow: hidden;
+}
+.pedido-card .precio{
+    margin-left: auto;
+    font-size: 20px;
+    text-align: center;
+}
+.pedido-card .main{
+    font-size: 20px;
+    font-weight: bold;
+}
+.pedido-card .sub{
+    color:#7f7f7f;
+    margin-left: 8px;
+    font-size: 12px;
+}
+.pedido-card .detalle-pedido{
+    font-weight: bolder;
+    margin:20px;
+    width: 200px;
+}
+
+.pedido-card span{
+    font-size: 12px;
+    font-weight: lighter;
+}
+.pedido-card button{
+    border-radius: 15px;
+    margin-left: 15px;
+}
+
+.pedido-card button > i{
+    position: static;
+    font-size: 18px;
+}
+.pedido-card a{
+    border-radius: 20px !important;
+}
+.pedido-card a > i{
+    position: static;
+    font-size: 15px;
+
+}
+.evals-home{
+    display: block;
+    margin-left: 15px;
+}
+.evals-home{
+    font-size: 22px;
+}
+.pedidos-header{
+    display:flex;
+    align-items: center;
+}
+.evals-header{
+    display:flex;
+    align-items: center;
+}
+
+.eval-card{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    padding:8px 13px;
+    margin-bottom: 15px;
+    background: #ffffff;
+}
+.eval-card .user-img{
+    border-radius: 50%;
+    overflow: hidden;
+}
+.eval-card .user-name{
+    font-weight: bold;
+    text-align: center;
+}
+.eval-card .puntos-cont{
+    margin-left: auto;
+    font-size: 20px;
+    text-align: center;
+}
+.eval-card .text-cont{
+    display:block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding:5px 20px;
+    height: 52px;
+}
+
+.eval-card img{
+    max-height: 50px;
+}
+.eval-card i{
+    position: static;
+    color: #ffab00;
+}
+
+/************************************
+        ORDENES
+********************************** */
+.ordenes-index{
+    display:block;
+    border-radius: 0 10px 10px 10px;
+}
+.ordenes-index .header{
+    padding:15px;
+    border-radius: 10px;
+    border:1px solid #cfcfcf;
+    background: #ffffff;
+    margin-bottom: 15px;
+}
+.ordenes-index .text{
+    font-size: 22px;
+}
+
+.orden-card{
+    display:flex;
+    align-items: center;
+    border:1px solid #cfcfcf;
+    padding:10px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.orden-card .id{
+    flex: 1 1 auto;
+    display: flex;
+    align-self: flex-start;
+    flex-direction: column;
+    height:100px;
+    text-align: center;
+}
+
+.orden-card .texto{
+
+}
+.orden-card .ord-cont{
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.orden-card .orden{
+    font-size: 25px;
+    font-weight: bolder;
+}
+.orden-card .sub-orden{
+    font-size: 12px;
+    color:#7f7f7f;
+}
+.orden-card .user{
+    text-align: center;
+    margin:0 10px;
+    flex:1 1 auto;
+}
+.orden-card .name{
+    color:#6f6f6f;
+}
+
+.orden-card .img{
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+
+}
+.orden-card img{
+    max-height: 50px;
+}
+.orden-card .precio-container{
+    flex:1 1 auto;
+    text-align: center;
+}
+
+.orden-card .precio-container .total{
+    font-size: 25px;
+    font-weight: bolder;
+    color:#6f6f6f;
+}
+.orden-card .subtotal-container{
+    color:#7f7f7f;
+}
+.orden-card .status-container{
+    text-align: center;
+    flex: 1 1 auto;
+}
+.orden-card .deliver strong{
+    font-size: 14px;
+}
+
+.orden-card .btn-group{
+    margin-left: auto !important;
+}
+/********************************
+    COLORTHEMES
+ *******************************/
+.color-editor{
+    padding:20px;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.color-mock{
+    border:1px solid #cfcfcf;
+    height:300px;
+}
+.nav-mock{
+    height:10px;
+    background: var(--color-secondary);
+}
+.header-mock{
+    height:60px;
+    border-bottom: 1px solid #cfcfcf;
+    color:var(--color-primary);
+}
+.body-mock{
+    width: 100%;
+    overflow:hidden;
+}
+.aside-mock{
+    height: 150px;
+    width:30%;
+    float: left;
+}
+.section-mock{
+    float: right;
+    height: 150px;
+    width: 70%;
+    border-left: 1px solid #cfcfcf;
+}
+.section-mock .normal{
+    color:var(--color-texto);
+}
+.section-mock .claro{
+    color:var(--color-texto-claro);
+}
+.footer-mock{
+    height:78px;
+    background: var(--color-secondary);
+}
+
+.btn-cont-mock{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-mock{
+    padding:15px 30px;
+    background: var(--color-primary);
+    color: var(--color-texto-btn);
+    border-radius: 30px;
+    border: none;
+}
+
+.color-right{
+    margin-left: auto;
+}
 
 /*********************************************/
+.btn-comerciocentral{
+    background: linear-gradient(to right, #8b92c0, #b989c3);
+    padding:10px 30px;
+    border-radius: 5px;
+    color:#fff !important;
+}
+.btn-comerciocentral:hover{
+    background: linear-gradient(to right, #2e59f9, #d555ff);
+}
+
+.btn-comerciocentral-2{
+    background: linear-gradient(to bottom, #8b92c0, #b989c3);
+    padding:10px 30px;
+    border-radius: 5px;
+    color:#fff !important;
+}
+.btn-comerciocentral-2:hover{
+    background: linear-gradient(to bottom, #2e59f9, #d555ff);
+}
 
 .btn-comerciocentral-dark{
     background: linear-gradient(to right, #3a4d99, #77439c);
@@ -272,6 +679,27 @@ input:checked + .slider:before {
   position:relative;
   top:1px;
 }
+}
+
+.scrollbar-mini::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    display:none;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.scrollbar-mini::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.scrollbar-mini::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+/* Cambiamos el fondo cuando esté en active */
+.scrollbar-mini::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
 }
 
 
