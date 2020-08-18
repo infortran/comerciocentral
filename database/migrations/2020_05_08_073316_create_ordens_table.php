@@ -15,6 +15,7 @@ class CreateOrdensTable extends Migration
     {
         Schema::create('ordens', function (Blueprint $table) {
             $table->id();
+            $table->integer('number');
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('nombre');
             $table->string('direccion')->nullable();

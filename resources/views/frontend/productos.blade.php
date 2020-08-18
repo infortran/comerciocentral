@@ -16,7 +16,7 @@
 
                         <div class="text-banner-main" style="color:{{ $tienda->productobanner->color_texto ?? '#000000' }} !important">{{ $tienda->productobanner->txt1 ?? 'Antes $ 10990'}}</div>
                         <div class="subtitulo-banner-main" style="color:{{ $tienda->productobanner->color_texto ?? '#000000' }} !important">{{ $tienda->productobanner->txt2 ?? 'Ahora $ 9990'}}</div>
-                        @if($tienda->productobanner->producto)
+                        @if($tienda->productobanner)
                         <a href="{{ url('producto').'/'. ($tienda->productobanner->producto->id ?? '') }}" class="btn btn-primary btn-banner-main">{{ $tienda->productobanner->btn ?? 'Comprar'}}</a>
                         @else
                             <button class="btn btn-primary btn-banner-main">Comprar</button>

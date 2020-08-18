@@ -30,7 +30,7 @@ class MainController extends Controller
         if(Auth::check()){
             $domain = Auth::user()->tiendas()->first()->dominio ?? null;
             if($domain){
-                $url = 'http://'.$domain.'.comerciocentral.chi/';
+                $url = 'https://'.$domain.'.comerciocentral.cl/';
                 return redirect($url);
             }
             return redirect('/tienda');

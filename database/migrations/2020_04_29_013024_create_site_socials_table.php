@@ -13,10 +13,10 @@ class CreateSiteSocialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_socials', function (Blueprint $table) {
+        Schema::create('social_tienda', function (Blueprint $table) {
             $table->id();
             $table->integer('tienda_id')->unsigned();
-            $table->integer('id_social')->unsigned();
+            $table->integer('social_id')->unsigned();
             $table->string('uri');
         });
     }

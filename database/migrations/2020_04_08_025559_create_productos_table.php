@@ -15,12 +15,13 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->integer('tienda_id')->unsigned();
             $table->string('nombre');
             $table->string('descripcion');
             $table->integer('precio');
             $table->string('img');
-            $table->integer('id_categoria')->default(0);
-            $table->integer('id_marca')->default(0);
+            $table->integer('categoria_id')->unsigned()->default(0);
+            $table->integer('marca_id')->unsigned()->default(0);
             $table->timestamps();
             $table->boolean('is_available')->default(true);
         });
