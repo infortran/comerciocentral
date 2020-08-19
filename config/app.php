@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Comercio Central'),
+    'name' => env('APP_NAME', 'Azeda'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://comerciocentral.cl'),
+    'url' => env('APP_URL', 'http://comerciocentral.chi'),
 
     'asset_url' => env('ASSET_URL', null),
 

@@ -26,8 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        $marcas = Marca::all();
-        return view('home', ['categorias' => $categorias, 'marcas' => $marcas]);
+        return view('main.construct');
     }
 }
