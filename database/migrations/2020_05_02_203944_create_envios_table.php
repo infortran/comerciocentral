@@ -15,6 +15,7 @@ class CreateEnviosTable extends Migration
     {
         Schema::create('envios', function (Blueprint $table) {
             $table->id();
+            $table->integer('tienda_id')->unsigned();
             $table->string('descripcion');
             $table->integer('precio');
             $table->integer('min_price')->nullable();

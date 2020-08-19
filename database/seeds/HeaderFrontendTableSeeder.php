@@ -11,9 +11,6 @@ class HeaderFrontendTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('header_frontends')->insert([
-        	'telefono' => '+56 9 12345678',
-        	'email' => 'contacto@dominio.cl',
-			'img_header' => 'navbar-brand.png',]);
+
     }
 }

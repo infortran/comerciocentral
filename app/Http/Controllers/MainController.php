@@ -150,7 +150,7 @@ class MainController extends Controller
 
         $user->save();
         $user->tiendas()->save($tienda);
-        return redirect('http://'.$domain.'.comerciocentral.chi/');
+        return redirect('https://'.$domain.'.comerciocentral.cl/');
     }
 
 

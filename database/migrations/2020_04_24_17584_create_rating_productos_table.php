@@ -13,7 +13,7 @@ class CreateRatingProductosTable extends Migration
      */
     public function up()
     {
-        Schema::create('rating_producto', function (Blueprint $table) {
+        Schema::create('producto_rating', function (Blueprint $table) {
             $table->id();
             $table->integer('rating_id')->unsigned();
             $table->integer('producto_id')->unsigned();

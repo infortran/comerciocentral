@@ -15,7 +15,7 @@ class CreateWebpayOrdensTable extends Migration
     {
         Schema::create('webpay_ordens', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_orden')->unsigned();
+            $table->integer('orden_id')->unsigned();
             $table->string('session_id');
             $table->string('card_number');
             $table->string('accounting_date');

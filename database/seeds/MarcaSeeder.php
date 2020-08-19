@@ -12,9 +12,15 @@ class MarcaSeeder extends Seeder
     public function run()
     {
         DB::table('marcas')->insert([
-            ['marca'=>'Nike'],
-            ['marca'=>'Adidas'],
-            ['marca'=>'Puma:']
+            [
+                'tienda_id' => 1,
+                'marca'=>'Nike'],
+            [
+                'tienda_id' => 1,
+                'marca'=>'Adidas'],
+            [
+                'tienda_id' => 1,
+                'marca'=>'Puma:']
         ]);
     }
 }

@@ -41,7 +41,7 @@ class AdminController extends Controller
                 $data['socials'] = Social::all();
                 return view('backend.config.index', $data);
             }
-            return redirect('http://'. $domain.'.comerciocentral.chi');
+            return redirect('https://'. $domain.'.comerciocentral.cl');
         }
 
         return view('frontend.templates.site-not-found');
@@ -54,7 +54,7 @@ class AdminController extends Controller
                 $data = $loader->getData();
                 return view('backend.home', $data);
             }
-            return redirect('http://'. $domain.'.comerciocentral.chi')->withErrors('No tienes permiso par acceder a este sitio');
+            return redirect('https://'. $domain.'.comerciocentral.cl')->withErrors('No tienes permiso par acceder a este sitio');
         }
         return view('frontend.templates.site-not-found');
     }

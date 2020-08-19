@@ -12,9 +12,15 @@ class CategoriaSeeder extends Seeder
     public function run()
     {
         DB::table('categorias')->insert([
-            ['categoria'=>'Zapatos'],
-            ['categoria'=>'Zapatillas'],
-            ['categoria'=>'Tacos y tacones']
+            [
+                'tienda_id' => 1,
+                'categoria'=>'Zapatos'],
+            [
+                'tienda_id' => 1,
+                'categoria'=>'Zapatillas'],
+            [
+                'tienda_id' => 1,
+                'categoria'=>'Tacos y tacones']
             ]);
     }
 }

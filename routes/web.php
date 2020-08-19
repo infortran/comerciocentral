@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Route::get('/tienda', 'InicioController@index')->name('inicio.index');
-Route::domain('godmode.comerciocentral.chi')->group(function(){
+Route::domain('godmode.comerciocentral.cl')->group(function(){
     Route::get('/', 'GodModeController@index');
 });
 
 
-Route::domain('{domain}.comerciocentral.chi')->group(function () {
+Route::domain('{domain}.comerciocentral.cl')->group(function () {
     Route::get('/', 'InicioController@index');
     Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
     Auth::routes();
