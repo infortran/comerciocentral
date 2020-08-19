@@ -38,6 +38,14 @@
     .img-container{
         text-align: center;
     }
+    @media(max-width: 720px){
+        .text{
+            font-size: 24px;
+        }
+        img{
+            max-height: 80px;
+        }
+    }
 </style>
 <body>
 <div class="text">
