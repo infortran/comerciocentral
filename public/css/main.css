@@ -4013,6 +4013,11 @@ h2.title {
     left: 5px
 }
 
+.post-container{
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    overflow: hidden;
+}
 
 /*************************
 ******* Contact CSS ********

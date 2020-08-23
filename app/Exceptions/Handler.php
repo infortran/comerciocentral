@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
@@ -51,8 +52,27 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
         if (!$request->expectsJson() && $exception instanceof MethodNotAllowedHttpException) {
             return redirect('/');
+        }
+        if($exception instanceof ModelNotFoundException){
+            return redirect('/');
+        }
+        if($this->isHttpException($exception)){
+            switch($exception->getStatusCode()){
+                case 404:
+                    return redirect('/');
+                    break;
+                // internal error
+                case 500:
+                    return \Response::view('custom.500',array(),500);
+                    break;
+
+                default:
+                    return $this->renderHttpException($exception);
+                    break;
+            }
         }
         return parent::render($request, $exception);
     }

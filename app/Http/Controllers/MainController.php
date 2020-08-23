@@ -30,7 +30,7 @@ class MainController extends Controller
         if(Auth::check()){
             $domain = Auth::user()->tiendas()->first()->dominio ?? null;
             if($domain){
-                $url = 'https://'.$domain.'.comerciocentral.cl/';
+                $url = env('APP_PROTOCOL').'://'.$domain.'.comerciocentral.'.env('APP_DOMAIN');
                 return redirect($url);
             }
             return redirect('/tienda');
@@ -150,7 +150,7 @@ class MainController extends Controller
 
         $user->save();
         $user->tiendas()->save($tienda);
-        return redirect('https://'.$domain.'.comerciocentral.cl/');
+        return redirect(env('APP_PROTOCOL').'://'.$domain.'.comerciocentral.'.env('APP_DOMAIN'));
     }
 
 

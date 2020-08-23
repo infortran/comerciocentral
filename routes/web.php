@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-
+*/
 //Route::get('/tienda', 'InicioController@index')->name('inicio.index');
-Route::domain('godmode.comerciocentral.cl')->group(function(){
+Route::domain('godmode.comerciocentral.'.env('APP_DOMAIN'))->group(function(){
     Route::get('/', 'GodModeController@index');
 });
 
 
-Route::domain('{domain}.comerciocentral.cl')->group(function () {
+Route::domain('{domain}.comerciocentral.'.env('APP_DOMAIN'))->group(function () {
     Route::get('/', 'InicioController@index');
     Route::post('/login/auth', 'Auth\LoginController@login')->name('main.login.auth');
     Auth::routes();
@@ -147,9 +147,9 @@ Route::resource('admin/socials', 'SocialController');
 Route::resource('admin/envios', 'EnvioController');
 
 
-*/
 
-Route::get('/', 'HomeController@index');
+
+//Route::get('/', 'HomeController@index');
 
 
 

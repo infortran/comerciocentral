@@ -18,34 +18,23 @@
 							<h3></h3>
 							<div class="post-meta">
 								<ul>
-									<!--li><i class="fa fa-user"></i> Mac Doe</li>
-									<li><i class="fa fa-clock-o"></i> 1:33 pm</li-->
-									<li><i class="fa fa-calendar"></i> {{$post->created_at->diffForHumans()}}</li>
+
+									<li><i class="fa fa-calendar"></i> {{$post->created_at->format('d/m/Y')}}</li>
+									<li><i class="fa fa-clock"></i> {{$post->created_at->diffForHumans()}}</li>
 								</ul>
-								<!--span>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-half-o"></i>
-								</span-->
 							</div>
+                            <div class="post-container">
+                                <img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
+                                <p>{{$post->contenido}}</p>
+                            </div>
 
-                            <img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
 
-							<p>{{$post->contenido}}</p>
-							<!--div class="pager-area">
-								<ul class="pager pull-right">
-									<li><a href="#">Pre</a></li>
-									<li><a href="#">Next</a></li>
-								</ul>
-							</div-->
 						</div>
 					</div><!--/blog-post-area-->
 
-					<div class="rating-area">
+					<div class="rating-area post-container" style="padding:5px;margin-top: 20px">
 						<ul class="ratings">
-							<li class="rate-this">votos:</li>
+							<li class="rate-this">Valoracion:</li>
                             <div class="stars blog-single-stars">
 
 
