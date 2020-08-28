@@ -74,8 +74,8 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center mb-90">
                         <span class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s"></span>
-                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">What we offer for you</h3>
-                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">We provide online instant cash loans with quick approval that suit your term</p>
+                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Que tenemos para ofrecerte</h3>
+                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Servicios ajustados a las necesidades de tu negocio</p>
                     </div>
                 </div>
             </div>

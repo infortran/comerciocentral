@@ -30,7 +30,7 @@
 						</div>
 						<div class="form-group">
 						    <label for="">Contenido</label>
-						    <textarea name="contenido" class="form-control" style="min-height: 300px">{{ old('contenido') }}</textarea>
+						    <textarea id="blog-textarea" name="contenido" class="form-control d-none" style="min-height: 300px">{{ old('contenido') }}</textarea>
 						</div>
 
 
@@ -47,7 +47,7 @@
 					<h2 class="card-title">Subir imagen a entrada</h2>
 					<input name="img" type="file" value="{{ old('img') }}">
 
-					<small>La imagen debe ser mayor de 1000x800 pixeles</small>
+					<small>La imagen debe ser de preferencia grande</small>
 				</div><!---->
 			</div><!---->
 		</div><!---->

@@ -31,7 +31,7 @@
 						</div>
 						<div class="form-group">
 						    <label for="">Contenido</label>
-						    <textarea name="contenido" class="form-control" style="min-height: 300px">{{$post->contenido}}</textarea>
+						    <textarea id="blog-textarea" name="contenido" class="form-control d-none" style="min-height: 300px">{{$post->contenido}}</textarea>
 						</div>
 
 

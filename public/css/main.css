@@ -5,6 +5,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
 @import url(https://fonts.googleapis.com/css?family=Abel);
+.btn-primary:hover{
+    box-shadow: 0px 5px 10px rgba(0,0,0,.4);
+}
 
 /**********************
     Mensaje FORM
@@ -1494,6 +1497,9 @@
     }
 }
 
+.user-rating-container{
+    flex:1;
+}
 
 /**********FIN RATING STAR***********/
 
@@ -3613,7 +3619,65 @@ h2.title {
 *******Blog CSS******
 **************************/
 .autor{
+    flex:1;
     display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.comentario{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.comentario .contenido{
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    padding:10px;
+    flex:1;
+    margin-left: 10px;
+}
+.comentario .content{
+    padding:5px
+}
+.comentario img {
+    max-height: 60px;
+    border-radius: 10px;
+}
+.comentario .username{
+    color: var(--color-primary);
+    font-weight: bolder;
+}
+.comentario .header{
+    display: flex;
+}
+.comentario .diff-for-humans{
+    color:var(--color-texto-claro);
+}
+.comentario .foot{
+    display: flex;
+    align-items: center;
+    padding:10px;
+    color: #adadad;
+}
+.comentario .date{
+    margin-left: auto;
+}
+
+.comentario button {
+    border:1px solid #cfcfcf;
+    color: #868686;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 12px;
+}
+.comentario button:hover{
+    color:var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.replay-container{
+    display:flex;
     align-items: center;
 }
 
@@ -3635,7 +3699,7 @@ h2.title {
 }
 
 .blog-post-area .single-blog-post p {
-    padding:20px;
+    padding:10px;
     color: #363432
 }
 
@@ -3701,6 +3765,7 @@ h2.title {
     color: var(--color-texto-btn);
     margin-top: 17px;
 }
+
 
 .pagination-area {
     margin-bottom: 45px;
@@ -4014,6 +4079,21 @@ h2.title {
 }
 
 .post-container{
+    margin-top: 20px;
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.text-post-contenido{
+    padding:20px
+}
+
+.post-container.flex{
+    display:flex;
+    align-items: center;
+    padding:10px;
+    margin-top: 20px;
     border:1px solid #cfcfcf;
     border-radius: 10px;
     overflow: hidden;

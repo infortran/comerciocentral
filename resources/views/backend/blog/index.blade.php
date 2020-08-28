@@ -47,7 +47,7 @@
                                 <a href="{{route('blog.show', ['domain' => $domain ,$post->id])}}"><h5 class="card-title"><strong>{{$post->titulo}}</strong></h5></a>
 			      				<br>
 			      				<hr>
-						        <p class="card-text block-ellipsis">{{$post->contenido}}</p>
+						        <p class="card-text block-ellipsis">{{strip_tags(html_entity_decode($post->contenido))}}</p>
 
 			      			</div>
 			      			<div class="col-5">

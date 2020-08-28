@@ -25,15 +25,18 @@
 							</div>
                             <div class="post-container">
                                 <img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
-                                <p>{{$post->contenido}}</p>
+                                <div class="text-post-contenido">
+                                    {!! $post->contenido !!}
+                                </div>
+
                             </div>
 
 
 						</div>
 					</div><!--/blog-post-area-->
 
-					<div class="rating-area post-container" style="padding:5px;margin-top: 20px">
-						<ul class="ratings">
+					<div class="rating-area post-container flex">
+						<ul class="ratings" style="flex:1">
 							<li class="rate-this">Valoracion:</li>
                             <div class="stars blog-single-stars">
 
@@ -84,40 +87,22 @@
                                 @endif
 
                             </div>
-							<!--li>
-								<i class="fa fa-star color"></i>
-								<i class="fa fa-star color"></i>
-								<i class="fa fa-star color"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-							</li-->
 							<li class="color">({{count($post->ratings)}} {{count($post->ratings) > 1?'votos':'voto'}})</li>
 						</ul>
-                        <div class="autor pull-right">
-                            <a class="pull-left" href="#">
-                                <img style="max-width: 50px" class="media-object" src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">Autor: {{$post->user->name}} {{$post->user->lastname}}</h4>
-                            </div>
+                        <div class="user-rating-container">
+
+                            <input type="radio">
+                            <input type="radio">
+                            <input type="radio">
+                            <input type="radio">
+                            <input type="radio">
                         </div>
-						<!--ul class="tag">
-							<li>TAG:</li>
-							<li><a class="color" href="">Pink <span>/</span></a></li>
-							<li><a class="color" href="">T-Shirt <span>/</span></a></li>
-							<li><a class="color" href="">Girls</a></li>
-						</ul-->
+                        <div class="autor">
+                            <img style="max-width: 50px;margin-right: 10px" class="media-object" src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
+                            <div><strong>Autor: {{$post->user->name}} {{$post->user->lastname}}</strong></div>
+                        </div>
 					</div><!--/rating-area-->
 
-					<!--div class="socials-share">
-						<a href=""><img src="{{asset('images/blog/socials.png')}}" alt=""></a>
-					</div><!--/socials-share-->
-
-
-                    <!--================================
-                                   AUTOR
-                    ====================================-->
-					<!--/AUTOR-->
 
 
                     <!--==================================================00
@@ -125,68 +110,61 @@
                     ================================================-->
 					<div class="response-area">
 						<h2>Comentarios ({{$post->comentarios()->count()}})</h2>
+                        <hr>
 						<ul class="media-list">
 
 
                             @foreach($post->comentarios as $comentario)
-                                @if($comentario->banned)
-                                    <li class="media">
-                                        <a class="pull-left" href="#">
-                                            <i class="fa fa-times fa-5x" style="color: red"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <strong>Este comentario ha sido bloqueado por el administrador</strong>
-                                            <p>El usuario no ha respetado las <a href="#">Normas de la comunidad</a></p>
+                                @if(! $comentario->banned)
+                                    <div class="comentario">
+                                        <div class="img">
+                                            <img src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
                                         </div>
-                                    </li>
-                                @else
-							<li class="media">
+                                        <div class="contenido">
+                                            <div class="header">
+                                                <div class="username">{{$comentario->user->name}}</div>
+                                                &nbsp; - &nbsp;
+                                                <div class="diff-for-humans"><small>{{$comentario->created_at->diffForHumans()}}</small></div>
+                                            </div>
 
-								<a class="pull-left" href="#">
-									<img style="max-width: 150px; min-height: 150px" class="media-object " src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
-								</a>
-								<div class="media-body">
-									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>{{$comentario->user->name}}</li>
-										<li><i class="fa fa-clock"></i>{{$comentario->created_at->timezone('America/Santiago')->format('H:i')}}</li>
-										<li><i class="fa fa-calendar"></i>{{$comentario->created_at->timezone('America/Santiago')->format('d.m.Y')}}</li>
-                                        <li><i class="fa fa-calendar"></i>{{$comentario->created_at->diffForHumans()}}</li>
-									</ul>
-									<p>{{$comentario->comentario}}</p>
-									<!--a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a-->
-								</div>
-							</li>
+                                            <div class="content">{{$comentario->comentario}}</div>
+                                            <hr style="padding:0;margin:0">
+                                            <div class="foot">
+                                                @if(Auth::check())
+                                                    @if($comentario->user->id === Auth::user()->id)
+                                                    <div class="actions">
+                                                        <button><i class="fa fa-edit"></i>Editar</button>
+                                                        <button><i class="fa fa-times"></i>Eliminar</button>
+                                                    </div>
+                                                    @endif
+                                                @endif
+                                                <div class="date">
+                                                    <i class="fa fa-calendar"></i>
+                                                    {{ $comentario->created_at->timezone('America/Santiago')->format('d/m/Y') }}
+                                                    &nbsp; - &nbsp;
+                                                    <i class="fa fa-clock"></i>
+                                                    {{ $comentario->created_at->timezone('America/Santiago')->format('H:i') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                             @endforeach
-							<!--li class="media second-media">
-								<a class="pull-left" href="#">
-									<img class="media-object" src="{{asset('images/blog/man-three.jpg')}}" alt="">
-								</a>
-								<div class="media-body">
-									<ul class="sinlge-post-meta">
-										<li><i class="fa fa-user"></i>Janis Gallagher</li>
-										<li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-										<li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-									<a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-								</div>
-							</li-->
 
 						</ul>
 					</div><!--/Response-area-->
+                    <hr>
 					<div class="replay-box">
 						<div class="row">
-							<form method="POST" action="{{url('comentario')}}" class="col-12">
+							<form method="POST" action="{{url('comentario')}}" class="col-xs-12">
                                 @csrf
 								<h2>Déjanos tu comentario</h2>
-                                @guest
-                                <div class="blank-arrow">
-                                    <label>Debes iniciar sesion</label>
+                                <div class="replay-container">
+                                    <img style="max-height: 70px;margin-right: 20px" src="{{ Auth::check() ? asset('images/uploads/users').'/'.Auth::user()->img : asset('images/system/avatar.png') }}" alt="">
+                                    <textarea name="comentario" class="form-control" {{Auth::check() ? '':'disabled'}}></textarea>
                                 </div>
-                                @endif
-                                <textarea name="comentario" class="form-control"></textarea>
-                                <input name="id_user" type="hidden" value="{{Auth::user() ? Auth::user()->id : ''}}">
+
+                                <input name="id_user" type="hidden" value="{{Auth::check() ? Auth::user()->id : ''}}">
                                 <input name="id_post" type="hidden" value="{{$post->id}}">
 
                                 @guest
@@ -195,16 +173,6 @@
                                 <button class="btn btn-primary" type="submit">Comentar</button>
                                 @endif
 							</form>
-							<!--div class="col-sm-8">
-								<div class="text-area">
-									<div class="blank-arrow">
-										<label>Your Name</label>
-									</div>
-									<span>*</span>
-									<textarea name="message" rows="11"></textarea>
-									<a class="btn btn-primary" href="">post comment</a>
-								</div>
-							</div-->
 						</div>
 					</div><!--/Repaly Box-->
 				</div>

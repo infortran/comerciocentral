@@ -75,35 +75,16 @@
                                     @endif
 
                                 </div>
-								<!--span>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star-half"></i>
-								</span-->
 							</div>
 							<a href="{{url('noticias/post'.'/'.$post->id)}}">
 								<img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
 							</a>
-							<p class="block-ellipsis">{{$post->contenido}}</p>
+							<p class="block-ellipsis">{{strip_tags(html_entity_decode($post->contenido))}}</p>
 							<a  class="btn btn-primary" href="{{route('post', [$domain, $post->id])}}">Leer mas</a>
 						</div>
                             <hr>
                         @endforeach
 
-
-
-
-
-						<!--div class="pagination-area">
-							<ul class="pagination">
-								<li><a href="" class="active">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-							</ul>
-						</div-->
 					</div>
 				</div>
 

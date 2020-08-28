@@ -31,8 +31,7 @@
     <!-- Select2 dependencies -->
     <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css')}}" rel="stylesheet" />
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js')}}" defer></script>
-
-
+    <script src="{{asset('js/ckeditor.js')}}"></script>
 
     <style>
             .search-form {
@@ -457,7 +456,12 @@
     <script src="{{asset('js/areyousure.js')}}" defer></script>
     <script src="{{asset('js/ays-beforeunload-shim.js')}}" defer></script>
     <script src="{{asset('js/admin.js')}}" defer></script>
+    <script>
+        setTimeout(function(){
+            CKEDITOR.replace( 'blog-textarea' );
+        },1000);
 
+    </script>
     <!-- Select2 Dependencies js -->
 
 

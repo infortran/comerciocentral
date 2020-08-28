@@ -74,7 +74,7 @@ class BlogAdminController extends Controller
                 $tienda = $data['tienda'];
                 $request->validate([
                     'titulo' => 'required|max:50',
-                    'contenido' => 'required|max:500',
+                    'contenido' => 'required',
                     'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=500,min_height=500']);
                 $img = $request->file('img');
                 $imageName = time().'.'.$img->extension();
@@ -151,7 +151,7 @@ class BlogAdminController extends Controller
         if($request->img){
             $request->validate([
                 'titulo' => 'required|max:50',
-                'contenido' => 'required|max:500',
+                'contenido' => 'required',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
             $img = $request->file('img');
             $imageName = time().'.'.$img->extension();
@@ -163,7 +163,7 @@ class BlogAdminController extends Controller
         }else{
             $request->validate([
                 'titulo' => 'required|max:50',
-                'contenido' => 'required|max:500']);
+                'contenido' => 'required']);
         }
         $post->titulo = request('titulo');
         $post->contenido = request('contenido');
