@@ -12,13 +12,14 @@ class ProductosSeeder extends Seeder
     public function run()
     {
         DB::table('productos')->insert([[
-            'tienda_id' => 1,
-            'nombre' => 'nombre del producto',
-            'descripcion' => 'descripcion del producto',
-            'precio' => '1000',
-            'img' => 'image.png',
             'categoria_id' => 1,
-            'marca_id' => 1],
+            'descripcion' => 'descripcion del producto',
+            'img' => 'image.png',
+            'marca_id' => 1,
+            'nombre' => 'nombre del producto',
+            'precio' => '1000',
+            'tienda_id' => 1],
+
             [
                 'tienda_id' => 1,
                 'nombre' => 'nombre del producto',
@@ -49,8 +50,8 @@ class ProductosSeeder extends Seeder
                 'descripcion' => 'descripcion del producto',
                 'precio' => '1000',
                 'img' => 'image.png',
-                'id_categoria' => 3,
-                'id_marca' => 3],
+                'categoria_id' => 3,
+                'marca_id' => 3],
             [
                 'tienda_id' => 1,
                 'nombre' => 'nombre del producto',

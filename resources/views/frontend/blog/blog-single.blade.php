@@ -24,7 +24,7 @@
 								</ul>
 							</div>
                             <div class="post-container">
-                                <img src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
+                                <img class="img-post" src="{{asset('images/uploads/blog').'/'.$post->img}}" alt="">
                                 <div class="text-post-contenido">
                                     {!! $post->contenido !!}
                                 </div>

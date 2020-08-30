@@ -4,7 +4,7 @@
 <div class="container">
 	<h1>Editor del blog
 		<a href="{{url('admin/blog/create')}}">
-		<button class="addButton float-right"><i class="fa fa-plus-square"></i> Nueva entrada</button></a></h1>
+		<button class="btn btn-comerciocentral float-right"><i class="fa fa-pencil-alt"></i> Nueva noticia</button></a></h1>
 
 
   <!-- ============================
@@ -31,6 +31,7 @@
 
 		<hr>
 	<div class="container">
+		@if(count($posts) > 0)
 		@foreach($posts as $post)
 		@include('backend.blog.modal-destroy')
 		<div class="card mb-3"><!--card 1-->
@@ -71,6 +72,25 @@
 			</div><!--.card 1-->
 			@endforeach
 			{{$posts->links()}}
+			@else
+			<div class="row">
+				<div class="col-12">
+					<div class="no-posts">
+						<div class="icon-container">
+							<div class="icon"></div>
+							<i class="fa fa-newspaper"></i>
+						</div>
+						<div class="title">Aun no has publicado tu primera noticia</div>
+						<div>Te invitamos a publicar las nuevas noticias asociadas a tu tienda</div>
+						<div class="btn-container">
+							<a href="{{url('admin/blog/create')}}" class="btn btn-comerciocentral">
+								<i class="fa fa-pencil-alt"></i>
+								Nueva Noticia</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			@endif
 	</div>
 </div>
 @endsection

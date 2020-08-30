@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="tienda-id" content="{{ $tienda->id }}">
 
-    <title>Administracion | {{ strtoupper($domain)}}</title>
+    <title>Administracion | {{ $tienda->nombre}}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

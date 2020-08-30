@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         	HeaderFrontendTableSeeder::class,
             MarcaSeeder::class,
             CategoriaSeeder::class,
-            ProductosSeeder::class]);
+            ProductosSeeder::class,
+            TiendaSeeder::class]);
     }
 }

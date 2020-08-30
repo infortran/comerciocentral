@@ -9,6 +9,43 @@
 .borde-r{
     border:1px solid red;
 }
+/********************************
+        BLOG DE NOTICIAS
+********************************/
+.no-posts{
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+
+}
+.no-posts .icon-container{
+    position:relative;
+}
+.no-posts .icon{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+    background: #878787;
+    position:relative;
+    box-shadow: 0 5px 8px rgba(0,0,0,.4);
+}
+.no-posts .fa-newspaper{
+    position:absolute;
+    top:25%;
+    left:23%;
+    font-size: 50px;
+    color:#ffffff;
+}
+.no-posts .title{
+    font-size: 25px;
+    font-weight: bold;
+}
+.no-posts .btn-container{
+    margin-top: 25px;
+}
 /************************************
         HOME
  **********************************/
@@ -33,7 +70,7 @@
     position:relative;
 }
 
-.icon-container .icon{
+.card-admin .icon-container .icon{
     width:70px;
     height:70px;
     background: linear-gradient(to right, #5d5dff, #d24dff);

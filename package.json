@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "ckeditor4": "^4.14.1"
+        "ckeditor4": "^4.14.1",
+        "csso": "^4.0.3"
     }
 }

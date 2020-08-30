@@ -4085,8 +4085,14 @@ h2.title {
     overflow: hidden;
 }
 
+
+
+.post-container .img-post{
+    width:100%
+}
+
 .text-post-contenido{
-    padding:20px
+    padding:20px;
 }
 
 .post-container.flex{

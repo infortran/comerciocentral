@@ -13,7 +13,7 @@ class CreateRatingPostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rating_post', function (Blueprint $table) {
+        Schema::create('post_rating', function (Blueprint $table) {
             $table->id();
             $table->integer('rating_id')->unsigned();
             $table->integer('post_id')->unsigned();

@@ -141,7 +141,7 @@
                                                 @if($orden->envio > 0)
                                                 <div class="envio">Envio: $ {{number_format($orden->envio,0,'','.')}}</div>
                                                     @else
-                                                    <div class="envio">Envio: <strong style="color:{{is_null($orden->envio) ? '#cfcfcf':'green'}}">{{ is_null($orden->envio) ? 'Sin Envio': 'GRATIS' }}</strong></div>
+                                                    <div class="envio">Envio: <strong style="color:{{is_null($orden->envio) ? '#cfcfcf':'green'}}">{{ is_null($orden->envio) ? 'Retiro en tienda': 'GRATIS' }}</strong></div>
                                                 @endif
                                             </div>
                                         </div>
