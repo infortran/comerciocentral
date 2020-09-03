@@ -16,6 +16,7 @@ class MainController extends Controller
         //$this->middleware('guest')->except('logout');
         //Session::flush();
         //Session::save();
+        $this->middleware('https');
     }
 
     public function checkDomain($dir){
@@ -27,14 +28,7 @@ class MainController extends Controller
     }
 
     public function index(Request $request){
-        if(Auth::check()){
-            $domain = Auth::user()->tiendas()->first()->dominio ?? null;
-            if($domain){
-                $url = env('APP_PROTOCOL').'://'.$domain.'.comerciocentral.'.env('APP_DOMAIN');
-                return redirect($url);
-            }
-            return redirect('/tienda');
-        }
+        //dd($_SERVER['HTTP_X_FORWARDED_PROTO']);
         return view('main.index');
 
     }
