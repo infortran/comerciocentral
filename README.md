@@ -1,4 +1,4 @@
-<p align="center"><img src="http://comerciocentral.chi/images/system/navbar-new2.png" width="400"></p>
+<p align="center"><img src="https://comerciocentral.cl/images/system/navbar-new2.png" width="400"></p>
 
 <p align="center">
 <!--a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
