@@ -1,4 +1,4 @@
-<p align="center"><img src="http://comerciocentral.chi/images/system/navbar.png" width="400"></p>
+<p align="center"><img src="http://comerciocentral.chi/images/system/navbar-new2.png" width="400"></p>
 
 <p align="center">
 <!--a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -9,71 +9,26 @@
 
 ## Comercio Central
 
-Somos un sistema enfocado en solucionar la falta de negocios para el mundo, presentando un modelo de negocio capaz de proporcionar herramientas a quienes no tienen como. Siempre enfocados en:
+ Bienvenidos.
+ Comercio Central esta enfocado en brindar la mejor seguridad a los usuarios a la hora de comprar y vender.
 
-- [Tiendas virtuales totalmente GRATIS](https://laravel.com/docs/routing).
-- [Capacidad de mejorar y ampliar tu tienda virtual](https://laravel.com/docs/container).
-- Ayuda a los que perdieron todo en esta pandemia [](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Tienda virtual totalmente GRATIS](https://comerciocentral.cl).
+- Capacidad de [mejorar y ampliar](https://comerciocentral.cl) tu tienda virtual.
+- Ayuda a quienes quedaron sin un negocio fisico.
+- Solicitudes de cliente a tiendas.
+- Certificaciones de autenticidad de datos.
+- Pago electronico con plataformas seguras (WebPay, PayPal, Khipu, entre otros).
+- Pronto lanzamiento de plataforma para ventas informales...
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Comercio Central es un sistema que brinda tiendas virtuales certificadas, para que la gente compre de manera segura,
+sin tener la posibilidad de enfrentar a un estafador o similar, debido a las certificaciones que hacemos al dueño de tienda.
 
-## Learning Laravel
+El motor de Comercio Central es gracias a [Laravel](https://laravel.com).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Vulnerabilidades de seguridad
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+If you discover a security vulnerability within Laravel, please send an e-mail to Freddy Perez via [freddy.perez.trabajos@gmail.com](mailto:freddy.perez.trabajos@gmail.com). All security vulnerabilities will be promptly addressed.
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
+## Licencia de Laravel
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
