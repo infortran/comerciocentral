@@ -1480,7 +1480,7 @@
     float: right;
 }
 .blog-stars .fa-star-half{
-    top:2px;
+    top:3px;
 }
 
 .blog-single-stars{
@@ -1488,7 +1488,7 @@
     float: left;
 }
 .blog-single-stars .fa-star-half{
-    top:2px;
+    top:3px;
 }
 
 @media(max-width: 762px){
@@ -1498,8 +1498,17 @@
 }
 
 .user-rating-container{
-    flex:1;
+    flex:1.5;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.user-rating-container .title{
+    font-size: 17px;
+    font-weight: bolder;
+}
+
 
 /**********FIN RATING STAR***********/
 
@@ -3826,7 +3835,7 @@ h2.title {
 }
 
 .rating-area .ratings {
-    float: left;
+    flex:1.2;
     padding-left: 0;
     margin-bottom: 0
 }

@@ -129,7 +129,41 @@ $(document).ready(function () {
     $('#btn-switch-cliente').click(function(){
         switchCliente();
     });
+
+    /****************************
+     * STAR RATING FUNCTION
+     * ******************/
+    $('#star-rating-voto').barrating({
+        theme: 'bootstrap-stars',
+        onSelect: function(value, text, event){
+            votarPorNoticia($('#star-rating-voto').data('post'), value);
+        }
+    });
+
 });
+
+function votarPorNoticia(noticia, voto){
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url:'/votar_noticia/'+noticia+'/'+voto,
+        contentType:false,
+        processData:false,
+        cache:false,
+        success:function(data){
+            if(data){
+                showSnackBar('Gracias por darnos tu opinion', 1500);
+                setTimeout(function(){
+                    location.reload();
+                },1500);
+            }
+        },error:function(x,y,z){
+            alert(y);
+            //location.reload();
+        }
+    });
+}
 
 function switchCliente(){
     $.ajax({

@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "ckeditor4": "^4.14.1",
-        "csso": "^4.0.3"
+        "csso": "^4.0.3",
+        "csso-cli": "^3.0.0",
+        "jquery-bar-rating": "^1.2.2"
     }
 }

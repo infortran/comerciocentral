@@ -11,12 +11,19 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        DB::table('users')->insert([[
         	'name' => 'Freddy Perez',
         	'email' => 'freddy@deliciasurbanas.cl',
         	'password' => '$2y$10$sVwwiepca5wECk9VKFHp4ODWhbXSqoTf9WNUVxEYaLF01HGTifEbS',
         	'telefono' => '+56 9 47065823',
         	'img' => 'avatar.png',
-        	'role' => 'admin']);
+        	'role' => 'admin'],
+			[
+				'name' => 'Mayerlin Urbina',
+				'email' => 'mayerlin@comerciocentral.cl',
+				'password' => '$2y$10$sVwwiepca5wECk9VKFHp4ODWhbXSqoTf9WNUVxEYaLF01HGTifEbS',
+				'telefono' => '+56 9 47065823',
+				'img' => 'avatar.png',
+				'role' => 'admin']]);
     }
 }

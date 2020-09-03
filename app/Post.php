@@ -15,8 +15,8 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function ratings(){
-        return $this->belongsToMany('App\Rating');
+    public function postratings(){
+        return $this->hasMany('App\PostRating');
     }
 
     public function comentarios(){

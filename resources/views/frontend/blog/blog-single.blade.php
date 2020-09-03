@@ -36,66 +36,83 @@
 					</div><!--/blog-post-area-->
 
 					<div class="rating-area post-container flex">
-						<ul class="ratings" style="flex:1">
+						<ul class="ratings">
 							<li class="rate-this">Valoracion:</li>
                             <div class="stars blog-single-stars">
 
-
-                                @if($post->ratings()->avg('voto') > 0.4 && $post->ratings()->avg('voto') < 1)
+                                <?php use App\Http\Controllers\BlogController; ?>
+                                @if(BlogController::promedio($post) > 0.4 && BlogController::promedio($post) < 1)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 1 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 1 ? '#ffab00' : ''}}"></i>
                                 @endif
 
-                                @if($post->ratings()->avg('voto') > 1.4 && $post->ratings()->avg('voto') < 2)
+                                @if(BlogController::promedio($post) > 1.4 && BlogController::promedio($post) < 2)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 2 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 2 ? '#ffab00' : ''}}"></i>
                                 @endif
 
-                                @if($post->ratings()->avg('voto') > 2.4 && $post->ratings()->avg('voto') < 3)
+                                @if(BlogController::promedio($post) > 2.4 && BlogController::promedio($post) < 3)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 3 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 3 ? '#ffab00' : ''}}"></i>
                                 @endif
 
 
-                                @if($post->ratings()->avg('voto') > 3.4 && $post->ratings()->avg('voto') < 4)
+                                @if(BlogController::promedio($post) > 3.4 && BlogController::promedio($post) < 4)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 4 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 4 ? '#ffab00' : ''}}"></i>
                                 @endif
-                                @if($post->ratings()->avg('voto') > 4.4 && $post->ratings()->avg('voto') < 5)
+                                @if(BlogController::promedio($post) > 4.4 && BlogController::promedio($post) < 5)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ $post->ratings()->avg('voto') >= 5 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 5 ? '#ffab00' : ''}}"></i>
                                 @endif
 
                             </div>
-							<li class="color">({{count($post->ratings)}} {{count($post->ratings) > 1?'votos':'voto'}})</li>
+							<li class="color">({{count($post->postratings)}} {{count($post->postratings) > 1?'votos':'voto'}})</li>
 						</ul>
-                        <div class="user-rating-container">
+                        <div class="user-rating-container text-center">
+                            @if(Auth::check())
 
-                            <input type="radio">
-                            <input type="radio">
-                            <input type="radio">
-                            <input type="radio">
-                            <input type="radio">
+                            <div class="title">Tu voto</div>
+                                @if(!$ha_votado)
+
+                            <select id="star-rating-voto" data-post="{{$post->id}}">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                                @else
+                                    <div class="stars blog-single-stars">
+                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 1 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 2 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 3 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 4 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 5 ? '#ffab00' : ''}}"></i>
+                                        </div>
+                                    @endif
+                            <div><small id="cant-voto">{{ $ha_votado ? 'Ya ha votado' : 'Aun no has votado' }}</small></div>
+                            @endif
                         </div>
                         <div class="autor">
                             <img style="max-width: 50px;margin-right: 10px" class="media-object" src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">

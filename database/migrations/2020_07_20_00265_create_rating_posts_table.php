@@ -17,7 +17,6 @@ class CreateRatingPostsTable extends Migration
             $table->id();
             $table->integer('rating_id')->unsigned();
             $table->integer('post_id')->unsigned();
-            $table->string('comentario',200)->nullable();
         });
     }
 

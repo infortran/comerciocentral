@@ -17,7 +17,6 @@ class CreateRatingsTable extends Migration
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->integer('voto');
-            $table->string('comentario')->nullable();
             $table->timestamps();
         });
     }
