@@ -16,7 +16,7 @@ class MainController extends Controller
         //$this->middleware('guest')->except('logout');
         //Session::flush();
         //Session::save();
-        $this->middleware('https');
+        //$this->middleware('https');
     }
 
     public function checkDomain($dir){
