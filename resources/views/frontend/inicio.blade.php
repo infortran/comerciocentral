@@ -48,92 +48,72 @@
 
 
             <!--===========================================
-					CERTIFICACION PUNTAJE Y DUEÑO
+					REDUCTORES DE RIESGO
 			=============================================-->
     <section>
         <div class="container">
-            <div class="row evaluacion text-center">
-                <div class="col-xs-12 col-lg-4 eval eval-certificacion">
-                    <div class="icon-certificacion">
-                        <svg class="icon-certificacion-svg" width="80" height="80">
-                            <circle r="38" cx="40" cy="40" style="fill: {{ $certificacion ? '#68ca00' : 'yellow' }}"></circle>
-                        </svg>
-                        <i class="fa fa-store-alt store" style="color: {{ $certificacion ? 'white' : 'black' }}"></i>
-                        <i class="fa fa-{{ $certificacion ? 'check' : 'times' }}-circle check" style="color:{{ $certificacion ? '#0f9500' :'red' }}"></i>
+            <div class="row reduct-container">
+                <div class="reduct-a">
+                    <div class="reduct">
+                        <div class="icon-container">
+                            <div class="icon"></div>
+                            <i class="fa fa-head-side-mask covid-19"></i>
+                        </div>
+                        <div class="text-container">
+                            <div class="title">Medidas COVID-19</div>
+                            <div class="text">Tomamos todas las precauciones necesarias.</div>
+                            <div><a href="">Conoce mas</a></div>
+                        </div>
                     </div>
 
-                    <div class="title">{{$certificacion ? 'Tienda Certificada' : 'Tienda No Certificada'}}</div>
-                    <a href="{{ url('/certificaciones') }}">Ver detalles</a>
-                </div>
-                <div class="col-xs-12 col-lg-4 eval eval-puntuacion">
-                    <div class="title">Puntuación</div>
-                    <div class="points">{{ number_format($puntaje, 1) }}</div>
-                    <div class="stars">
-                        @if($puntaje > 0.4 && $puntaje < 1)
-                            <div class="media-estrella">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half"></i>
-                            </div>
-                        @else
-                            <i class="fa fa-star" style="color:{{ $puntaje >= 1 ? '#ffab00' : ''}}"></i>
-                        @endif
-
-                        @if($puntaje > 1.4 && $puntaje < 2)
-                            <div class="media-estrella">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half"></i>
-                            </div>
-                        @else
-                            <i class="fa fa-star" style="color:{{ $puntaje >= 2 ? '#ffab00' : ''}}"></i>
-                        @endif
-
-                            @if($puntaje > 2.4 && $puntaje < 3)
-                                <div class="media-estrella">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
-                                </div>
-                                @else
-                                <i class="fa fa-star" style="color:{{ $puntaje >= 3 ? '#ffab00' : ''}}"></i>
-                                @endif
-
-
-                        @if($puntaje > 3.4 && $puntaje < 4)
-                            <div class="media-estrella">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half"></i>
-                            </div>
-                        @else
-                            <i class="fa fa-star" style="color:{{ $puntaje >= 4 ? '#ffab00' : ''}}"></i>
-                        @endif
-                            @if($puntaje > 4.4 && $puntaje < 5)
-                                <div class="media-estrella">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half"></i>
-                                </div>
-                                @else
-                                <i class="fa fa-star" style="color:{{ $puntaje >= 5 ? '#ffab00' : ''}}"></i>
-                                @endif
-
-                    </div>
-                    <div class="users-votes">
-                        <i class="fa fa-users"></i>
-                        <strong>{{ count($tienda->ratings) }}</strong>
-                        <div><small>votos</small></div>
+                    <div class=" reduct">
+                        <div class="icon-container">
+                            <div class="icon"></div>
+                            <i class="fa fa-store"></i>
+                        </div>
+                        <div class="text-container">
+                            <div class="title">Ubicacion fisica</div>
+                            <div class="text">Contamos con un lugar donde nos puedes visitar</div>
+                            <div><a href="">Conoce nuestra dirección</a></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-lg-4 eval eval-owner">
-
-                    <img style="max-height: 80px" class="img-responsive center-block" src="{{ asset('images/uploads/users'). '/'. $tienda->user->img }}" alt="">
-                    <div class="owner-name">{{ $tienda->user->name. ' '. $tienda->user->lastname }}</div>
-                    <div class="owner-position">Representante</div>
+                <div class="reduct-b">
+                    <div class=" reduct">
+                        <div class="icon-container">
+                            <div class="icon"></div>
+                            <i class="fa fa-shipping-fast"></i>
+                        </div>
+                        <div class="text-container">
+                            <div class="title">Despacho a domicilio</div>
+                            <div class="text">Entrega en tu hogar, de manera segura y confiable.</div>
+                            <div><a href="">Conoce nuestro delivery</a></div>
+                        </div>
+                    </div>
+                    <div class=" reduct">
+                        <div class="icon-container">
+                            <div class="icon"></div>
+                            <i class="fa fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="text-container">
+                            <div class="title">Compra protegida</div>
+                            <div class="text">Tu dinero estara protegido durante la compra</div>
+                            <div><a href="">Conoce mas</a></div>
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
+
+
+
         </div>
     </section><!--====================/CERT PUNTAJE DUEÑO==============================-->
 
 
 
-	<section>
+	<section style="margin-top: 40px">
 		<div class="container">
 			<div class="row">
 
@@ -291,15 +271,27 @@
                             </div>
 
                             @endforeach
-                    </div>
-                </div>
-            </div><!--/recommended_items-->
-            <div class="row">
-                <div class="banner">
 
-                </div>
-            </div>
+            </div><!--/recommended_items-->
+
 		</div><!-- FIN CONTAINER-->
 	</section>
+    <div class="container-fluid banner-inferior-container">
+        <div class="banner-inferior">
+            <div class="img-container">
+                <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+            </div>
+            <div class="text-container">
+                <div class="title">
+                    Comercio Central
+                </div>
+                <div class="text">
+                    El centro del comercio electronico, donde puedes vender tus productos
+                    en una elegante tienda virtual
+                </div>
+                <button class="btn-banner">Crea tu tienda ahora</button>
+            </div>
+        </div>
+    </div>
 
 	@endsection

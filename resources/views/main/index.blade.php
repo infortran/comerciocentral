@@ -9,7 +9,7 @@
                     <div class="col-12 text-center">
                         <div class="slider_text">
                             <!--img style="max-height: 200px" class="mx-auto" src="{{asset('images/system/shop-optimized.png')}}" alt=""-->
-                            <h3>La nueva tienda virtual de confianza <strong>GRATIS</strong> y <strong>CERTIFICADA</strong></h3>
+                            <h3>Crea una tienda virtual de confianza <strong>GRATIS</strong> y <strong>CERTIFICADA</strong></h3>
                         </div>
                     </div>
                     <div class="col-12 col-lg-10 col-xl-8">
@@ -32,34 +32,6 @@
                                 </button>
                             </div>
                         </form>
-
-
-                            <!--form action="" method="post">
-                                @csrf
-                                <button type="submit">logout</button>
-                            </form>
-                        <div class="payment_form white-bg wow fadeInDown" data-wow-duration="1.2s" data-wow-delay=".2s">
-                            <div class="info text-center">
-                                <h4>Como se llama tu tienda?</h4>
-                                <p>Verifica si el nombre de tu tienda esta disponible</p>
-                            </div>
-                            <div class="form">
-                                <div class="row">
-                                    <div class="col-lg-12">
-
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Nombre de tu tienda">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Tu correo electronico">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="submit_btn">
-                                <button class="boxed-btn3" type="submit">Continuar</button>
-                            </div>
-                        </div-->
                     </div>
                 </div>
             </div>
@@ -74,17 +46,38 @@
                 <div class="col-lg-12">
                     <div class="section_title text-center mb-90">
                         <span class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s"></span>
-                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Que tenemos para ofrecerte</h3>
-                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Servicios ajustados a las necesidades de tu negocio</p>
+                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Queremos ayudarte</h3>
+                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">con servicios ajustados a las necesidades de tu negocio</p>
                     </div>
                 </div>
             </div>
             <div class="row">
+                <div class="col-12 main-price-container">
+                    <div class="main-price">
+                        <div class="header">
+
+                        </div>
+                        <div class="body">
+
+                        </div>
+                        <div class="footer">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+
+                </div>
+                <div class="col-12">
+
+                </div>
+            </div>
+            <!--div class="row">
                 <div class="col-lg-4 col-md-6">
                     <div class="single_service wow fadeInLeft" data-wow-duration="1.2s" data-wow-delay=".5s">
                         <div class="service_icon_wrap text-center">
                             <div class="service_icon ">
-                                <img src="img/svg_icon/service_1.png" alt="">
+                                
                             </div>
                         </div>
                         <div class="info text-center">
@@ -152,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!--END ROW-->
         </div>
     </div>
     <!-- service_area_end  -->
