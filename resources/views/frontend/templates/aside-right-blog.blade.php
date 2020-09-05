@@ -19,4 +19,17 @@
 
         @endforeach
     </div>
+
+    <div class="banner-aside-right">
+        <div class="img-container">
+            <img class="img-responsive" src="{{asset('images/system/navbar-new2.png')}}" alt="">
+        </div>
+        <div class="title">
+
+        </div>
+        <div class="text">
+            El centro del comercio electronico, donde pueds crear tu tienda virtual <strong>GRATIS</strong>...
+        </div>
+        <button class="btn-banner">Consigue tu tienda</button>
+    </div>
 </div>

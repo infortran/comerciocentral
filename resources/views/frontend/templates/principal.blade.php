@@ -124,23 +124,30 @@
 						<div class="logo pull-left">
 							<a href="/"><img style="max-height:60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->dominio. '.png'}}" alt="" /></a>
 						</div>
+
+						<!--=================
+							BTN CLIENTE
+							===============-->
 						<div class="btn-group" style="margin-left: 30px">
                             @if(Auth::check() && ($tienda->clientes()->where('user_id', Auth::user()->id)->first()->pivot->cliente ?? false))
                                 <div class="btn-group">
-                                    <button id="btn-switch-cliente" class="btn btn-comerciocentral">
+                                    <button style="display:flex;align-items: center;" id="btn-switch-cliente" class="btn btn-comerciocentral">
                                         <i class="fa fa-check-circle"></i>
-                                        Eres Cliente
+                                        <div class="text-btn-cliente">Soy cliente</div>
                                     </button>
                                 </div>
                                 @else
-                            <div class="btn-group"  style="cursor:{{Auth::check()? 'pointer':'not-allowed'}} !important;"  data-toggle="tooltip" data-placement="bottom" title="{{Auth::check()? '' : 'Debes iniciar sesion o registrarse'}}">
-                                <button id="btn-switch-cliente" style="cursor:{{Auth::check()? 'pointer':'not-allowed'}} !important;" class="btn btn-cliente" data-user-id="{{ Auth::check() ? Auth::user()->id : '' }}"
+                            <div class="btn-group"  style="cursor:{{Auth::check()? 'pointer':'not-allowed'}} !important;"  data-toggle="tooltip" data-placement="bottom" title="{{Auth::check()? '' : 'Debe iniciar sesion o registrarse'}}">
+                                <button style="display:flex;align-items: center;" id="btn-switch-cliente" style="cursor:{{Auth::check()? 'pointer':'not-allowed'}} !important;" class="btn btn-cliente" data-user-id="{{ Auth::check() ? Auth::user()->id : '' }}"
                                     {{Auth::check()? '' : 'disabled'}}>
                                     <i class="fa fa-users"></i>
-                                    Hazte Cliente
+									<div class="text-btn-cliente">Hazte Cliente</div>
+
                                 </button>
                             </div>
                             @endif
+								@include('frontend.templates.modals.modal-block-cliente')
+
 							<!--===========================
 								SELECTOR DE MONEDA
 								======================-->

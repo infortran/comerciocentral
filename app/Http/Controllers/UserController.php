@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Image;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -53,19 +54,29 @@ class UserController extends Controller
                 if($loader->checkDominio()){
                     $loader->checkDominioAdmin();
                     $data = $loader->getData();
+                    //Si la tienda ya tiene al cliente
                     if($data['tienda']->clientes->contains(Auth::user()->id)){
+                        //verificar la fecha de su ultima modificacion
+                        //comparar con la fecha actual
+                        //si la fecha no supera los 2 meses mandar error
+                        //si no continuar con el codigo abajo
                         $rel = $data['tienda']->clientes()->where('user_id', Auth::user()->id)->first();
+                        $ahora = Carbon::now();
+                        $diferencia = $ahora->diffInDays($rel->pivot->updated_at);
+
                         if($rel->pivot->cliente){
                             $data['tienda']->clientes()->updateExistingPivot(Auth::user()->id, ['cliente' => false]);
                             return 'off';
-                        }else{
+                        }
+                        if($diferencia > 2){
                             $data['tienda']->clientes()->updateExistingPivot(Auth::user()->id, ['cliente' => true]);
                             return 'on';
                         }
-                    }else{
-                        $data['tienda']->clientes()->attach(Auth::user()->id);
-                        return 'new';
+                        return 'block';
                     }
+                    $data['tienda']->clientes()->attach(Auth::user()->id);
+                    return 'new';
+
                 }
             }
         }

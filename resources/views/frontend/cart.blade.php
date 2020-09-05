@@ -12,8 +12,6 @@
                     <h2 class="title text-center">Productos en carrito</h2>
 
                     @if(Session::has($cartname))
-
-
                            <table class="table table-striped" style="position: relative">
                                <div class="loading-item-cart" style="display: none">
                                    <div class="loading-cart"></div>
@@ -142,11 +140,28 @@
                     </div>
                 </div>
                 @else
-                    <div class="alert alert-info" style="margin-bottom: 300px">
+                        <div class="col-xs-12">
+                            <div class="no-cart">
+                                <div class="icon-container">
+                                    <div class="icon"></div>
+                                    <i class="fa fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="text-container">
+                                    <div class="title">
+                                        No hay productos en el carro
+                                    </div>
+                                    <div class="text">
+                                        Puedes agregar productos al carrito visitando nuestra zona de productos
+                                    </div>
+                                    <button class="btn-no-cart">Ir a Productos</button>
+                                </div>
+                            </div>
+                        </div>
+                    <!--div class="alert alert-info" style="margin-bottom: 300px">
                         <h5> <i class="fas fa-cart-arrow-down"></i>
                             No hay Items en el Carrito
                         </h5>
-                    </div>
+                    </div-->
                 @endif
             </div><!--/.row-->
 

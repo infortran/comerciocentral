@@ -177,19 +177,51 @@ function switchCliente(){
         cache:false,
         beforeSend:function(){
           $('#btn-switch-cliente >i').removeClass('fa-users').addClass('fa-circle-notch fa-spin');
+
         },
         success:function(data){
+            if(data === 'block'){
+                setTimeout(function(){
+                    $('#modal-block-cliente').modal('show');
+                    $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+
+                },800);
+                return;
+            }
             if(data === 'new'){
-                showSnackBar('Bienvenido como nuevo cliente de esta tienda', 1500);
-                $('#btn-switch-cliente').addClass('btn-comerciocentral').removeClass('btn-cliente');
-                $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+                setTimeout(function(){
+                    showSnackBar('Bienvenido como nuevo cliente de esta tienda', 1500);
+                    $('#btn-switch-cliente').addClass('btn-comerciocentral').removeClass('btn-cliente');
+                    $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+                    $('.text-btn-cliente').html('BRAVO!! Eres un nuevo cliente');
+                },800);
+
+                setTimeout(function(){
+                    $('.text-btn-cliente').html('Soy cliente');
+                },3000);
             }else{
                 if(data === 'on'){
-                    showSnackBar('Bienvenido nuevamente a esta tienda como cliente', 1500);
-                    $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+                    setTimeout(function(){
+                        showSnackBar('Bienvenido nuevamente a esta tienda como cliente', 1500);
+                        $('#btn-switch-cliente').addClass('btn-comerciocentral').removeClass('btn-cliente');
+                        $('#btn-switch-cliente >i').addClass('fa-check-circle').removeClass('fa-circle-notch fa-spin');
+                        $('.text-btn-cliente').html('BIENVENIDO OTRA VEZ!!');
+                    },800);
+
+                    setTimeout(function(){
+                        $('.text-btn-cliente').html('Soy cliente');
+                    },3000);
                 }else{
-                    showSnackBar('Has dejado de ser cliente de esta tienda', 1500);
-                    $('#btn-switch-cliente >i').addClass('fa-users').removeClass('fa-circle-notch fa-spin');
+                    setTimeout(function(){
+                        showSnackBar('Has dejado de ser cliente de esta tienda', 1500);
+                        $('#btn-switch-cliente').removeClass('btn-comerciocentral').addClass('btn-cliente');
+                        $('#btn-switch-cliente >i').addClass('fa-users').removeClass('fa-circle-notch fa-spin');
+                        $('.text-btn-cliente').html('Que pena, te extrañaremos...');
+                    },800);
+
+                    setTimeout(function(){
+                        $('.text-btn-cliente').html('Hazte Cliente');
+                    },3000);
                 }
             }
 

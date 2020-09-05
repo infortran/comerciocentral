@@ -24,5 +24,20 @@
                 <a href="{{ url('producto').'/'. ($tienda->asidebanner->producto->id ?? '')}}" class="btn btn-primary btn-banner-aside">{{$tienda->asidebanner->btn ?? ''}}</a>
             </div>
         </div><!--/aside banner-->
+        <div class="sub-banner-aside">
+            <div class="img-container">
+                <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+            </div>
+            <div class="text-container">
+                <div class="title">
+                    mall.comerciocentral.cl
+                </div>
+                <div class="text">
+                    Te invitamos a conocer todas las ofertas que te esperan en nuestro mall virtual.
+                </div>
+            </div>
+
+            <button class="btn-banner">Visita nuestro MALL</button>
+        </div>
     </div>
 </div>

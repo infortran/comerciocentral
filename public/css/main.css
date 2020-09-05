@@ -404,7 +404,103 @@
 /************************************
         FIN REDUCTORES DE RIESGO
 *************************************/
+/**********************************
+        Sub banner aside
+***********************************/
+.sub-banner-aside{
+    background:linear-gradient(to right, #988eff, #cf85ff);
+    text-align: center;
+    padding-bottom: 30px;
+    margin-top: 30px;
+}
 
+.sub-banner-aside .img-container{
+
+}
+.sub-banner-aside img{
+    width:100%;
+}
+.sub-banner-aside .text-container{
+    padding:10px;
+}
+.sub-banner-aside .title{
+    padding:20px 0;
+    font-weight: lighter;
+    color:#ffffff;
+    font-size: 20px;
+}
+.sub-banner-aside .text{
+    color: #ffffff;
+    font-weight: lighter;
+}
+.sub-banner-aside .btn-banner{
+    padding:20px;
+    border-radius: 50px;
+    border:none;
+    background: #574bff;
+    color:#ffffff;
+    font-weight: bold;
+    transition: ease .2s;
+    margin-top: 20px;
+}
+.sub-banner-aside .btn-banner:hover{
+    box-shadow: 0 3px 7px rgba(0,0,0,.4);
+    background: #cc76ff;
+}
+/**********************************
+        FIN Sub banner aside
+***********************************/
+/**********************************
+        Banner aside right
+***********************************/
+.banner-aside-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:linear-gradient(to right, #988eff, #cf85ff);
+    padding:20px;
+}
+
+.banner-aside-right .img-container{
+
+}
+
+.banner-aside-right img{
+
+}
+
+.banner-aside-right .title{
+
+}
+
+.banner-aside-right .text{
+    text-align: center;
+    color:#ffffff;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.banner-aside-right{
+
+}
+
+.banner-aside-right .btn-banner{
+    padding:20px;
+    border-radius: 50px;
+    border:none;
+    background: #574bff;
+    color:#ffffff;
+    font-weight: bold;
+    transition: ease .2s;
+    margin-top: 20px;
+}
+.banner-aside-right .btn-banner:hover{
+    box-shadow: 0 3px 7px rgba(0,0,0,.4);
+    background: #cc76ff;
+}
+/**********************************
+        fin Banner aside right
+***********************************/
 /**********************************
         Banner inferior
 ***********************************/
@@ -1479,6 +1575,10 @@
     color: var(--color-texto-btn);
 }
 
+.text-btn-cliente{
+    margin-left: 7px;
+}
+
 .btn-comerciocentral{
     background: linear-gradient(to right, #8b92c0, #b989c3);
     padding:10px 30px;
@@ -1486,7 +1586,7 @@
     color:#fff !important;
 }
 .btn-comerciocentral:hover{
-    background: linear-gradient(to right, #2e59f9, #d555ff);
+    background: linear-gradient(to right, #274bd1, #9a3db8);
 }
 
 .btn-plus-minus-cart{
