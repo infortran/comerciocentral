@@ -153,7 +153,7 @@
                                     <div class="text">
                                         Puedes agregar productos al carrito visitando nuestra zona de productos
                                     </div>
-                                    <button class="btn-no-cart">Ir a Productos</button>
+                                    <a href="{{url('/productos')}}" class="btn-no-cart">Ir a Productos</a>
                                 </div>
                             </div>
                         </div>
