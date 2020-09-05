@@ -142,6 +142,7 @@
                                     <div class="choose">
                                         <ul class="nav nav-pills nav-justified text-center">
                                             <li><a href="{{route('producto.single', [$domain, $producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
+                                            <li id="remove-cart-wrapper-{{$producto->id}}" data-id="{{$producto->id}}" class="btn-submit-remove-on-cart  {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'd-none-important'}}"><a  href="javascript: void(0)"><i class="fa fa-trash"></i>Eliminar</a></li>
                                         </ul>
                                     </div>
                                 </div>
