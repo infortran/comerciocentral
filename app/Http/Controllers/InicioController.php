@@ -27,7 +27,7 @@ class InicioController extends Controller
                 $data = $loader->getData();
                 $query = trim($request->get('search'));
                 if($request){
-                    $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%'. $query . '%')->orderBy('created_at', 'asc')->paginate(9);
+                    $data['productos'] = $data['tienda']->productos()->where('nombre', 'LIKE', '%'. $query . '%')->orderBy('created_at', 'desc')->paginate(9);
                 }
                 return view('frontend.inicio', $data);
             }

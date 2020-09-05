@@ -270,6 +270,7 @@ function addToCartFromAjax(id, tienda) {
                 $('.badge-carrito').html(data.cantidad_total);
                 $('.checkout-link').removeClass('display-none-imp');
                 $('.precio-total-float p').html('$ '+data.total_mas_envio);
+                $('#remove-cart-wrapper-'+id).removeClass('d-none-important');
                 //DESACTIVAR TODOS LOS BOTONES ADD-CART
                 $('.btn-default').prop('disabled', false);
                 disableRemoveBtn(data.cantidad_producto);
@@ -332,6 +333,7 @@ function removeOnCartFromAjax(id, tienda) {
             data.cantidad_total > 0 ? $('.badge-carrito').html(data.cantidad_total): $('.badge-carrito').html('');
             data.cantidad_total > 0 ? $('.checkout-link').removeClass('display-none-imp'): $('.checkout-link').addClass('display-none-imp');
             data.cantidad_total > 0 ? $('.precio-total-float p').html('$ '+data.total_mas_envio) : $('.precio-total-float p').html('vacio');
+            data.cantidad_producto > 0 ? $('#remove-cart-wrapper-'+id).removeClass('d-none-important'):$('#remove-cart-wrapper-'+id).addClass('d-none-important');
             addCantidadProducto(data.id_producto, data.cantidad_producto);
 
             $('#snackbar-remove').addClass('show-snackbar');
@@ -347,7 +349,7 @@ function removeOnCartFromAjax(id, tienda) {
         error:function(xhr, ajaxOptions, thrownError){
             console.log('Mostrando el error de ajax');
             console.log(xhr.responseText);
-            location.reload();
+            //location.reload();
         }
     });
 }

@@ -135,7 +135,7 @@
                 ================================================-->
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Nuestros productos</h2>
+						<h2 class="title text-center">Ultimos productos</h2>
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -192,6 +192,7 @@
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified text-center" >
 										<li><a href="{{route('producto.single', [$domain ,$producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
+                                        <li id="remove-cart-wrapper-{{$producto->id}}" data-id="{{$producto->id}}" class="btn-submit-remove-on-cart  {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'd-none-important'}}"><a  href="javascript: void(0)"><i class="fa fa-trash"></i>Eliminar</a></li>
 									</ul>
 								</div>
 							</div>
