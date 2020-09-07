@@ -12,11 +12,16 @@
 
                     <div class="panel-body">
                         <div class="certs">
+                            
                             <div class="icon-certs">
+                                @if($tienda->cert->ubicacion)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                    @else
                                 <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{ $tienda->cert->ubicacion ? '#10b800' : 'red' }}"></circle>
+                                    <circle r="35" cx="35" cy="35" style="fill:red"></circle>
                                 </svg>
-                                <i class="fa {{ $tienda->cert->ubicacion ? 'fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                <i class="fa fa-exclamation-triangle"></i>
+                                    @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title" style="color:{{ $tienda->cert->ubicacion ? '#10b800' : 'red' }}">
@@ -52,10 +57,14 @@
                         <hr>
                         <div class="certs">
                             <div class="icon-certs">
-                                <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{ $tienda->cert->admin ? '#10b800' : 'red' }}"></circle>
-                                </svg>
-                                <i class="fa {{ $tienda->cert->admin ? 'fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                @if($tienda->cert->admin)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                @else
+                                    <svg width="70" height="70">
+                                        <circle r="35" cx="35" cy="35" style="fill:red"></circle>
+                                    </svg>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title"  style="color:{{ $tienda->cert->admin ? '#10b800' : 'red' }}">
@@ -91,10 +100,14 @@
 
                         <div class="certs">
                             <div class="icon-certs">
-                                <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{ $tienda->cert->tributario ? '#10b800' : 'red' }}"></circle>
-                                </svg>
-                                <i class="fa {{ $tienda->cert->tributario ? 'fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                @if($tienda->cert->tributario)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                @else
+                                    <svg width="70" height="70">
+                                        <circle r="35" cx="35" cy="35" style="fill:red"></circle>
+                                    </svg>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title" style="color:{{ $tienda->cert->tributario ? '#10b800' : 'red' }}">
@@ -124,10 +137,14 @@
 
                         <div class="certs">
                             <div class="icon-certs">
-                                <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{ $tienda->cert->delivery ? '#10b800' : 'red' }}"></circle>
-                                </svg>
-                                <i class="fa {{ $tienda->cert->delivery ? 'fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                @if($tienda->cert->delivery)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                @else
+                                    <svg width="70" height="70">
+                                        <circle r="35" cx="35" cy="35" style="fill:red"></circle>
+                                    </svg>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title" style="color:{{ $tienda->cert->delivery ? '#10b800' : 'red' }}">
@@ -178,10 +195,14 @@
 
                         <div class="certs">
                             <div class="icon-certs">
-                                <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{ $tienda->cert->telefonico ? '#10b800' : 'red'}}"></circle>
-                                </svg>
-                                <i class="fa {{ $tienda->cert->telefonico ? 'fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                @if($tienda->cert->telefonico)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                @else
+                                    <svg width="70" height="70">
+                                        <circle r="35" cx="35" cy="35" style="fill:red"></circle>
+                                    </svg>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title" style="color:{{ $tienda->cert->telefonico ? '#10b800' : 'red' }}">
@@ -211,11 +232,14 @@
                         @if($tienda->cert->sanitario)
                         <div class="certs">
                             <div class="icon-certs">
-                                <svg width="70" height="70">
-                                    <circle r="35" cx="35" cy="35" style="fill: {{$tienda->cert->certdata->res_sanitaria ? '#10b800' : 'yellow'}}"></circle>
-                                </svg>
-                                <i class="fa {{ $tienda->cert->certdata->res_sanitaria ? 'fa-check' : 'fa-exclamation-triangle' }}" style="color:
-                                    {{ $tienda->cert->certdata->res_sanitaria ? 'white' : 'black' }}"></i>
+                                @if($tienda->cert->sanitario)
+                                    <img style="max-height: 80px;" src="{{asset('images/system/certs-icon.png')}}" alt="">
+                                @else
+                                    <svg width="70" height="70">
+                                        <circle r="35" cx="35" cy="35" style="fill:red"></circle>
+                                    </svg>
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                @endif
                             </div>
                             <div class="certs-text">
                                 <div class="certs-title" style="color:{{ $tienda->cert->certdata->res_sanitaria ? '#10b800' : '#C89600' }}">

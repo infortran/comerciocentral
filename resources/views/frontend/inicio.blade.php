@@ -133,9 +133,9 @@
                 <!--===========================================
                                  PRODUCTOS
                 ================================================-->
-				<div class="col-sm-9 padding-right">
-					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Ultimos productos</h2>
+                <div class="col-sm-9">
+                    <div class="features_items"><!--features_items-->
+                        <h2 class="title text-center">Ultimos productos</h2>
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -148,13 +148,13 @@
                         <div class="row prod-container" >
 
                             @if(count($productos) == 0)
-                            <div class="producto-notfound col-lg-12">
-                                <i class="fa fa-exclamation-triangle"></i>
-                                <div>
-                                    <div class="title">No hemos encontrado productos</div>
-                                    <div><small>Prueba buscando con otros terminos de busqueda</small></div>
+                                <div class="producto-notfound col-lg-12">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    <div>
+                                        <div class="title">No hemos encontrado productos</div>
+                                        <div><small>Prueba buscando con otros terminos de busqueda</small></div>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                             <div class="loading-productos display-none">
                                 <div class="loading-icon">
@@ -162,50 +162,47 @@
                                     <div>Buscando</div>
                                 </div>
                             </div>
-                        @foreach($productos as $producto)
-                            @if($producto->is_available)
-						<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img style="height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
-											<h2>$ {{number_format($producto->precio, 0, '', '.')}}</h2>
-											<p>{{$producto->nombre}}</p>
-											<button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
-                                                <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
-                                                <i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
-                                                <span id="btn-text-cart-{{$producto->id}}"  style="display: inline-block">Agregar al carrito</span>
-                                            </button>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>$ {{number_format($producto->precio, 0, '', '.')}}</h2>
-												<p>{{$producto->nombre}}</p>
-												<button id="btn-cart-{{$producto->id}}" type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" >
-                                                    <i id="check1-{{$producto->id}}" class="fa fa-check" style="color: #72c400 !important;display: none"></i>
-                                                    <i id="icon-cart1-{{$producto->id}}" class="fa fa-shopping-cart"></i>
-                                                    <span id="btn-text-cart1-{{$producto->id}}" style="display: inline-block">Agregar al carrito</span>
-                                                </button>
-											</div>
-										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified text-center" >
-										<li><a href="{{route('producto.single', [$domain ,$producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
-                                        <li id="remove-cart-wrapper-{{$producto->id}}" data-id="{{$producto->id}}" class="btn-submit-remove-on-cart  {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'd-none-important'}}"><a  href="javascript: void(0)"><i class="fa fa-trash"></i>Eliminar</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-                            @endif
-                        @endforeach
+                            @foreach($productos as $producto)
+                                @if($producto->is_available)
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <img style="height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+                                                    <h2 class="precio">$ {{number_format($producto->precio, 0, '', '.')}}</h2>
+                                                    <p>{{$producto->nombre}}</p>
+                                                    <button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
+                                                        <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+                                                        <i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
+                                                        <span id="btn-text-cart-{{$producto->id}}"  style="display: inline-block">Agregar al carrito</span>
+                                                    </button>
+                                                </div>
+                                                <div class="product-overlay">
+                                                    <div class="overlay-content">
+                                                        <h2 class="precio">$ {{number_format($producto->precio, 0, '', '.')}}</h2>
+                                                        <p>{{$producto->nombre}}</p>
+                                                        <button id="btn-cart-{{$producto->id}}" type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" >
+                                                            <i id="check1-{{$producto->id}}" class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+                                                            <i id="icon-cart1-{{$producto->id}}" class="fa fa-shopping-cart"></i>
+                                                            <span id="btn-text-cart1-{{$producto->id}}" style="display: inline-block">Agregar al carrito</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified text-center" >
+                                                    <li><a href="{{route('producto.single', [$domain ,$producto->id])}}"><i class="fa fa-eye"></i>Ver detalles</a></li>
+                                                    <li id="remove-cart-wrapper-{{$producto->id}}" data-id="{{$producto->id}}" class="btn-submit-remove-on-cart  {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'd-none-important'}}"><a  href="javascript: void(0)"><i class="fa fa-trash"></i>Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
 
-					</div><!--FIN PRODUCTOS-->
+                    </div><!--FIN features-->
                     {{ $productos->links() }}
-
-
-
 
                     <!--=======================================0
                             PRODUCTOS POR MARCAS
@@ -214,21 +211,21 @@
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
                                 @foreach($tienda->marcas as $key => $marca)
-                                    @if($marca->productos->count() > 0)
-                                    <li class="{{$key == 0 ? 'active' : ''}}"><a href="#marca-tab-{{$marca->id}}" data-toggle="tab">{{$marca->marca}}</a></li>
+                    @if($marca->productos->count() > 0)
+                            <li class="{{$key == 0 ? 'active' : ''}}"><a href="#marca-tab-{{$marca->id}}" data-toggle="tab">{{$marca->marca}}</a></li>
                                     @endif
-                                @endforeach
-							</ul>
-						</div>
-						<div class="tab-content">
+                    @endforeach
+                            </ul>
+                        </div>
+                        <div class="tab-content">
                             @foreach($tienda->marcas as $keym => $marca)
-							<div class="tab-pane fade {{$keym == 0 ? 'active in' : ''}}" id="marca-tab-{{$marca->id}}" >
+                            <div class="tab-pane fade {{$keym == 0 ? 'active in' : ''}}" id="marca-tab-{{$marca->id}}" >
                                 @foreach($marca->productos as $producto)
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img style="max-width:187px;max-height: 137px !important;" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img style="max-width:187px;max-height: 137px !important;" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 												<h2>{{$producto->precio}}</h2>
 												<p>{{$producto->nombre}}</p>
 												<button class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</button>
@@ -240,59 +237,60 @@
                                 @endforeach
 
 
-							</div>
+                            </div>
                             @endforeach
-						</div>
-					</div><!--/category-tab-->
+                            </div>
+                        </div><!--/category-tab-->
 
 
 
-				</div><!--.col-9 content-->
-
-			</div><!--.row-->
+                </div><!--.col-9 content-->
+            </div><!-- fin row principal-->
             <div class="recommended_items"><!--recommended_items-->
                 <h2 class="title text-center">ultimas noticias</h2>
-                        @foreach($tienda->posts->take(3) as $noticia)
-
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="{{ asset('images/uploads/blog').'/' .$noticia->img }}" alt="" />
-                                            <div class="text-productinfo ">
-                                                <h4>{{ $noticia->titulo }}</h4>
-                                                <div class="cont-noticia" >{{ $noticia->contenido }}</div>
-                                                <a href="{{route('post', [$domain, $noticia->id])}}">Ver mas</a>
-                                            </div>
-
-                                        </div>
-
+                @foreach($tienda->posts->take(3) as $noticia)
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="{{ asset('images/uploads/blog').'/' .$noticia->img }}" alt="" />
+                                    <div class="text-productinfo ">
+                                        <h4>{{ $noticia->titulo }}</h4>
+                                        <div class="cont-noticia" >{{ $noticia->contenido }}</div>
+                                        <a href="{{route('post', [$domain, $noticia->id])}}">Ver mas</a>
                                     </div>
+
                                 </div>
+
                             </div>
-
-                            @endforeach
-
+                        </div>
+                    </div>
+                @endforeach
             </div><!--/recommended_items-->
 
 		</div><!-- FIN CONTAINER-->
+
+
 	</section>
-    <div class="container-fluid banner-inferior-container">
-        <div class="banner-inferior">
-            <div class="img-container">
-                <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
-            </div>
-            <div class="text-container">
-                <div class="title">
-                    Comercio Central
+
+        <div class="container-fluid banner-inferior-container">
+            <div class="banner-inferior">
+                <div class="img-container">
+                    <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
                 </div>
-                <div class="text">
-                    El centro del comercio electronico, donde puedes vender tus productos
-                    en una elegante tienda virtual
+                <div class="text-container">
+                    <div class="title">
+                        Comercio Central
+                    </div>
+                    <div class="text">
+                        El centro del comercio electronico, donde puedes vender tus productos
+                        en una elegante tienda virtual
+                    </div>
+                    <button class="btn-banner">Crea tu tienda ahora</button>
                 </div>
-                <button class="btn-banner">Crea tu tienda ahora</button>
             </div>
         </div>
-    </div>
+
+
 
 	@endsection

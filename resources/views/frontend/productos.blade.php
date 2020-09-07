@@ -119,7 +119,8 @@
                                     <div class="single-products">
                                         <div class="productinfo text-center">
                                             <img style="height: 192px" src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
-                                            <h2>$ {{number_format($producto->precio,0,'','.')}}</h2>
+                                            <h2 class="precio">$ {{number_format($producto->precio,0,'','.')}}</h2>
+                                            <!--h3 class="precio-antes">$ 2.000</h3-->
                                             <p class="cont-noticia">{{$producto->nombre}}</p>
                                             <button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}">
                                                 <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
@@ -129,7 +130,7 @@
                                         </div>
                                         <div class="product-overlay">
                                             <div class="overlay-content">
-                                                <h2>$ {{number_format($producto->precio,0,'','.')}}</h2>
+                                                <h2 class="precio">$ {{number_format($producto->precio,0,'','.')}}</h2>
                                                 <p class="cont-noticia">{{$producto->nombre}}</p>
                                                 <button id="btn-cart-{{$producto->id}}" type="button" class="btn btn-default add-to-cart btn-submit-add-cart" data-id="{{$producto->id}}" >
                                                     <i id="check1-{{$producto->id}}" class="fa fa-check" style="color: #72c400 !important;display: none"></i>

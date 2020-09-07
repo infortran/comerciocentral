@@ -6,7 +6,7 @@
 
         <div class="col-md-9">
             <h2 class="title text-center">Productos en carrito</h2>
-            @if(Session::has($cartname))
+            @if(Session::has($cartName))
 
 
                 <table class="table table-striped" style="position: relative">
@@ -91,24 +91,24 @@
 
 
 
-                    <div id="panel-envio" class="panel panel-default {{Session::has('envio') ? '':' d-none'}}">
+                    <div id="panel-envio" class="panel panel-default {{Session::has($envioName) ? '':' d-none'}}">
                         <div class="panel-heading">
                             <i class="fa fa-shipping-fast"></i>
                             Coste de envio
                         </div>
                         <div class="panel-body text-center">
-                            @if(Session::has('envio') && Session::get('envio')->precio == 0)
+                            @if(Session::has($envioname) && Session::get($envioName)->precio == 0)
                                 <div id="precio-envio" style="font-size: 18px;font-weight: bold">
                                     <i style="color: green">GRATIS</i>
                                 </div>
                             @else
-                                <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{Session::has('envio') ? number_format(Session::get('envio')->precio,0,'','.') : 0}}</div>
+                                <div id="precio-envio" style="font-size: 18px;font-weight: bold">$ {{Session::has($envioName) ? number_format(Session::get($envioName)->precio,0,'','.') : 0}}</div>
                             @endif
-                            <div id="descripcion-envio">{{Session::has('envio') ? Session::get('envio')->descripcion : ''}}</div>
+                            <div id="descripcion-envio">{{Session::has($envioName) ? Session::get($envioName)->descripcion : ''}}</div>
                         </div>
                     </div>
 
-                    <div id="panel-sin-envio" class="panel panel-default {{Session::has('envio') ? ' d-none':''}}">
+                    <div id="panel-sin-envio" class="panel panel-default {{Session::has($envioName) ? ' d-none':''}}">
                         <div class="panel-heading">
                             <i class="fa fa-store-alt"></i>
                             Retiro en tienda
@@ -139,10 +139,22 @@
             </div>
         </div>
         @else
-            <div class="alert alert-info" style="margin-bottom: 300px">
-                <h5> <i class="fas fa-cart-arrow-down"></i>
-                    No hay Items en el Carrito
-                </h5>
+            <div class="col-xs-12">
+                <div class="no-cart">
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <i class="fa fa-cart-arrow-down"></i>
+                    </div>
+                    <div class="text-container">
+                        <div class="title">
+                            No hay productos en el carro
+                        </div>
+                        <div class="text">
+                            Puedes agregar productos al carrito visitando nuestra zona de productos
+                        </div>
+                        <a href="{{url('/productos')}}" class="btn-no-cart">Ir a Productos</a>
+                    </div>
+                </div>
             </div>
         @endif
     </div><!--/.row-->

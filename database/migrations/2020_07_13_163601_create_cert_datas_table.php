@@ -13,7 +13,7 @@ class CreateCertDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('cert_datas', function (Blueprint $table) {
+        Schema::create('cert_data', function (Blueprint $table) {
             $table->id();
             $table->integer('cert_id');
             $table->string('img_ubicacion')->default('image.png');

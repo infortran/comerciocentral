@@ -12,7 +12,36 @@
                     <h2 class="title text-center">Productos en carrito</h2>
 
                     @if(Session::has($cartname))
-                           <table class="table table-striped" style="position: relative">
+                            <div class="cart-item-container">
+                                <div class="loading-item-cart" style="display: none">
+                                    <div class="loading-cart"></div>
+                                </div>
+
+                                @foreach($cart_productos as $producto)
+                                <div class="cart-item">
+                                    <div class="img-container">
+                                        <div title="Eliminar" data-toggle="tooltip" data-placement="bottom" class="btn-submit-reset-on-cart btn-cart-item-xs d-none" data-id="{{$producto['item']['id']}}"><i class="fa fa-trash"></i></div>
+                                        <img src="{{asset('images/uploads/productos').'/'.$producto['item']['img']}}" alt="">
+                                    </div>
+                                    <div class="text-container">
+                                        <div class="title">{{$producto['item']['nombre']}}</div>
+                                        <div class="text">{{$producto['item']['descripcion']}}</div>
+                                    </div>
+                                    <div class="controls">
+                                        <select class="form-control select-qty-item-cart" name="" id="" data-id="{{$producto['item']['id']}}">
+                                            @for($i = 0; $i < 10; $i++)
+                                            <option value="{{$i}}" {{$i == $producto['cantidad'] ? 'selected' : ''}}>{{$i}}</option>
+                                                @endfor
+                                        </select>
+                                    </div>
+                                    <div class="precio">
+                                        $ {{number_format($producto['item']['precio'], 0, '', '.')}}
+                                    </div>
+                                    <div title="Eliminar" data-toggle="tooltip" data-placement="bottom" class="btn-submit-reset-on-cart btn-cart-item" data-id="{{$producto['item']['id']}}"><i class="fa fa-trash"></i></div>
+                                </div>
+                                @endforeach
+                            </div>
+                           <!--table class="table table-striped" style="position: relative">
                                <div class="loading-item-cart" style="display: none">
                                    <div class="loading-cart"></div>
 
@@ -63,7 +92,7 @@
                                     </tr>
                                @endforeach
                                </tbody>
-                           </table>
+                           </table-->
                         <a href="{{url('/productos')}}">
                         <button class="btn-seguir-comprando">
                             <i class="fa fa-angle-double-left"></i>

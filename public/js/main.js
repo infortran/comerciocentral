@@ -12,13 +12,17 @@ var RGBChange = function () {
 /*scroll to top*/
 
 $(document).ready(function () {
+    //TOOLTIP BOOTSTRAP
     $('[data-toggle="tooltip"]').tooltip();
+
+    //RANGO DE PRECIOS ASIDE LEFT
     $('#sl2').slider().on('slideStop', function(e){
         $('.min-precio').html('$ '+formatNumber(e.value[0]));
         $('.max-precio').html('$ '+formatNumber(e.value[1]));
         rangoPrecios(e.value[0], e.value[1]);
     });
 
+    //FORMULARIO CONTACTO
     $('.icon-cont').click(function(){
        var motivo = $(this).data('motivo');
        $('#motivo-'+motivo).prop('checked', true);
@@ -38,11 +42,14 @@ $(document).ready(function () {
 
        $(this).addClass(motivo+'-active');
     });
+
+    //SELECTOR IMAGEN DEL USUARIO
     $("#input-img-user").change(function(){
         var selector = $('#img-user');
         readURL(this, selector);
     });
 
+    //SELECTOR IMAGEN VOUCHER DEPOSITO (funcion se debe eliminar)
     $("#input-img-voucher").change(function(){
         var selector = $('#img-voucher');
         readURL(this, selector);
@@ -71,13 +78,14 @@ $(document).ready(function () {
     //resetColorStar();
     //ratingStars();
 
-
+    //BOTON ADD CART WRAPPER
     $('.btn-submit-add-cart').click(function(){
         var id = $(this).data('id');
         var tiendaId = $('meta[name="tienda-id"]').attr('content');
         //alert(" " + tiendaId);
         addToCartFromAjax(id, tiendaId);
     });
+
 
     $('.btn-submit-remove-on-cart').click(function(){
         var id = $(this).data('id');
@@ -96,7 +104,7 @@ $(document).ready(function () {
         $('#input-item-cart-' + id).val(parseInt($('#input-item-cart-' + id).val()) + 1).change();
     });*/
 
-    $(document).on('click', '.btn-plus-cart', function () {
+    /*$(document).on('click', '.btn-plus-cart', function () {
         var id = $(this).data('id');
         var value = $('#input-item-cart-' + id).val();
         if(value < 10){
@@ -112,9 +120,9 @@ $(document).ready(function () {
         if(value > 1){
             $('#input-item-cart-' + id).val(parseInt(value) - 1).change();
         }
-    });
+    });*/
 
-    $(document).on('change','.input-item-cart',function(){
+    $(document).on('change','.select-qty-item-cart',function(){
        var id = $(this).data('id');
        var cant = $(this).val();
        var tiendaId = $('meta[name="tienda-id"]').attr('content');
@@ -457,16 +465,17 @@ function resetOnCartFromAjax(id, tienda) {
         },
         success:function(json){
             setTimeout(function(){
+                //alert(json.cantidad_total);
                 $('#cart_items').html(json.html);
-                json.cantidad_total > 0 ? $('.badge-carrito').html(json.cantidad_total): $('#badge-carrito').html('');
+                json.cantidad_total > 0 ? $('.badge-carrito').html(json.cantidad_total): $('.badge-carrito').html('');
                 json.cantidad_total > 0 ? $('.checkout-link').removeClass('display-none-imp'): $('.checkout-link').addClass('display-none-imp');
-
+                json.cantidad_total > 0 ? $('.precio-total-float p').html('$ '+data.total_mas_envio) : $('.precio-total-float p').html('vacio');
             },500);
         },
         error:function (xhr, ajaxOptions, thrownError) {
             console.log('Mostrando el error de ajax');
             console.log(xhr.responseText);
-            location.reload();
+            //location.reload();
         }
     });
 }

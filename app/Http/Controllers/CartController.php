@@ -155,6 +155,12 @@ class CartController extends Controller
         }else{
             Session::forget($cartName);
         }
+        $cantidadProducto = 0;
+
+        if(isset($cart->items[$id]) && $cart->items[$id] != null){
+            $cantidadProducto = $cart->items[$id]['cantidad'];
+        }
+
 
         $this->calcularEnvio($cart->precioTotal, $tienda);
         $total_mas_envio = Session::has($envioName) ? $cart->precioTotal + Session::get($envioName)->precio : $cart->precioTotal;
@@ -165,11 +171,15 @@ class CartController extends Controller
             'precio_total' => $cart->precioTotal,
             'total_mas_envio' => $total_mas_envio,
             'envio' => Session::has($envioName) ? Session::get($envioName) : null,
+            'cartName' => $cartName,
+            'envioName' => $envioName
         ];
 
         return response()->json([
             'html' => view('frontend.templates.cart-ajax', $data)->render(),
-            'cantidad_total' => $cart->cantidadTotal//Retorna respuesta al badge carrito
+            'cantidad_total' => $cart->cantidadTotal,//Retorna respuesta al badge carrito
+            'total_mas_envio' => $total_mas_envio,
+            'cantidad_product' => $cantidadProducto
         ]);
     }
 

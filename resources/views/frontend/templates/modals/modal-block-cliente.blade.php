@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-block-cliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div style="width:300px" class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="border-bottom:none !important">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 style="display:flex;align-items: center" class="modal-title" id="myModalLabel">
                     <div style="position:relative;margin-right: 20px">
@@ -14,11 +14,11 @@
                     Upps!! Lo sentimos
                 </h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: 18px;text-align: center">
                 Deben pasar al menos 48 horas para que puedas volver a ser cliente de esta tienda
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-comerciocentral" data-dismiss="modal">Cerrar</button>
+            <div class="modal-footer text-center" style="text-align: center !important; border-top:none !important">
+                <button style="padding:15px 35px !important" type="button" class="btn btn-comerciocentral" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
