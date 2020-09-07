@@ -320,7 +320,8 @@
                                                 <i class="fa fa-plus-circle"></i>
                                                 Agregar nuevo medio de envio
                                             </li>
-                                            {!! Form::open(['route' => 'envios.store']) !!}
+                                            {!! Form::open(['route' => ['envios.store',$domain]]) !!}
+                                            <input type="hidden" name="tienda" value="{{$tienda->id}}">
                                             <li style="display: none" class="list-group-item" id="form-agregar-envio">
                                                 <div class="row">
                                                     <div class="col-8">
@@ -370,7 +371,7 @@
                                                             <td class="d-none d-sm-table-cell">$ {{number_format($envio->min_price)}}</td>
                                                             <td class="d-none d-sm-table-cell">$ {{number_format($envio->max_price)}}</td>
                                                             <td>
-                                                                {!! Form::open(['id' => '','method' => 'DELETE', 'route' => ['envios.destroy', $envio]]) !!}
+                                                                {!! Form::open(['id' => '','method' => 'DELETE', 'route' => ['envios.destroy',$domain, $envio]]) !!}
                                                                 <button type="submit" style="background: transparent; border-color: transparent">
                                                                     <i class="fa fa-window-close" style="color: red" ></i>
                                                                 </button>
@@ -467,7 +468,7 @@
                                     </button>
                                 </div>
                                 <div class="col-2" style="display:flex;align-items: center">
-                                    <span style="font-size: 14px" class="badge badge-pill badge-primary float-right">{{Auth::user()->socials->count()}}</span>
+                                    <span style="font-size: 14px" class="badge badge-pill badge-primary float-right">{{Auth::user()->socials->count() ?? ''}}</span>
                                 </div>
 
                             </div>

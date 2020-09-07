@@ -198,4 +198,22 @@
 
 
     </section> <!--/#cart_items-->
+
+    <div class="container-fluid banner-inferior-container">
+        <div class="banner-inferior">
+            <div class="img-container">
+                <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+            </div>
+            <div class="text-container">
+                <div class="title">
+                    Comercio Central
+                </div>
+                <div class="text">
+                    El centro del comercio electronico, donde puedes vender tus productos
+                    en una elegante tienda virtual
+                </div>
+                <button class="btn-banner">Crea tu tienda ahora</button>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -1408,7 +1408,28 @@
 }
 
 .icon-titulo > i{
+
+
     color:var(--color-primary);
+    font-size:20px;
+}
+
+.icon-titulo-direccion{
+    position:relative;
+    width:70px;
+    height:70px;
+    background: var(--color-primary);
+    display: inline-block;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0,0,0,.12);
+}
+
+.icon-titulo-direccion > i{
+    position:absolute;
+    top:30%;
+    left:37%;
+    color:#ffffff;
+    font-size:25px;
 }
 
 .icon-titulo-inverse{
@@ -1423,11 +1444,7 @@
     color: #fff;
     padding:5px;
 }
-.td-checkout{
-    font-size: 16px;
 
-    text-align: right
-}
 
 .td-total-checkout{
     font-size: 16px;
@@ -1436,16 +1453,111 @@
 }
 
 .list-group-item-checkout{
-    display: table;
+    display:flex;
+    align-items: center;
     width: 100%;
+    border-radius: 10px !important;
 }
 
-.list-group-item-checkout > div{
-    display: table-cell;
-    vertical-align: middle;
+.list-group-item-checkout .name{
+    margin-left: 20px;
 }
 
+.list-group-item-checkout .data{
+    margin-left: auto;
+}
 
+.list-details-checkout{
+    display:flex;
+    align-items:center;
+}
+.list-details-checkout:first-child{
+    border-radius: 10px 10px 0 0;
+}
+.list-details-checkout .item-nombre{
+
+}
+.list-details-checkout .item-cantidad{
+    margin-left: auto;
+
+}
+.list-details-checkout .item-total{
+    font-size: 16px;
+    margin-left: auto;
+
+}
+.list-envio-checkout{
+    display: flex;
+    align-items:center;
+    border-radius: 0 0 10px 10px !important;
+}
+
+.list-envio-checkout .estado-envio{
+    margin-left: auto;
+}
+
+.list-payment-checkout{
+    display: flex;
+    align-items: center;
+}
+.list-payment-checkout .radio-container{
+    margin-right: 20px;
+}
+
+.list-payment-checkout .img-container{
+    margin-right: 20px;
+    flex:.6;
+}
+.list-payment-checkout .text{
+    flex:1;
+}
+
+.list-payment-checkout:first-child{
+    border-radius: 10px 10px 0 0;
+}
+.list-payment-checkout:last-child{
+    border-radius: 0 0 10px 10px;
+}
+
+@media(max-width:426px){
+    .list-group-item-checkout{
+        flex-direction: column;
+        text-align: center;
+    }
+    .list-group-item-checkout .name{
+        margin-left: 0;
+    }
+
+    .list-group-item-checkout .data{
+        margin-left: 0;
+    }
+
+    .list-details-checkout{
+        flex-direction: column;
+    }
+    .list-details-checkout .item-cantidad{
+        margin-left: 0;
+    }
+    .list-details-checkout .item-total{
+        margin-left: 0;
+    }
+    .list-envio-checkout{
+        flex-direction:column;
+    }
+    .list-envio-checkout .estado-envio{
+        margin-left: 0;
+    }
+    .list-payment-checkout img{
+        max-width:100px;
+        max-height:50px;
+    }
+    .list-payment-checkout:first-child{
+        padding:20px 15px;
+    }
+    .icon-titulo-inverse{
+        padding:15px;
+    }
+}
 
 /********************************************/
 /***********************************************

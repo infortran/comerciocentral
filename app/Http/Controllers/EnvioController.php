@@ -33,19 +33,20 @@ class EnvioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $domain)
     {
         $request->validate([
             'descripcion' => 'required|min:5|max:255',
             'precio' => 'required|numeric'
         ]);
         $envio = new Envio();
+        $envio->tienda_id = request('tienda');
         $envio->descripcion = request('descripcion');
         $envio->precio = request('precio');
         $envio->min_price = request('min_price');
         $envio->max_price = request('max_price');
         $envio->save();
-        return redirect('/admin');
+        return redirect('/admin/config/main');
     }
 
     /**

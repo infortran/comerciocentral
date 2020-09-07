@@ -71,7 +71,7 @@ class CheckoutController extends Controller
 
                     if(Session::has($envioname)){
                         $envio = Session::get($envioname)->precio;
-                        if(Auth::check() && $data['tienda']->direcciones){
+                        if(Auth::check() && Auth::user()->direcciones){
                             $direccion = Direccion::find($request->get('direccion_envio'));
                             $dir_string = $direccion->calle.' / ';
                             $dir_string .= $direccion->numero. ' / ';

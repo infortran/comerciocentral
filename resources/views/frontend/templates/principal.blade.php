@@ -246,7 +246,7 @@
 					</div>
 
                     <div class="col-sm-5 col-md-3 hidden-xs">
-                        @if(url()->current() === url('/') || Request::segment(1) === 'contacto')
+                        @if(url()->current() === url('/') || Request::segment(1) === 'contacto' || Request::segment(1) === 'carrito')
                             <a href="{{ url('/certificaciones') }}">
                         <div class="certificado">
                             <div class="cert-icon">
@@ -290,7 +290,7 @@
         <div class="container hidden-sm hidden-md hidden-lg" style="margin-bottom:50px">
             <div class="row">
                 <div class="col-xs-6 certificado-container">
-                    @if(url()->current() === url('/') || Request::segment(1) === 'contacto')
+                    @if(url()->current() === url('/'))
                     <a href="{{ url('/certificaciones') }}">
                     <div class="certificado">
                         <div class="cert-icon">
