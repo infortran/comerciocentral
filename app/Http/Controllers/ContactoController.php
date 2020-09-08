@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\HeaderFrontend;
 use App\FooterInfo;
 use App\TeamMember;
+use App\Rules\Captcha;
+use Validator;
 
 class ContactoController extends Controller
 {
@@ -27,15 +29,42 @@ class ContactoController extends Controller
     }
 
     public function enviarMensaje(Request $request, $domain){
+
         if($domain){
             $loader = new Loader($domain);
             if($loader->checkDominio()){
                 $data = $loader->getData();
-                $validation = [
+
+                $validation = Validator::make($request->all(), [
                     'motivo' => 'required',
                     'asunto' => 'required|max:50',
                     'mensaje' => 'required|max:500',
-                    'orden' => 'numeric|nullable'
+                    'orden' => 'numeric|nullable',
+                    'g-recaptcha-response' => new Captcha()
+                ]);
+                if(!Auth::check()){
+                    $validation['name'] = 'required|max:55';
+                    $validation['lastname'] = 'required|max:55';
+                    $validation['email'] = 'required|email|max:55';
+                    $validation['telefono'] = 'required|max:50';
+                }
+
+
+                if (!$validation->passes()) {
+
+                    return response()->json(['error'=>$validation->errors()]);
+
+                }
+
+
+
+
+                /*$validation = [
+                    'motivo' => 'required',
+                    'asunto' => 'required|max:50',
+                    'mensaje' => 'required|max:500',
+                    'orden' => 'numeric|nullable',
+                    'g-recaptcha-response' => new Captcha()
                 ];
                 if(!Auth::check()){
                     $validation['name'] = 'required|max:55';
@@ -43,7 +72,7 @@ class ContactoController extends Controller
                     $validation['email'] = 'required|email|max:55';
                     $validation['telefono'] = 'required|max:50';
                 }
-                $request->validate($validation);
+                $request->validate($validation);*/
                 $mensaje = new Mensaje();
                 $mensaje->orden_id = $request->get('orden');
                 $mensaje->user_id = Auth::check() ? Auth::user()->id : null;
@@ -56,9 +85,9 @@ class ContactoController extends Controller
                 $mensaje->motivo = $request->get('motivo');
                 $data['tienda']->mensajes()->save($mensaje);
 
-                return redirect('/contacto');
+                return response()->json(['status'=>'ok']);
             }
         }
-
+        return view('frontend.templates.site-not-found');
     }
 }

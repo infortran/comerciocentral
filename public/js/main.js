@@ -24,6 +24,7 @@ $(document).ready(function () {
 
     //FORMULARIO CONTACTO
     $('.icon-cont').click(function(){
+        $('#error-motivo').html('');
        var motivo = $(this).data('motivo');
        $('#motivo-'+motivo).prop('checked', true);
        if(motivo == 'consulta'){
@@ -41,6 +42,16 @@ $(document).ready(function () {
        }
 
        $(this).addClass(motivo+'-active');
+    });
+
+    //FUNCION ENVIAR MENSAJE POR AJAX
+    $('#form-enviar-mensaje-ajax').submit(function(e){
+        e.preventDefault();
+        enviarMensajeAjax();
+    });
+    contactoErrorsReset();
+    $(document).on('click','#rc-anchor-container',function(){
+        $('#error-recaptcha').html('');
     });
 
     //SELECTOR IMAGEN DEL USUARIO
@@ -99,29 +110,7 @@ $(document).ready(function () {
         resetOnCartFromAjax(id, tiendaId);
     });
 
-    /*$('.btn-plus-cart').click(function(){
-        var id = $(this).data('id');
-        $('#input-item-cart-' + id).val(parseInt($('#input-item-cart-' + id).val()) + 1).change();
-    });*/
-
-    /*$(document).on('click', '.btn-plus-cart', function () {
-        var id = $(this).data('id');
-        var value = $('#input-item-cart-' + id).val();
-        if(value < 10){
-            $('#input-item-cart-' + id).val(parseInt($('#input-item-cart-' + id).val()) + 1).change();
-        }else{
-            alert('Ha sobrepasado el limite de stock');
-        }
-    });
-
-    $(document).on('click','.btn-minus-cart',function(){
-        var id = $(this).data('id');
-        var value = $('#input-item-cart-' + id).val();
-        if(value > 1){
-            $('#input-item-cart-' + id).val(parseInt(value) - 1).change();
-        }
-    });*/
-
+    //SELECT CARRITO ITEM
     $(document).on('change','.select-qty-item-cart',function(){
        var id = $(this).data('id');
        var cant = $(this).val();
@@ -171,6 +160,111 @@ function votarPorNoticia(noticia, voto){
             //location.reload();
         }
     });
+}
+
+function enviarMensajeAjax(){
+    var fade = 800;
+    var fadeout = 400;
+    var data = new FormData();
+    var motivo = $('.motivo-contacto:checked').val();
+    //alert(motivo === undefined ? null : motivo)
+    data.append('motivo', motivo === undefined ? '' : motivo);
+    data.append('asunto', $('#asunto-contacto').val());
+    data.append('mensaje',$('#mensaje-contacto').val());
+    data.append('orden',$('#orden-contacto').val());
+    data.append('g-recaptcha-response',grecaptcha.getResponse());
+    data.append('name',$('#name-contacto').val());
+    data.append('lastname',$('#lastname-contacto').val());
+    data.append('email',$('#email-contacto').val());
+    data.append('telefono',$('#telefono-contacto').val());
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+       url:'/contacto',
+        method:'POST',
+        data:data,
+        processData:false,
+        contentType:false,
+        cache:false,
+        dataType:'json',
+        beforeSend:function(){
+
+            $('#btn-enviar-mensaje').addClass('active');
+
+        },
+        success:function(json){
+
+            setTimeout(function(){
+                if($.isEmptyObject(json.error)){
+                    $('#btn-enviar-mensaje').addClass('success');
+                    $('#mensaje-success-icon').show();
+                    $('#mensaje-text-btn').hide();
+                    $('#mensaje-default-icon').hide();
+                    setTimeout(function(){
+                        $('#btn-enviar-mensaje').removeClass('active success');
+                        $('#mensaje-success-icon').hide();
+                        $('#mensaje-text-btn').show();
+                        $('#mensaje-default-icon').show();
+                        contactoReset();
+                    },3000);
+                    setTimeout(function(){
+                        $('#modal-mensaje-enviado').modal('show');
+                    },3500);
+                    //SUCCESS
+                }else{
+                    $('#btn-enviar-mensaje').addClass('error');
+                    $('#mensaje-error-icon').show();
+                    $('#mensaje-text-btn').hide();
+                    $('#mensaje-default-icon').hide();
+                    setTimeout(function(){
+                        $('#btn-enviar-mensaje').removeClass('active error');
+                        $('#mensaje-error-icon').hide();
+                        $('#mensaje-text-btn').show();
+                        $('#mensaje-default-icon').show();
+                    },3000)
+                    //alert('mostrando errores');
+                    //mostrar errores
+                    var errorMotivo = json.error.motivo ? 'Debes seleccionar un motivo para tu mensaje' : '';
+                    $('#error-motivo').html(errorMotivo);
+                    $('#error-name').html(json.error.name);
+                    $('#error-lastname').html(json.error.lastname);
+                    $('#error-email').html(json.error.email);
+                    $('#error-telefono').html(json.error.telefono);
+                    $('#error-asunto').html(json.error.asunto);
+                    $('#error-mensaje').html(json.error.asunto);
+                    $('#error-recaptcha').html(json.error['g-recaptcha-response']);
+                    if(json.error['g-recaptcha-response']){
+                        setTimeout(function(){$('#error-recaptcha').html('')},3000);
+                    }
+                }
+            },1500);
+
+            console.log(json.error);
+        },error:function(x,y,z){
+            console.log(x.responseText);
+            alert('error');
+        }
+    });
+}
+
+function contactoErrorsReset(){
+    $('#name-contacto').focus(function(){$('#error-name').html('')});
+    $('#lastname-contacto').focus(function(){$('#error-lastname').html('')});
+    $('#email-contacto').focus(function(){$('#error-email').html('')});
+    $('#telefono-contacto').focus(function(){$('#error-telefono').html('')});
+    $('#asunto-contacto').focus(function(){$('#error-asunto').html('')});
+    $('#mensaje-contacto').focus(function(){$('#error-mensaje').html('')});
+
+}
+
+function contactoReset(){
+    $('#name-contacto').val('');
+    $('#lastname-contacto').val('');
+    $('#email-contacto').val('');
+    $('#telefono-contacto').val('');
+    $('#asunto-contacto').val('');
+    $('#mensaje-contacto').val('');
 }
 
 function switchCliente(){

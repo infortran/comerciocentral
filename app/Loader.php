@@ -27,21 +27,19 @@ class Loader{
             'tienda' => $tienda,
             'is_owner' => $this->isOwner,
             'color_themes' => $tienda->colorthemes,
-            'puntaje' => $this->getPuntajeTienda($tienda->id)
+            'puntaje' => $this->getPuntajeTienda($tienda)
         ];
         return $data;
     }
 
-    public function getPuntajeTienda($id_tienda){
-        $tienda = Tienda::findOrFail($id_tienda);
-        $votos = $tienda->ratings;
+    public function getPuntajeTienda($tienda){
         $suma = 0;
-        foreach($votos as $voto){
-            $suma += $voto->voto;
+        foreach($tienda->ratings as $voto){
+            $suma += $voto->rating->voto;
         }
         $resultado = 0;
         if($suma > 0){
-            $resultado = $suma / count($votos);
+            $resultado = $suma / count($tienda->ratings);
         }
         return $resultado;
     }

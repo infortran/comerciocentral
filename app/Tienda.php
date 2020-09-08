@@ -60,7 +60,7 @@ class Tienda extends Model
     }
 
     public function ratings(){
-        return $this->belongsToMany('App\Rating');
+        return $this->hasMany('App\RatingTienda');
     }
 
     public function asidebanner(){

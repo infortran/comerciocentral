@@ -352,6 +352,43 @@
                         <div><small>votos</small></div>
                     </div>
                 </div>
+                <h4 style="margin-top:20px;text-align: center;color:var(--color-primary);">ULTIMAS OPINIONES</h4>
+                @foreach($tienda->ratings->take(5) as $rating)
+                <div class="eval-card">
+                    <div class="img-cont">
+                        <div class="user-img">
+                            <img src="{{ asset('images/uploads/users/').'/'.$rating->rating->user->img }}" alt="">
+                        </div>
+                        <div class="user-name">{{$rating->rating->user->name}}</div>
+                    </div>
+                    <div class="text-cont">
+                        {{$rating->comentario}}
+
+                    </div>
+                    <div class="puntos-cont">
+                        <i class="fa fa-star"></i>
+                        {{number_format($rating->rating->voto,1)}}
+                    </div>
+                </div><!-- END CARD -->
+                    @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid banner-inferior-container" style="margin-top: 30px">
+        <div class="banner-inferior">
+            <div class="img-container">
+                <img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+            </div>
+            <div class="text-container">
+                <div class="title">
+                    Comercio Central
+                </div>
+                <div class="text">
+                    El centro del comercio electronico, donde puedes vender tus productos
+                    en una elegante tienda virtual
+                </div>
+                <button class="btn-banner">Crea tu tienda ahora</button>
             </div>
         </div>
     </div>

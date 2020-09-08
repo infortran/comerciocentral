@@ -215,9 +215,9 @@
                     <div class="col-md-6">
                         <div class="list-group">
                             <div class="list-group-item text-center" style="background: #efefef">
-                                <h4 style="font-size: 80px">
+                                <h4 >
                                     <div class="icon-titulo" >
-                                        <i class="fa fa-store"></i>
+                                        <i class="fa fa-store" style="font-size: 80px"></i>
                                     </div>
                                 </h4>
                                 <h4>RETIRO EN TIENDA</h4>

@@ -38,7 +38,7 @@
 .mensaje-form input{
     margin:0 10px;
     padding:20px 20px;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .motivo-mensaje-container{
@@ -150,6 +150,7 @@
     margin-bottom: 18.5px;
 }
 
+
 .contacto-card .icon{
     border:5px solid white;
     position: relative;
@@ -168,7 +169,7 @@
     right:23px;
     font-size: 25px;
 }
-.dir-icon .marker{
+.contacto-card .dir-icon .marker{
     right:26px !important;
 }
 
@@ -194,16 +195,145 @@
     text-align: center;
 }
 
-.text p{
+.contacto-card .text p{
     font-size: 17px;
+}
+.mensaje-form .btn-send{
+    background:var(--color-primary);
+    padding:20px 30px;
+    border:none;
+    border-radius: 50px;
+    color:var(--color-texto-btn);
+    outline: none;
+    transition: .3s ease all;
+}
+
+.mensaje-form .btn-send.active{
+    font-size: 0;
+    width:50px;
+    height:50px;
+    padding:0;
+    background: transparent;
+    border:5px solid var(--color-primary);
+    border-left-color: transparent;
+    animation: rotate .9s ease .5s infinite;
+}
+.mensaje-form .btn-send.success{
+    position:relative;
+    background: #dfdfdf;
+    color:green;
+    animation: bounce .3s ease-in;
+    border:1px solid transparent;
+    font-size: 20px;
+}
+.mensaje-form .btn-send.error{
+    position:relative;
+    background: var(--color-primary);
+    color:var(--color-texto-btn);
+    animation: bounce .3s ease-in;
+    border:1px solid transparent;
+    font-size: 20px;
+}
+@keyframes rotate{
+    0%{
+        transform:rotate(360deg);
+    }
+}
+.mensaje-container{
+    transition:.5s ease all;
+}
+
+.mensaje-enviado-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+    padding:20px;
+    margin:10px;
+    transition:.5s ease all;
+}
+
+.mensaje-enviado-container .icon-container{
+    position:relative;
+}
+
+.mensaje-enviado-container .icon{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+    position:relative;
+    background: #cfcfcf;
+}
+
+.mensaje-enviado-container i{
+    position:absolute;
+    top:25%;
+    left:25%;
+    font-size: 45px;
+}
+
+.mensaje-enviado-container .text-container{
+
+}
+
+.mensaje-enviado-container .title{
+    font-weight:lighter;
+    font-size: 35px;
+}
+
+.mensaje-enviado-container .text{
+    font-weight: lighter;
 }
 
 @media(max-width: 768px){
+    .mensaje-form{
+        padding:30px 6px;
+        text-align: center;
+    }
     .mensaje-form .form-group{
         flex-direction: column;
     }
+    .mensaje-form input {
+        margin:0;
+    }
+    .textarea-contacto{
+        margin:0;
+    }
     .mensaje-form .form-group input{
         margin-bottom: 20px;
+    }
+
+    .contacto-card:last-child .text p{
+        font-size: 12px !important;
+    }
+
+    .contacto-card .text p{
+        margin:0 !important;
+    }
+
+    .contacto-card .icon{
+        width:50px;
+        height:50px;
+    }
+    .contacto-card .icon i{
+        font-size: 14px;
+        top:32%;
+        left:32%;
+    }
+
+    .contacto-card .dir-icon i{
+        left:35%;
+    }
+    .map-contact-container{
+        margin-top: 30px;
+    }
+    .g-recaptcha {
+        transform: scale(0.8);
+    }
+    .form-group{
+        margin-bottom: 0 !important;
     }
 }
 
@@ -827,6 +957,55 @@
     font-size: 60px;
     color: white;
     text-shadow: 0px 3px 3px rgba(0,0,0,.4);
+}
+
+.eval-card{
+    display: flex;
+    align-items: center;
+    padding:10px;
+    border-radius: 10px;
+    border:1px solid #cfcfcf;
+    margin-top: 20px;
+}
+
+.eval-card .user-img{
+    border-radius: 50%;
+    overflow: hidden;
+}
+.eval-card .user-name{
+    font-weight: bold;
+    text-align: center;
+}
+.eval-card .puntos-cont{
+    margin-left: auto;
+    font-size: 20px;
+    text-align: center;
+}
+.eval-card .text-cont{
+    display:block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding:5px 20px;
+    height: 52px;
+}
+
+.eval-card .img-cont{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    max-width:60px;
+}
+
+.eval-card img{
+    max-height: 50px;
+}
+.eval-card i{
+    position: static;
+    color: #ffab00;
 }
 
 
@@ -1734,7 +1913,7 @@
     height:50px;
     border-radius: 50%;
     border-left-color: transparent !important;
-    animation: rotate 1.4s ease 0.5s infinite;
+    animation: rotate .9s ease 0.5s infinite;
 }
 
 .btn-seguir-comprando{
@@ -1793,7 +1972,7 @@
     color:#ffffff;
     text-shadow: 1px 1px 3px rgba(0,0,0,.4);
     margin-top: 20px;
-    transition:.5s ease;
+    transition:.3s ease;
 }
 
 .no-cart .btn-no-cart:hover{

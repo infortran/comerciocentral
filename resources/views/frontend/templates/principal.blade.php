@@ -42,6 +42,7 @@
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="tienda-id" content="{{ $tienda->id }}" >
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head><!--/head-->
 
 <body>
@@ -246,7 +247,7 @@
 					</div>
 
                     <div class="col-sm-5 col-md-3 hidden-xs">
-                        @if(url()->current() === url('/') || Request::segment(1) === 'contacto' || Request::segment(1) === 'carrito')
+                        @if(url()->current() === url('/') || Request::segment(1) === 'checkout' || Request::segment(1) === 'contacto' || Request::segment(1) === 'carrito')
                             <a href="{{ url('/certificaciones') }}">
                         <div class="certificado">
                             <div class="cert-icon">
@@ -470,7 +471,7 @@
     <script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}"></script>
 	@if(Request::segment(1) == 'contacto')
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&key={{env('GMAP_API_KEY')}}"></script>
 	<script type="text/javascript" src="{{asset('js/gmaps.js')}}"></script>
 	<script src="{{asset('js/contact.js')}}"></script>
 	@endif

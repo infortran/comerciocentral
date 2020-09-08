@@ -6,15 +6,17 @@
     <h1 class="titulo-principal">Contacto</h1>
     <hr>
     <div class="row">
+
         <div class="col-lg-7">
-            <form class="mensaje-form" action="{{ url('/contacto') }}" method="POST">
+
+            <form class="mensaje-form mensaje-container" id="form-enviar-mensaje-ajax">
                 @csrf
                 <h1 style="margin:0">Necesitas contactarnos?</h1>
                 <hr>
                 <label>MOTIVO DEL MENSAJE</label>
                 <div class="motivo-mensaje-container">
                     <div class="consulta icon-cont active" data-motivo="consulta">
-                        <input class="display-none" type="radio" name="motivo" value="consulta" id="motivo-consulta">
+                        <input class="display-none motivo-contacto" type="radio" name="motivo" value="consulta" id="motivo-consulta">
                         <div class="icon">
                             <i class="fa fa-question"></i>
                         </div>
@@ -23,7 +25,7 @@
                         </div>
                     </div>
                     <div class="sugerencia icon-cont" data-motivo="sugerencia">
-                        <input class="display-none" type="radio" name="motivo" value="sugerencia" id="motivo-sugerencia">
+                        <input class="display-none motivo-contacto" type="radio" name="motivo" value="sugerencia" id="motivo-sugerencia">
                         <div class="icon">
                             <i class="fa fa-user-edit"></i>
                         </div>
@@ -32,7 +34,7 @@
                         </div>
                     </div>
                     <div class="reclamo icon-cont" data-motivo="reclamo">
-                        <input class="display-none" type="radio" name="motivo" value="reclamo" id="motivo-reclamo">
+                        <input class="display-none motivo-contacto" type="radio" name="motivo" value="reclamo" id="motivo-reclamo">
                         <div class="icon">
                             <i class="fa fa-exclamation-triangle"></i>
                         </div>
@@ -41,32 +43,24 @@
                         </div>
                     </div>
                 </div>
-                @if($errors->has('motivo'))
-                <p style="color:red">Debes seleccionar un motivo para tu mensaje</p>
-                @endif
+
+                <p id="error-motivo" style="color:red"></p>
+
                 <hr>
                 <label class="">DATOS DEL CLIENTE</label>
                 @if(!Auth::check())
                 <div class="form-group">
-                    <input name="name" class="form-control" type="text" placeholder="Tu nombre" value="{{old('name')}}">
-                    <input name="lastname" class="form-control" type="text" placeholder="tu apellido" value="{{old('lastname')}}">
+                    <input id="name-contacto" name="name" class="form-control" type="text" placeholder="Tu nombre" value="{{old('name')}}">
+                    <input id="lastname-contacto" name="lastname" class="form-control" type="text" placeholder="tu apellido" value="{{old('lastname')}}">
                 </div>
-                @error('name')
-                    <p style="color:red">{{$message}}</p>
-                    @enderror
-                    @error('lastname')
-                    <p style="color:red">{{$message}}</p>
-                    @enderror
+                    <p id="error-name" style="color:red"></p>
+                    <p id="error-lastname" style="color:red"></p>
                 <div class="form-group">
-                    <input name="email" class="form-control" type="text" placeholder="tu correo" value="{{old('email')}}">
-                    <input name="telefono" class="form-control" type="text" placeholder="tu telefono" value="{{old('telefono')}}">
+                    <input id="email-contacto" name="email" class="form-control" type="text" placeholder="tu correo" value="{{old('email')}}">
+                    <input id="telefono-contacto" name="telefono" class="form-control" type="text" placeholder="tu telefono" value="{{old('telefono')}}">
                 </div>
-                    @error('email')
-                    <p style="color:red">{{$message}}</p>
-                    @enderror
-                    @error('telefono')
-                    <p style="color:red">{{$message}}</p>
-                    @enderror
+                    <p id="error-email" style="color:red"></p>
+                    <p id="error-telefono" style="color:red"></p>
                 @else
                 <div class="list-group">
                     <div class="list-group-item">
@@ -83,28 +77,34 @@
                 <hr>
                 <label class="">MENSAJE</label>
                 <div class="form-group">
-                    <input name="asunto" class="form-control" type="text" placeholder="Asunto">
+                    <input id="asunto-contacto" name="asunto" class="form-control" type="text" placeholder="Asunto" value="{{old('asunto')}}">
+                    <p id="error-asunto" style="color:red"></p>
                 </div>
-                @error('asunto')
-                <p style="color:red">{{$message}}</p>
-                @enderror
+
                 <div class="form-group">
-                    <input class="form-control" type="number" placeholder="N° Orden de Compra (Opcional)" name="orden">
+                    <input id="orden-contacto" class="form-control" type="number" placeholder="N° Orden de Compra (Opcional)" name="orden" value="{{old('orden')}}">
                 </div>
                 <div class="textarea-contacto">
-                    <textarea class="form-control" name="mensaje" id="" rows="6" placeholder="Su mensaje"></textarea>
+                    <textarea class="form-control" name="mensaje" id="mensaje-contacto" rows="6" placeholder="Su mensaje">{{old('mensaje')}}</textarea>
+                    <p id="error-mensaje" style="color:red"></p>
                 </div>
-                @error('mensaje')
-                <p style="color:red">{{$message}}</p>
-                @enderror
 
-                <button class="btn btn-primary" type="submit">
-                    <i class="fa fa-envelope-open-text"></i>
-                    Enviar Mensaje</button>
+                <div style="margin-top: 20px;" id="recaptcha-container">
+                    <div id="recaptcha-contacto" class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                    <div>
+                        <strong id="error-recaptcha" style="color:red"></strong>
+                    </div>
+                    <button id="btn-enviar-mensaje" class="btn-send" type="submit">
+                        <i id="mensaje-success-icon" class="fa fa-check" style="color:green;display:none"></i>
+                        <i id="mensaje-error-icon" class="fa fa-exclamation-triangle" style="display:none"></i>
+                        <i id="mensaje-default-icon" class="fa fa-envelope-open-text"></i>
+                        <div id="mensaje-text-btn" style="display:inline">Enviar Mensaje</div></button>
+                </div>
+
 
             </form>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 map-contact-container">
             <div class="col-sm-12">
                 <h2 class="title text-center"> <strong>Ubicanos</strong></h2>
                 <div id="gmap" class="contact-map">
@@ -115,11 +115,7 @@
                 <div class="icon dir-icon">
                     <i class="fa fa-map-marker-alt marker"></i>
                 </div>
-                @if($tienda->cert)
-                <div class="cert">
-                    <i class="fa fa-{{ $tienda->cert->ubicacion ? 'check' : 'times' }}-circle check" style="color:{{ $tienda->cert->ubicacion ? '#0f9500' :'red' }}"></i>
-                </div>
-                @endif
+
                 <div class="text">
                     @if(count($tienda->direccion)>0)
                     <div>{{ ($tienda->direccion[0]->calle ?? '').' '.($tienda->direccion[0]->numero ?? '') }}</div>
@@ -134,11 +130,7 @@
                 <div class="icon">
                     <i class="fa fa-phone"></i>
                 </div>
-                @if($tienda->cert)
-                <div class="cert">
-                    <i class="fa fa-{{ $tienda->cert->telefonico ? 'check' : 'times' }}-circle check" style="color:{{ $tienda->cert->telefonico ? '#0f9500' :'red' }}"></i>
-                </div>
-                @endif
+
                 <div class="text">
                     <p>{{ $tienda->telefono }}</p>
                 </div>
@@ -147,11 +139,7 @@
                 <div class="icon">
                     <i class="fa fa-envelope"></i>
                 </div>
-                @if($tienda->cert)
-                    <div class="cert">
-                        <i class="fa fa-check-circle check" style="color:transparent !important"></i>
-                    </div>
-                @endif
+
                 <div class="text">
                     <p>{{ $tienda->email }}</p>
                 </div>
@@ -159,5 +147,5 @@
         </div>
     </div>
 </div><!--/#contact-page-->
-
+    @include('frontend.templates.modals.modal-mensaje-enviado')
     @endsection
