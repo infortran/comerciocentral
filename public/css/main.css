@@ -640,13 +640,17 @@
 ***********************************/
 .banner-inferior-container{
     background:linear-gradient(to right, #988eff, #cf85ff);
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .banner-inferior{
     display:flex;
     align-items: center;
     color:#ffffff;
-    padding:60px 20px;
+    padding:20px;
+    max-width:1170px;
 }
 
 .banner-inferior .img-container{
@@ -657,7 +661,7 @@
     max-height:150px;
 }
 .banner-inferior .text-container{
-
+    margin-left:30px;
 }
 .banner-inferior .title{
     font-size: 40px;
@@ -687,6 +691,11 @@
     .banner-inferior{
         flex-direction: column;
         padding:30px 20px;
+        text-align: center;
+    }
+
+    .banner-inferior .text-container{
+        margin-left: 0;
     }
 
     .banner-inferior .title{
@@ -698,7 +707,7 @@
         width:100%;
     }
     .banner-inferior img{
-        max-height:120px;
+        max-height:100px;
     }
 }
 /**********************************
@@ -1061,6 +1070,8 @@
         FIN CERTIFICACIONES
  ************************************/
 .prod-container{
+    display: flex;
+    flex-wrap: wrap;
     position:relative;
     padding:3px 8px;
     min-height: 300px;
@@ -2221,7 +2232,6 @@
 
 @media(max-width: 762px){
     .media-estrella .fa-star-half{
-        top:4px;
     }
 }
 
@@ -2404,6 +2414,12 @@ CENTER VERTICAL
 }
 
 /*************END SNACKBAR*****************/
+.title-secondary{
+    text-transform: uppercase;
+    color:var(--color-primary);
+    font-size: 18px;
+    font-weight: bolder;
+}
 .text-productinfo{
     padding:10px 20px;
 }
@@ -3199,7 +3215,7 @@ h2.title:before {
 }
 
 .shipping {
-    margin-top: 40px;
+    margin-top: 10px;
     overflow: hidden;
     position: relative;
 }
@@ -3268,6 +3284,13 @@ h2.title {
 
 .product-image-wrapper .precio{
     font-family: "PT Sans Caption";
+}
+.product-image-wrapper .antes{
+    text-decoration: line-through;
+    color: #cfcfcf;
+    font-size: 18px;
+    font-weight: lighter;
+
 }
 
 .single-products {
@@ -3646,11 +3669,10 @@ h2.title {
 }
 
 .product-information {
-    border: 1px solid #F7F7F0;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
     overflow: hidden;
-    padding-bottom: 60px;
-    padding-left: 60px;
-    padding-top: 60px;
+    padding:30px 20px;
     position: relative;
 }
 
@@ -3663,7 +3685,8 @@ h2.title {
 .product-information h2 {
     color: #363432;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-weight: 300;
+    font-size: 30px;
     margin-top: 0;
 }
 
@@ -3682,9 +3705,9 @@ h2.title {
 .product-information span span {
     color: var(--color-primary);
     float: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: "PT Sans Caption";
     font-size: 30px;
-    font-weight: 700;
+    font-weight: bolder;
     margin-right: 20px;
     margin-top: 0px;
 }
@@ -3706,6 +3729,44 @@ h2.title {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     margin-right: 5px;
+}
+
+.product-information .antes{
+    text-decoration: line-through;
+    color:#cfcfcf;
+    font-size: 25px;
+    font-weight: lighter;
+}
+
+.product-details .oferta{
+    position:absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    background: #dc0a01;
+    color:#ffffff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,.4);
+    top:10px;
+    right:10px;
+    transform: rotate(20deg);
+}
+.product-details .oferta .cantidad{
+    font-size: 22px;
+    font-weight: bold;
+    display: inline-block;
+}
+.product-details .oferta .text-oferta{
+    font-size: 18px;
+    font-weight: bolder;
+    transform: rotate(20deg);
+}
+.product-details .oferta .text{
+    font-size: 12px;
 }
 
 .share {
@@ -3798,7 +3859,11 @@ h2.title {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
 }
-
+@media(max-width:321px){
+    .view-product img{
+        height:250px;
+    }
+}
 
 /*************************
 *******404 CSS******
@@ -4371,6 +4436,7 @@ h2.title {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 .comentario .contenido{
     border:1px solid #cfcfcf;
@@ -4382,9 +4448,14 @@ h2.title {
 .comentario .content{
     padding:5px
 }
-.comentario img {
+.comentario .img img {
     max-height: 60px;
-    border-radius: 10px;
+    border-radius: 50%;
+}
+.comentario .img-xs img {
+    max-height: 20px;
+    border-radius: 50%;
+    display:none;
 }
 .comentario .username{
     color: var(--color-primary);
@@ -4409,13 +4480,95 @@ h2.title {
 .comentario button {
     border:1px solid #cfcfcf;
     color: #868686;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding:5px 10px;
+    outline:none;
     background: transparent;
-    font-size: 12px;
+    font-size: 14px;
 }
 .comentario button:hover{
     color:var(--color-primary);
     border-color: var(--color-primary);
+}
+.btn-cart-text{
+    display:inline-block;
+}
+.btn-cart-text-xs{
+    display:none;
+}
+
+.no-comentario{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border:1px solid#cfcfcf;
+    border-radius: 10px;
+    padding:20px;
+    margin-top: 20px;
+}
+
+.no-comentario .icon-container{
+    position:relative;
+}
+.no-comentario .icon{
+    position:relative;
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+    background: #cfcfcf;
+}
+.no-comentario .icon-container i{
+    position:absolute;
+    top:25%;
+    left:25%;
+    font-size: 50px;
+}
+.no-comentario .text-container{
+
+}
+
+.no-comentario .title{
+    font-weight: lighter;
+    font-size: 40px;
+}
+
+.no-comentario .text{
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+@media(max-width:321px){
+    .comentario .contenido{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .comentario .img img{
+        display:none
+    }
+    .comentario .img-xs img{
+        display:inline-block;
+        margin-right: 10px;
+    }
+
+    .btn-cart-text-xs{
+        display:inline-block;
+    }
+    .btn-cart-text{
+        display:none;
+    }
+
+    .comentario .foot{
+        flex-direction:column-reverse;
+    }
+    .comentario .date{
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+
+    .no-comentario .title{
+        font-size: 25px;
+    }
 }
 
 .replay-container{
@@ -4686,11 +4839,7 @@ h2.title {
     text-transform: uppercase;
 }
 
-.response-area h2 {
-    color: #363432;
-    font-size: 20px;
-    font-weight: 700;
-}
+
 
 .response-area .media {
     border: 1px solid #F7F7F0;
@@ -4744,17 +4893,11 @@ h2.title {
 }
 
 .replay-box {
-    margin-bottom: 107px;
-    margin-top: 55px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.replay-box h2 {
-    font-weight: 700;
-    font-size: 20px;
-    color: #363432;
-    margin-top: 0;
-    margin-bottom: 45px
-}
+
 
 .replay-box label {
     background: var(--color-primary);
@@ -4826,7 +4969,14 @@ h2.title {
     border-radius: 10px;
     overflow: hidden;
 }
-
+.rating-container{
+    display:flex;
+    align-items: center;
+    padding:10px;
+    margin-top: 20px;
+    border:1px solid #cfcfcf;
+    border-radius: 10px;
+}
 
 
 .post-container .img-post{
@@ -4846,7 +4996,18 @@ h2.title {
     border-radius: 10px;
     overflow: hidden;
 }
-
+@media(max-width: 426px){
+    .rating-container{
+        flex-direction:column;
+    }
+    .user-rating-container{
+        margin-top: 20px;
+    }
+    .autor{
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
 /*************************
 ******* Contact CSS ********
 **************************/

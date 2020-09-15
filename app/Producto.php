@@ -23,7 +23,7 @@ class Producto extends Model
     }
 
     public function ratings(){
-        return $this->belongsToMany('App\Rating');
+        return $this->hasMany('App\ProductoRating');
     }
 
     public function tienda(){
@@ -36,5 +36,9 @@ class Producto extends Model
 
     public function productobanner(){
         return $this->hasOne('App\ProductoBanner');
+    }
+
+    public function comentarios(){
+        return $this->hasMany('App\ComentarioProducto');
     }
 }

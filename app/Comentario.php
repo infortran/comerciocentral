@@ -10,8 +10,11 @@ class Comentario extends Model
         return $this->belongsTo('App\User');
     }
 
-
     public function post(){
-        return $this->belongsTo('App\Post');
+        return $this->hasOne('App\ComentarioPost');
+    }
+
+    public function comentarioproducto(){
+        return $this->hasOne('App\ComentarioProducto');
     }
 }

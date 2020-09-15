@@ -3,97 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Comentario;
+use App\ComentarioProducto;
 use Illuminate\Http\Request;
 
 class ComentarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function cProductoStore(Request $request)
     {
         $request->validate([
            'comentario' => 'required|max:500'
         ]);
         $comentario = new Comentario();
 
-        $comentario->user_id = request('id_user');
-        $comentario->post_id = request('id_post');
+        $comentario->user_id = Auth::user()->id;
         $comentario->comentario = request('comentario');
 
         $comentario->save();
+        $cp = new ComentarioProducto();
+        $cp->comentario_id = $comentario->id;
+        $cp->producto_id = request('producto');
+        $cp->save();
 
         $redirect = '/noticias/post/' . $request->get('id_post');
 
         return redirect($redirect);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Comentario  $comentario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comentario $comentario)
-    {
-        //
+    public function cProductoUpdate(Request $request, $domain, $id){
+        $comentario = Comentario::findOrFail($id);
+        $request->validate([
+            'comentario' => 'required|max:500'
+        ]);
+        $comentario->comentario = request('comentario');
+        $comentario->update();
+        $redirect = '/producto/' . $comentario->comentarioproducto->producto->id . '#comentario-header';
+        return redirect($redirect);
     }
+    public function cProductoDestroy(Request $request, $domain, $id){
+        $comentarioproducto = ComentarioProducto::findOrFail($id);
+        $comentario = $comentarioproducto->comentario;
+        $producto = $comentarioproducto->producto;
+        $comentario->delete();
+        $comentarioproducto->delete();
+        $redirect = '/producto/' . $producto->id . '#comentario-header';
+        return redirect($redirect);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Comentario  $comentario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comentario $comentario)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comentario  $comentario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comentario $comentario)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Comentario  $comentario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comentario $comentario)
-    {
-        //
     }
 
     public function ban($id){

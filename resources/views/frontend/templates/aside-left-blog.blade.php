@@ -1,8 +1,8 @@
-<div class="col-sm-3">
+<div class="col-sm-3 hidden-xs">
 
 
     <div class="left-sidebar">
-        <h2 class="title">Publicidad</h2>
+
 
         <div class="shipping text-center banner-aside" style="background: linear-gradient(to bottom, {{ $tienda->asidebanner->color_princ_a ?? '' }}, {{ $tienda->asidebanner->color_princ_b ?? ''}});"><!--aside banner-->
             <div class="row banner-aside-a"  style="background-image: url('{{ asset('images/uploads/productos').'/'.($tienda->asidebanner->producto->img ?? '')}}')">

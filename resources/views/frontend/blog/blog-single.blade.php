@@ -35,55 +35,55 @@
 						</div>
 					</div><!--/blog-post-area-->
 
-					<div class="rating-area post-container flex">
+					<div class="rating-area rating-container flex">
 						<ul class="ratings">
 							<li class="rate-this">Valoracion:</li>
                             <div class="stars blog-single-stars">
 
-                                <?php use App\Http\Controllers\BlogController; ?>
-                                @if(BlogController::promedio($post) > 0.4 && BlogController::promedio($post) < 1)
+
+                                @if($promedio > 0.4 && $promedio < 1)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 1 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ $promedio >= 1 ? '#ffab00' : ''}}"></i>
                                 @endif
 
-                                @if(BlogController::promedio($post) > 1.4 && BlogController::promedio($post) < 2)
+                                @if($promedio > 1.4 && $promedio < 2)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 2 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ $promedio >= 2 ? '#ffab00' : ''}}"></i>
                                 @endif
 
-                                @if(BlogController::promedio($post) > 2.4 && BlogController::promedio($post) < 3)
+                                @if($promedio > 2.4 && $promedio < 3)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 3 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ $promedio >= 3 ? '#ffab00' : ''}}"></i>
                                 @endif
 
 
-                                @if(BlogController::promedio($post) > 3.4 && BlogController::promedio($post) < 4)
+                                @if($promedio > 3.4 && $promedio < 4)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 4 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ $promedio >= 4 ? '#ffab00' : ''}}"></i>
                                 @endif
-                                @if(BlogController::promedio($post) > 4.4 && BlogController::promedio($post) < 5)
+                                @if($promedio > 4.4 && $promedio < 5)
                                     <div class="media-estrella">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-half"></i>
                                     </div>
                                 @else
-                                    <i class="fa fa-star" style="color:{{ BlogController::promedio($post) >= 5 ? '#ffab00' : ''}}"></i>
+                                    <i class="fa fa-star" style="color:{{ $promedio >= 5 ? '#ffab00' : ''}}"></i>
                                 @endif
 
                             </div>
@@ -104,11 +104,11 @@
                             </select>
                                 @else
                                     <div class="stars blog-single-stars">
-                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 1 ? '#ffab00' : ''}}"></i>
-                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 2 ? '#ffab00' : ''}}"></i>
-                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 3 ? '#ffab00' : ''}}"></i>
-                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 4 ? '#ffab00' : ''}}"></i>
-                                        <i class="fa fa-star fa-2x" style="color:{{ BlogController::promedio($post) >= 5 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ $promedio >= 1 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ $promedio >= 2 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ $promedio >= 3 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ $promedio >= 4 ? '#ffab00' : ''}}"></i>
+                                        <i class="fa fa-star fa-2x" style="color:{{ $promedio >= 5 ? '#ffab00' : ''}}"></i>
                                         </div>
                                     @endif
                             <div><small id="cant-voto">{{ $ha_votado ? 'Ya ha votado' : 'Aun no has votado' }}</small></div>
@@ -126,41 +126,64 @@
                                 COMENTARIOS
                     ================================================-->
 					<div class="response-area">
-						<h2>Comentarios ({{$post->comentarios()->count()}})</h2>
+                        <div class="replay-box">
+                            <div class="row">
+                                <form method="POST" action="{{url('comentario')}}" class="col-xs-12">
+                                    @csrf
+                                    <h2 class="title-secondary">Déjanos tu comentario</h2>
+                                    <div class="replay-container">
+                                        <img class="hidden-xs" style="max-height: 70px;margin-right: 20px" src="{{ Auth::check() ? asset('images/uploads/users').'/'.Auth::user()->img : asset('images/system/avatar.png') }}" alt="">
+                                        <textarea name="comentario" class="form-control" {{Auth::check() ? '':'disabled'}}></textarea>
+                                    </div>
+
+                                    <input name="id_user" type="hidden" value="{{Auth::check() ? Auth::user()->id : ''}}">
+                                    <input name="id_post" type="hidden" value="{{$post->id}}">
+
+                                    @guest
+                                    <a href="{{ url('/login') }}" class="btn btn-primary pull-right">Debes iniciar sesion</a>
+                                    @else
+                                        <button class="btn btn-primary pull-right" type="submit">Comentar</button>
+                                    @endif
+                                </form>
+                            </div>
+                        </div><!--/Repaly Box-->
+						<h2 class="title-secondary">Comentarios ({{$post->comentarios->count()}})</h2>
                         <hr>
 						<ul class="media-list">
 
 
-                            @foreach($post->comentarios as $comentario)
-                                @if(! $comentario->banned)
+                            @foreach($post->comentarios as $comentariopost)
+
+                                @if(! $comentariopost->comentario->banned)
                                     <div class="comentario">
                                         <div class="img">
-                                            <img src="{{asset('images/uploads/users').'/'.$post->user->img}}" alt="">
+                                            <img src="{{asset('images/uploads/users').'/'.$comentariopost->comentario->user->img}}" alt="">
                                         </div>
                                         <div class="contenido">
                                             <div class="header">
-                                                <div class="username">{{$comentario->user->name}}</div>
+                                                <div class="img-xs">
+                                                    <img src="{{asset('images/uploads/users').'/'.$comentariopost->comentario->user->img}}" alt="">
+                                                </div>
+                                                <div class="username">{{$comentariopost->comentario->user->name}}</div>
                                                 &nbsp; - &nbsp;
-                                                <div class="diff-for-humans"><small>{{$comentario->created_at->diffForHumans()}}</small></div>
+                                                <div class="diff-for-humans"><small>{{$comentariopost->comentario->created_at->diffForHumans()}}</small></div>
                                             </div>
 
-                                            <div class="content">{{$comentario->comentario}}</div>
+                                            <div class="content">{{$comentariopost->comentario->comentario}}</div>
                                             <hr style="padding:0;margin:0">
                                             <div class="foot">
-                                                @if(Auth::check())
-                                                    @if($comentario->user->id === Auth::user()->id)
+                                                    @if(Auth::check() && $comentariopost->comentario->user->id === Auth::user()->id)
                                                     <div class="actions">
                                                         <button><i class="fa fa-edit"></i>Editar</button>
                                                         <button><i class="fa fa-times"></i>Eliminar</button>
                                                     </div>
                                                     @endif
-                                                @endif
                                                 <div class="date">
                                                     <i class="fa fa-calendar"></i>
-                                                    {{ $comentario->created_at->timezone('America/Santiago')->format('d/m/Y') }}
+                                                    {{ $comentariopost->comentario->created_at->timezone('America/Santiago')->format('d/m/Y') }}
                                                     &nbsp; - &nbsp;
                                                     <i class="fa fa-clock"></i>
-                                                    {{ $comentario->created_at->timezone('America/Santiago')->format('H:i') }}
+                                                    {{ $comentariopost->comentario->created_at->timezone('America/Santiago')->format('H:i') }}
                                                 </div>
                                             </div>
                                         </div>
@@ -170,28 +193,8 @@
 
 						</ul>
 					</div><!--/Response-area-->
-                    <hr>
-					<div class="replay-box">
-						<div class="row">
-							<form method="POST" action="{{url('comentario')}}" class="col-xs-12">
-                                @csrf
-								<h2>Déjanos tu comentario</h2>
-                                <div class="replay-container">
-                                    <img style="max-height: 70px;margin-right: 20px" src="{{ Auth::check() ? asset('images/uploads/users').'/'.Auth::user()->img : asset('images/system/avatar.png') }}" alt="">
-                                    <textarea name="comentario" class="form-control" {{Auth::check() ? '':'disabled'}}></textarea>
-                                </div>
 
-                                <input name="id_user" type="hidden" value="{{Auth::check() ? Auth::user()->id : ''}}">
-                                <input name="id_post" type="hidden" value="{{$post->id}}">
 
-                                @guest
-                                <a href="{{ url('/login') }}" class="btn btn-primary">Debes iniciar sesion</a>
-                                @else
-                                <button class="btn btn-primary" type="submit">Comentar</button>
-                                @endif
-							</form>
-						</div>
-					</div><!--/Repaly Box-->
 				</div>
 			</div>
 		</div>

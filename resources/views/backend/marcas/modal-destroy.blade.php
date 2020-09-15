@@ -9,7 +9,6 @@
         </button>
       </div>
       <div class="modal-body">
-
         Esta seguro que desea eliminar permanentemente la marca N°{{$marca->id}} ?
       </div>
       <div class="modal-footer">
@@ -17,9 +16,9 @@
 
 
         <form action="{{ route('marcas.destroy', ['domain' => $domain, $marca->id]) }}" method="POST">
-            @csrf
-            @method('DELETE')
-        <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Eliminar</button>
 
         </form>
       </div>

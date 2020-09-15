@@ -54,10 +54,22 @@ class ProductoFrontController extends Controller
                 $data = $loader->getData();
                 $producto = Producto::findOrFail($id);
                 $data['producto'] = $producto;
+                $data['promedio'] = $this->promedio($producto);
                 return view('frontend.producto-detalle', $data);
             }
         }
         return view('frontend.templates.site-not-found');
+    }
+
+    public static function promedio($producto){
+        $suma = 0;
+        foreach($producto->ratings as $rating){
+            $suma += $rating->rating->voto;
+        }
+        if(count($producto->ratings) > 0){
+            return $suma / count($producto->ratings);
+        }
+        return 0;
     }
 
     public function rangoPrecios(Request $request, $domain){

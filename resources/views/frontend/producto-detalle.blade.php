@@ -1,94 +1,107 @@
 @extends('frontend.templates.principal')
 
 @section('content')
-<section>
+<section style="margin-bottom: 50px">
 		<div class="container">
 			<div class="row">
 
 				<!--===========================================
 									ASIDE
 				=============================================-->
-                @include('frontend.templates.aside-left')
+				@include('frontend.templates.aside-left-blog')
 				<!--=============FIN ASIDE================-->
 
-				<div class="col-sm-9 padding-right">
+				<div class="col-sm-9">
 					<div class="product-details"><!--product-details-->
-						<div class="col-sm-5">
+						<div class="col-sm-7">
 							<div class="view-product">
-								<img  style="max-height: 300px"  src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
+								<div class="oferta d-none-important">
+									<div class="cantidad">50 %</div>
+									<div class="text">descuento</div>
+								</div>
+								<div class="oferta d-none-important">
+									<div class="text-oferta">OFERTA</div>
+								</div>
+								<img  style="max-height: 400px"  src="{{asset('images/uploads/productos').'/'.$producto->img}}" alt="" />
 
 							</div>
-							<div id="similar-product" class="carousel slide" data-ride="carousel">
 
-								  <!-- Wrapper for slides -->
-								    <div class="carousel-inner">
-										<div class="item active">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-										<div class="item">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-										<div class="item">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-
-									</div>
-
-								  <!-- Controls -->
-								  <a class="left item-control" href="#similar-product" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								  </a>
-								  <a class="right item-control" href="#similar-product" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								  </a>
-							</div>
 
 						</div>
-						<div class="col-sm-7">
+						<div class="col-sm-5">
 							<div class="product-information"><!--/product-information-->
-								<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
 								<h2>{{$producto->nombre}}</h2>
 								<p>{{$producto->descripcion}}</p>
-                                <div id="rating-bar-producto" class="rating-bar">
+                                <div style="font-size: 25px;">
 
-                                    <i class="fa fa-star fa-2x" data-value="1"></i>
-                                    <i class="fa fa-star fa-2x" data-value="2"></i>
-                                    <i class="fa fa-star fa-2x" data-value="3"></i>
-                                    <i class="fa fa-star fa-2x" data-value="4"></i>
-                                    <i class="fa fa-star fa-2x" data-value="5"></i>
+									@if($promedio > 0.4 && $promedio < 1)
+										<div class="media-estrella">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half"></i>
+										</div>
+									@else
+										<i class="fa fa-star" style="color:{{ $promedio >= 1 ? '#ffab00' : ''}}"></i>
+									@endif
+
+									@if($promedio > 1.4 && $promedio < 2)
+										<div class="media-estrella">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half"></i>
+										</div>
+									@else
+										<i class="fa fa-star" style="color:{{ $promedio >= 2 ? '#ffab00' : ''}}"></i>
+									@endif
+
+									@if($promedio > 2.4 && $promedio < 3)
+										<div class="media-estrella">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half"></i>
+										</div>
+									@else
+										<i class="fa fa-star" style="color:{{ $promedio >= 3 ? '#ffab00' : ''}}"></i>
+									@endif
+
+
+									@if($promedio > 3.4 && $promedio < 4)
+										<div class="media-estrella">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half"></i>
+										</div>
+									@else
+										<i class="fa fa-star" style="color:{{ $promedio >= 4 ? '#ffab00' : ''}}"></i>
+									@endif
+									@if($promedio > 4.4 && $promedio < 5)
+										<div class="media-estrella">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star-half"></i>
+										</div>
+									@else
+										<i class="fa fa-star" style="color:{{ $promedio >= 5 ? '#ffab00' : ''}}"></i>
+									@endif
 
 
 
                                 </div>
-								<!--img src="{{asset('images/product-details/rating.png')}}" alt="" /-->
 								<span>
+									<div class="antes">$ 2.000</div>
 									<span>$ {{number_format($producto->precio, 0, '','.')}}</span>
 									<label>Cantidad:</label>
 									<input type="text" value="{{ Session::has('cart') && isset(Session::get('cart')->items[$producto->id]) ? Session::get('cart')->items[$producto->id]['cantidad'] : '0' }}" id="input-cantidad-producto-{{$producto->id}}"/>
-									<!--button type="button" class="btn btn-fefault cart btn-submit-add-cart" data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
-										<i class="fa fa-shopping-cart"></i>
-										Agregar al carrito
-									</button-->
                                     <hr>
                                     <button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
                                             <i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
                                             <i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
-                                            <i id="btn-text-cart-{{$producto->id}}"  style="display: inline-block">Agregar al carrito</i>
+                                            <i class="btn-cart-text" id="btn-text-cart-{{$producto->id}}">Agregar al carrito</i>
+											<i class="btn-cart-text-xs" id="btn-text-cart-{{$producto->id}}">Agregar</i>
                                     </button>
 
                                     <button style="min-width: 50px" type="button" class="btn add-to-cart btn-default btn-submit-remove-on-cart" title="Quitar 1 item"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}
                                     {{Session::has($cartname) && isset(Session::get($cartname)->items[$producto->id]) && Session::get($cartname)->items[$producto->id] > 0 ? '' : 'disabled'}}>
-                                        <i class="fa fa-times"></i>
+                                        <i class="fa fa-trash"></i>
                                     </button>
 
 								</span>
-								<p><b>Disponibilidad:</b>
+								<p><b>Stock:</b>
                                 @if($producto->is_available)
                                     <i class="badge" style="background: #69c700">Disponible</i>
                                 @else
@@ -97,295 +110,107 @@
                                 </p>
 								<!--p><b>Condition:</b> New</p-->
 								<p><b>Marca:</b> {{$producto->marca->marca}}</p>
-								<a href=""><img src="{{asset('images/product-details/share.png')}}" class="share img-responsive"  alt="" /></a>
+
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->
+					<div id="comentario-header" class="title-secondary text-center">Comentarios del producto</div>
 
-					<div class="category-tab shop-details-tab"><!--category-tab-->
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
-								<li><a href="#details" data-toggle="tab">Details</a></li>
-								<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-								<li><a href="#tag" data-toggle="tab">Tag</a></li>
-								<li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
-							</ul>
+					@if(count($producto->comentarios) > 0)
+						@foreach($producto->comentarios as $comentarioprod)
+					<form action="{{route('comentario.producto.update',[$domain, $comentarioprod->comentario->id])}}" method="POST" class="comentario">
+						@csrf
+						@method('PUT')
+						<div class="img">
+							<img src="{{asset('images/uploads/users').'/'.$comentarioprod->comentario->user->img}}" alt="">
 						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade" id="details" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
+						<div class="contenido">
+							<div class="header">
+								<div class="img-xs">
+									<img src="{{asset('images/uploads/users').'/'.$comentarioprod->comentario->user->img}}" alt="">
 								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								<div class="username">{{$comentarioprod->comentario->user->name.' '.$comentarioprod->comentario->user->lastname}}</div>
+								&nbsp; - &nbsp;
+								<div class="diff-for-humans"><small>{{$comentarioprod->comentario->created_at->diffForHumans()}}</small></div>
 							</div>
 
-							<div class="tab-pane fade" id="companyprofile" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
+							<div id="comentario-producto-cont-{{$comentarioprod->id}}" class="content">{{$comentarioprod->comentario->comentario}}</div>
+							<textarea name="comentario" id="input-editar-comentario-producto-{{$comentarioprod->id}}" class="d-none form-control" rows="3"></textarea>
+							<hr style="padding:0;margin:0">
+							<div class="foot">
+
+									@if(Auth::check() && $comentarioprod->comentario->user->id === Auth::user()->id)
+										<div class="actions">
+											<button class="btn-editar-comentario-producto" data-comentario="{{$comentarioprod->id}}"><i class="fa fa-edit"></i> Editar</button>
+											<button class="d-none" id="btn-submit-comentario-producto-{{$comentarioprod->id}}" type="submit"><i class="fa fa-save"></i> Guardar</button>
+											<button data-toggle="modal" data-target="#modal-delete-comentario-{{$comentarioprod->id}}"><i class="fa fa-trash"></i> Eliminar</button>
 										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
+									@endif
+
+								<div class="date">
+									<i class="fa fa-calendar"></i>
+
+									{{ $comentarioprod->comentario->created_at->timezone('America/Santiago')->format('d/m/Y') }}
+									&nbsp; - &nbsp;
+									<i class="fa fa-clock"></i>
+
+									{{ $comentarioprod->comentario->created_at->timezone('America/Santiago')->format('H:i') }}
 								</div>
 							</div>
-
-							<div class="tab-pane fade" id="tag" >
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="images/home/gallery4.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="tab-pane fade active in" id="reviews" >
-								<div class="col-sm-12">
-									<ul>
-										<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-									<p><b>Write Your Review</b></p>
-
-									<form action="#">
-										<span>
-											<input type="text" placeholder="Your Name"/>
-											<input type="email" placeholder="Email Address"/>
-										</span>
-										<textarea name="" ></textarea>
-										<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-										<button type="button" class="btn btn-default pull-right">
-											Submit
-										</button>
-									</form>
-								</div>
-							</div>
-
 						</div>
-					</div><!--/category-tab-->
-
-					<div class="recommended_items"><!--recommended_items-->
-						<h2 class="title text-center">recommended items</h2>
-
-						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
-									</div>
+					</form>
+						@endforeach
+					@else
+							<div class="no-comentario">
+								<div class="icon-container">
+									<div class="icon"></div>
+									<i class="fa fa-comment-dots"></i>
 								</div>
-								<div class="item">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
+								<div class="text-container">
+									<div class="title">
+										Este producto aun no recibe comentarios
 									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
+									<div class="text">
+										Una vez que hayas comprado este producto podrás dar tu opinion.
 									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-												</div>
-											</div>
-										</div>
-									</div>
+									<button  id="btn-cart-2-{{$producto->id}}"  type="button" class="btn btn-default add-to-cart btn-submit-add-cart"  data-id="{{$producto->id}}" {{$producto->is_available ? '':'disabled'}}>
+										<i id="check-{{$producto->id}}"  class="fa fa-check" style="color: #72c400 !important;display: none"></i>
+										<i id="icon-cart-{{$producto->id}}"  class="fa fa-shopping-cart"></i>
+										<i class="btn-cart-text" id="btn-text-cart-{{$producto->id}}">Agregar al carrito</i>
+										<i class="btn-cart-text-xs" id="btn-text-cart-{{$producto->id}}">Agregar</i>
+									</button>
 								</div>
 							</div>
-							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>
-						</div>
-					</div><!--/recommended_items-->
+					@endif
+
+
+
 
 				</div>
 			</div>
 		</div>
 	</section>
+<div class="container-fluid banner-inferior-container">
+	<div class="banner-inferior">
+		<div class="img-container">
+			<img src="{{asset('images/system/navbar-new2.png')}}" alt="">
+		</div>
+		<div class="text-container">
+			<div class="title">
+				Comercio Central
+			</div>
+			<div class="text">
+				El centro del comercio electronico, donde puedes vender tus productos
+				en una elegante tienda virtual
+			</div>
+			<button class="btn-banner">Crea tu tienda ahora</button>
+		</div>
+	</div>
+</div>
 
+@if(count($producto->comentarios) > 0)
+	@foreach($producto->comentarios as $productocomentario)
+		@include('frontend.templates.modals.modal-delete-comentario')
+	@endforeach
+@endif
 	@endsection

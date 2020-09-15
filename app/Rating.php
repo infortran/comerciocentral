@@ -10,6 +10,10 @@ class Rating extends Model
         return $this->hasOne('App\PostRating');
     }
 
+    public function productorating(){
+        return $this->hasOne('App\ProductoRating');
+    }
+
     public function user(){
         return $this->belongsTo('App\User');
     }

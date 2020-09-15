@@ -12,8 +12,9 @@ var RGBChange = function () {
 /*scroll to top*/
 
 $(document).ready(function () {
-    //TOOLTIP BOOTSTRAP
+    //TOOLTIP & POPOVER BOOTSTRAP
     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 
     //RANGO DE PRECIOS ASIDE LEFT
     $('#sl2').slider().on('slideStop', function(e){
@@ -136,6 +137,22 @@ $(document).ready(function () {
             votarPorNoticia($('#star-rating-voto').data('post'), value);
         }
     });
+
+    /*********************
+     * Comentarios
+     ******************/
+
+    $('.btn-editar-comentario-producto').click(function(e){
+        e.preventDefault();
+        var comentario = $(this).data('comentario');
+        var comentarioCont = $('#comentario-producto-cont-'+ comentario);
+
+        $('#input-editar-comentario-producto-'+comentario).show().val(comentarioCont.html());
+        $('#btn-submit-comentario-producto-'+comentario).show();
+        comentarioCont.hide();
+        $(this).hide();
+    });
+
 
 });
 
