@@ -27,6 +27,7 @@
         "ckeditor4": "^4.15.0",
         "csso": "^4.0.3",
         "csso-cli": "^3.0.0",
-        "jquery-bar-rating": "^1.2.2"
+        "jquery-bar-rating": "^1.2.2",
+        "node-forge": "^0.10.0"
     }
 }
