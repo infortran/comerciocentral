@@ -86,4 +86,8 @@ class Tienda extends Model
     public function ordenes(){
         return $this->hasMany('App\Orden');
     }
+
+    public function visitante(){
+        return $this->hasMany('App\Visita');
+    }
 }

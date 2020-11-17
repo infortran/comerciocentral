@@ -29,8 +29,8 @@ class BannerController extends Controller
 
     public function updateAside(Request $request, $domain){
         $request->validate([
-            'dscto' => 'required',
-            'btn' => 'required|max:20'
+            'dscto' => 'required||regex:[A-Za-z1-9 ]',
+            'btn' => 'required|max:20|regex:[A-Za-z1-9 ]'
         ]);
         $tienda = Tienda::findOrFail($request->get('tienda'));
         $asidebanner = $tienda->asidebanner ? $tienda->asidebanner : new AsideBanner();
@@ -57,11 +57,11 @@ class BannerController extends Controller
         if($request->img){
             $request->validate([
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'titulo' => 'required|max:50',
-                'txt1' => 'required',
-                'txt2' => 'required',
-                'btn' => 'required',
-                'dscto' => 'required'
+                'titulo' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                'txt1' => 'required|regex:[A-Za-z1-9 ]',
+                'txt2' => 'required|regex:[A-Za-z1-9 ]',
+                'btn' => 'required|regex:[A-Za-z1-9 ]',
+                'dscto' => 'required|regex:[A-Za-z1-9 ]'
             ]);
 
             $img = $request->file('img');
@@ -80,11 +80,11 @@ class BannerController extends Controller
             $banner->img = $imageName;
         }else {
             $request->validate([
-                'titulo' => 'required|max:50',
-                'txt1' => 'required',
-                'txt2' => 'required',
-                'btn' => 'required',
-                'dscto' => 'required'
+                'titulo' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                'txt1' => 'required|regex:[A-Za-z1-9 ]',
+                'txt2' => 'required|regex:[A-Za-z1-9 ]',
+                'btn' => 'required|regex:[A-Za-z1-9 ]',
+                'dscto' => 'required|regex:[A-Za-z1-9 ]'
             ]);
         }
 

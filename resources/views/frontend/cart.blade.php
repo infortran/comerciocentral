@@ -41,58 +41,7 @@
                                 </div>
                                 @endforeach
                             </div>
-                           <!--table class="table table-striped" style="position: relative">
-                               <div class="loading-item-cart" style="display: none">
-                                   <div class="loading-cart"></div>
 
-                               </div>
-
-                               <thead>
-                                   <tr>
-                                       <th colspan="2">Caracteristicas</th>
-                                       <th class="hidden-xs">Precio</th>
-                                       <th>Cantidad</th>
-                                       <th class="hidden-xs">Total</th>
-                                   </tr>
-
-                               </thead>
-                               <tbody>
-                               @foreach($cart_productos as $producto)
-                                    <tr>
-                                        <td><img style="max-height: 100px" src="{{asset('images/uploads/productos').'/'.$producto['item']['img']}}" alt=""></td>
-                                        <td width="25%">
-                                            <div>{{$producto['item']['nombre']}}</div>
-                                            <div style="font-size: 20px" class="visible-sm visible-xs">
-                                                <strong>{{$producto['cantidad']}}</strong> x
-                                                $ {{number_format($producto['item']['precio'], 0, '', '.')}}
-                                            </div>
-                                        </td>
-                                        <td class="hidden-xs">$ {{number_format($producto['item']['precio'], 0, '', '.')}}</td>
-                                        <td width="30%">
-                                            <button class="btn btn-plus-minus-cart btn-minus-cart" style="margin-right: 5px" data-id="{{$producto['item']['id']}}">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-
-                                            <input style="max-width: 45px;display: inline-block;float:left !important"
-                                                   class="input-item-cart form-control text-center input-number-to-text"
-                                                   type="number" min="0" data-id="{{$producto['item']['id']}}"
-                                                   id="input-item-cart-{{$producto['item']['id']}}"
-                                                   value="{{$producto['cantidad']}}" autocomplete="off">
-
-                                            <button class="btn btn-plus-minus-cart btn-plus-cart"  style="margin-left: 5px" data-id="{{$producto['item']['id']}}">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </td>
-                                        <td class="hidden-xs" style="font-size: 18px">
-                                            <strong id="total-producto-{{$producto['item']['id']}}">$ {{number_format($producto['precio'], 0, '', '.')}}</strong>
-                                        </td>
-                                        <td>
-                                            <i class="reset-item-cart fa fa-window-close fa-2x btn-submit-reset-on-cart" style="color: red;cursor:pointer" data-id="{{$producto['item']['id']}}"></i>
-                                        </td>
-                                    </tr>
-                               @endforeach
-                               </tbody>
-                           </table-->
                         <a href="{{url('/productos')}}">
                         <button class="btn-seguir-comprando">
                             <i class="fa fa-angle-double-left"></i>

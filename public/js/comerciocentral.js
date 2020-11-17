@@ -46,6 +46,7 @@
         $('#btn-create-account').removeClass('btn-hover');
     });
 
+    //cada vez que ingreso un nombre de tienda
     $(document).on('input','#nombre-tienda', function(){
         var domain = $('#nombre-tienda').val().replace(/\s+/g, '').toLowerCase();
 

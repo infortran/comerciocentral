@@ -58,8 +58,8 @@ class ProductoController extends Controller
         $tienda = Tienda::findOrFail($request->get('tienda'));
         $request->validate([
             'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'nombre' => 'required|max:255',
-            'descripcion' => 'required|max:255',
+            'nombre' => 'required|max:255|regex:[A-Za-z1-9 ]',
+            'descripcion' => 'required|max:255|regex:[A-Za-z1-9 ]',
             'precio' => 'required|numeric|integer|max:100000'
         ]);
 
@@ -110,8 +110,8 @@ class ProductoController extends Controller
         if($request->img){
             $request->validate([
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'nombre' => 'required|max:255',
-                'descripcion' => 'required|max:255',
+                'nombre' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'descripcion' => 'required|max:255|regex:[A-Za-z1-9 ]',
                 'precio' => 'required'
             ]);
 
@@ -124,15 +124,15 @@ class ProductoController extends Controller
 
             $img_delete = 'images/uploads/productos/'. $producto->img;
             if(File::exists(public_path($img_delete))) {
-                if(!$producto->img == 'image.png'){
+                if($producto->img != 'image.png'){
                     File::delete($img_delete);
                 }
             }
             $producto->img = $imageName;
         }else{
             $request->validate([
-                'nombre' => 'required|max:255',
-                'descripcion' => 'required|max:255',
+                'nombre' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'descripcion' => 'required|max:255|regex:[A-Za-z1-9 ]',
                 'precio' => 'required'
             ]);
         }

@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Direccion;
-use App\FooterInfo;
-use App\HeaderFrontend;
 use App\Loader;
-use App\Orden;
 use App\SiteSocial;
-use App\TeamMember;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,37 +12,20 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Image;
+use Validator;
 use Carbon\Carbon;
 
 class UserController extends Controller
 {
     public function __construct(){
-        if(Session::has('auth_change_pass_user')){
-            Session::remove('auth_change_pass_user');
-        }
+        $this->middleware('auth');
     }
 
-    public function index($domain){
-        if(!Auth::check()){
-            if(!session()->has('from')){
-                session()->put('from', url()->current());
-            }
-            return redirect('/login');
-        }
-
-        if($domain) {
-            $loader = new Loader($domain);
-            if($loader->checkDominio()){
-                $loader->checkDominioAdmin();
-                $data = $loader->getData();
-                $data['compras'] = Orden::where('id_user', Auth::user()->id)->get();
-                return view('frontend.user', $data);
-            }
-        }
-        return view('frontend.templates.site-not-found');
+    public function index(){
 
     }
 
+    //funcion que permite ser cliente de una tienda
     public function switchCliente(Request $request, $domain){
         if($request->ajax()){
             if($domain){
@@ -83,22 +62,53 @@ class UserController extends Controller
         return view('frontend.templates.site-not-found');
     }
 
+    public function storeImg(Request $request){
+        $user = Auth::user();
+        $validation = Validator::make($request->all(), [
+            'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=200,min_height=200'
+        ]);
+        if (!$validation->passes()) {
+            return response()->json(['error'=>$validation->errors()]);
+        }
+        //get image file
+        $img = $request->file('img');
+        //get only filename
+        $img_filename = pathinfo($img->getClientOriginalName())['filename'];
+        //rename with date
+        $imageName = $img_filename.time().'.'.$img->extension();
+
+        $imgResize = Image::make($img->path());
+        $imgResize->fit(200,200, function($constraint) {
+            $constraint->upsize();
+        })->save(public_path('images/uploads/users').'/'. $imageName);
+
+        $img_delete = 'images/uploads/users/'. $user->img;
+        if(File::exists(public_path($img_delete))) {
+            if($user->img != 'avatar.png'){
+                File::delete($img_delete);
+            }
+        }
+        $user->img = $imageName;
+        $user->save();
+        return json_encode(['status' => 'ok']);
+    }
+
     public function update(Request $request, $id){
         $user = User::findOrFail($id);
         if($request->img){
             if($request->get('email') == $user->email){
                 $request->validate([
                     'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
-                    'name' => 'required|max:50',
-                    'lastname' => 'required|max:50',
-                    'telefono' => 'required|max:50',
+                    'name' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'lastname' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'telefono' => 'required|max:50|numeric',
                 ]);
             }else{
                 $request->validate([
                     'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
-                    'name' => 'required|max:50',
-                    'lastname' => 'required|max:50',
-                    'telefono' => 'required|max:50',
+                    'name' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'lastname' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'telefono' => 'required|max:50|numeric',
                     'email' => 'required|max:255|email|unique:users'
                 ]);
             }
@@ -124,15 +134,15 @@ class UserController extends Controller
         }else{
             if($request->get('email') == $user->email){
                 $request->validate([
-                    'name' => 'required|max:50',
-                    'lastname' => 'required|max:50',
-                    'telefono' => 'required|max:50',
+                    'name' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'lastname' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'telefono' => 'required|max:50|numeric',
                 ]);
             }else{
                 $request->validate([
-                    'name' => 'required|max:50',
-                    'lastname' => 'required|max:50',
-                    'telefono' => 'required|max:50',
+                    'name' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'lastname' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'telefono' => 'required|max:50|numeric',
                     'email' => 'required|max:255|email|unique:users'
                 ]);
             }
@@ -151,10 +161,10 @@ class UserController extends Controller
 
     public function addDireccion(Request $request){
         $request->validate([
-            'calle' => 'required',
-            'numero' => 'required',
-            'poblacion' => 'required',
-            'ciudad' => 'required'
+            'calle' => 'required|regex:[A-Za-z1-9 ]',
+            'numero' => 'required|',
+            'poblacion' => 'required|regex:[A-Za-z1-9 ]',
+            'ciudad' => 'required|regex:[A-Za-z1-9 ]'
         ]);
         $user = Auth::user();
         $direccion = new Direccion();
@@ -224,4 +234,5 @@ class UserController extends Controller
 
         return view('frontend.templates.site-not-found');
     }
+
 }

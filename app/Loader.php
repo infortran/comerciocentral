@@ -18,9 +18,10 @@ class Loader{
     public function getData()
     {
         $tienda = Tienda::where('dominio', $this->dominio)->first();
+
         $data = [
             'domain' => $this->dominio,
-            'domain_owner' => false,
+            'domain_owner' => false, //determina si la persona ha comprado el .cl
             'certificacion' => $this->certificado,
             'cartname' => 'cart-' . $tienda->id,
             'envioname' => 'envio-' . $tienda->id,
@@ -31,6 +32,8 @@ class Loader{
         ];
         return $data;
     }
+
+
 
     public function getPuntajeTienda($tienda){
         $suma = 0;

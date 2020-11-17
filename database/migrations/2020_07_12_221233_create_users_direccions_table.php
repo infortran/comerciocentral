@@ -13,7 +13,7 @@ class CreateUsersDireccionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('direccion_user', function (Blueprint $table) {
+        Schema::create('direccion_users', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->integer('direccion_id')->unsigned();

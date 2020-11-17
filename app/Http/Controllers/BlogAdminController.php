@@ -73,8 +73,8 @@ class BlogAdminController extends Controller
                 $data = $loader->getData();
                 $tienda = $data['tienda'];
                 $request->validate([
-                    'titulo' => 'required|max:50',
-                    'contenido' => 'required',
+                    'titulo' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'contenido' => 'required|regex:[A-Za-z1-9 ]',
                     'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=500,min_height=500']);
                 $img = $request->file('img');
                 $imageName = time().'.'.$img->extension();
@@ -150,8 +150,8 @@ class BlogAdminController extends Controller
         $post = Post::findOrFail($id);
         if($request->img){
             $request->validate([
-                'titulo' => 'required|max:50',
-                'contenido' => 'required',
+                'titulo' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                'contenido' => 'required|regex:[A-Za-z1-9 ]',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=960,min_height=720']);
             $img = $request->file('img');
             $imageName = time().'.'.$img->extension();
@@ -162,8 +162,8 @@ class BlogAdminController extends Controller
             $post->img = $imageName;
         }else{
             $request->validate([
-                'titulo' => 'required|max:50',
-                'contenido' => 'required']);
+                'titulo' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                'contenido' => 'required|regex:[A-Za-z1-9 ]']);
         }
         $post->titulo = request('titulo');
         $post->contenido = request('contenido');
@@ -182,7 +182,9 @@ class BlogAdminController extends Controller
         $post = Post::findOrFail($id);
         $img_delete = 'images/uploads/blog/'. $post->img;
         if(File::exists(public_path($img_delete))) {
-            File::delete($img_delete);
+            if($img_delete != 'image.png'){
+                File::delete($img_delete);
+            }
         }
         $post->delete();
 

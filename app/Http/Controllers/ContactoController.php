@@ -36,17 +36,17 @@ class ContactoController extends Controller
                 $data = $loader->getData();
 
                 $validation = Validator::make($request->all(), [
-                    'motivo' => 'required',
-                    'asunto' => 'required|max:50',
-                    'mensaje' => 'required|max:500',
+                    'motivo' => 'required|regex:[A-Za-z1-9 ]',
+                    'asunto' => 'required|max:50|regex:[A-Za-z1-9 ]',
+                    'mensaje' => 'required|max:500|regex:[A-Za-z1-9 ]',
                     'orden' => 'numeric|nullable',
                     'g-recaptcha-response' => new Captcha()
                 ]);
                 if(!Auth::check()){
-                    $validation['name'] = 'required|max:55';
-                    $validation['lastname'] = 'required|max:55';
+                    $validation['name'] = 'required|max:55|regex:[A-Za-z1-9 ]';
+                    $validation['lastname'] = 'required|max:55|regex:[A-Za-z1-9 ]';
                     $validation['email'] = 'required|email|max:55';
-                    $validation['telefono'] = 'required|max:50';
+                    $validation['telefono'] = 'required|max:10|numeric';
                 }
 
 

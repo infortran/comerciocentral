@@ -35,7 +35,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'categoria' => 'required|max:50'
+            'categoria' => 'required|max:50|regex:[A-Za-z1-9 ]'
         ]);
         $tienda = Tienda::findOrFail($request->get('tienda'));
         $categoria = new Categoria();
@@ -48,7 +48,7 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::findOrFail($id);
         $request->validate([
-            'categoria' => 'required|max:50'
+            'categoria' => 'required|max:50|regex:[A-Za-z1-9 ]'
         ]);
         $categoria->categoria = $request->get('categoria');
         $categoria->update();

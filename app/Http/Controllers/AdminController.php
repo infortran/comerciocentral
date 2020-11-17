@@ -81,12 +81,12 @@ class AdminController extends Controller
     		if($request->get('email') == $admin->email){
     			$request->validate([
 	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
-	                'name' => 'required|max:50'
+	                'name' => 'required|max:50|regex:[A-Za-z1-9 ]'
             	]);
     		}else{
     			$request->validate([
 	                'img' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=300',
-	                'name' => 'required|max:255',
+	                'name' => 'required|max:255|regex:[A-Za-z1-9 ]',
 	                'email' => 'required|max:255|email|unique:users'
             	]);
     		}
@@ -112,11 +112,11 @@ class AdminController extends Controller
         }else{
         	if($request->get('email') == $admin->email){
         		$request->validate([
-                	'name' => 'required|max:50'
+                	'name' => 'required|max:50|regex:[A-Za-z1-9 ]'
             	]);
         	}else{
         		$request->validate([
-	                'name' => 'required|max:50',
+	                'name' => 'required|max:50|regex:[A-Za-z1-9 ]',
 	                'email' => 'required|max:255|email|unique:users'
 	            ]);
         	}

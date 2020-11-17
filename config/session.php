@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.comerciocentral.chi'),
+    'domain' => env('SESSION_DOMAIN', '.comerciocentral.test'),
 
     /*
     |--------------------------------------------------------------------------

@@ -252,7 +252,7 @@
                         </div>
                         <div class="info">
                             <div class="text-center">
-                                <span style="color: #b3a9ff" class="mt-3 mb-3 d-block">{{ $domain_owner ? $domain .'.cl' : $domain . '.comerciocentral.cl' }}</span>
+                                <a href="{{ $domain_owner ? env('APP_PROTOCOL').'://'.$domain .'.'.env('APP_DOMAIN') : env('APP_PROTOCOL').'://'.$domain . '.comerciocentral.'.env('APP_DOMAIN') }}" style="color: #b3a9ff" class="mt-3 mb-3 d-block">{{ $domain_owner ? $domain .'.cl' : $domain . '.comerciocentral.cl' }}</a>
 
                                 <a class="btn-comerciocentral-dark" href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">

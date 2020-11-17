@@ -48,9 +48,9 @@ class SlideController extends Controller
             'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048',
             'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
-            'titulo' => 'required|max:255',
-            'subtitulo' => 'required|max:255',
-            'txt_boton' => 'required'
+            'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+            'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+            'txt_boton' => 'required|regex:[A-Za-z1-9 ]'
         ]);
         //200x60
         $img = $request->file('img');
@@ -115,9 +115,9 @@ class SlideController extends Controller
         if($request->img && $request->img_pricing && $request->logo){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
@@ -134,9 +134,9 @@ class SlideController extends Controller
         }else if($request->img && $request->img_pricing){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
@@ -149,9 +149,9 @@ class SlideController extends Controller
         }else if($request->img_pricing && $request->logo){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
@@ -164,9 +164,9 @@ class SlideController extends Controller
         }else if($request->img && $request->logo){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
@@ -179,9 +179,9 @@ class SlideController extends Controller
         }else if($request->img){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'img' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ]);
             $imageName = $this->storeImgSlide($img, 485, 440);
@@ -190,9 +190,9 @@ class SlideController extends Controller
         }else if($request->img_pricing){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'img_pricing' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
             $imgPricingName = $this->storeImgSlide($img_pricing, 172, 172);
@@ -201,9 +201,9 @@ class SlideController extends Controller
         }else if($request->logo){
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
                 'logo' => 'required|mimes:jpeg,png,jpg|max:2048'
             ]);
             $logoName = $this->storeImgSlide($logo, 190, 60);
@@ -212,9 +212,9 @@ class SlideController extends Controller
         }else{
             $request->validate([
                 'producto_id' => 'required',
-                'titulo' => 'required|max:255',
-                'subtitulo' => 'required|max:255',
-                'txt_boton' => 'required',
+                'titulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'subtitulo' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'txt_boton' => 'required|regex:[A-Za-z1-9 ]',
             ]);
         }
         $producto = Producto::find($request->get('producto_id'));

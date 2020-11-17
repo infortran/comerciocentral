@@ -38,7 +38,7 @@ class SocialController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|regex:[A-Za-z1-9 ]',
             'url' => 'required'
         ]);
         $social = new Social();

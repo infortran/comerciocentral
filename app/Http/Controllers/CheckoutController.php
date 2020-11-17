@@ -80,10 +80,10 @@ class CheckoutController extends Controller
                             $dir_string .= $direccion->ciudad. '.';
                         }else{
                             $request->validate([
-                                'calle' => 'required',
-                                'numero' => 'required',
-                                'poblacion' => 'required',
-                                'ciudad' => 'required']);
+                                'calle' => 'required|regex:[A-Za-z1-9 ]',
+                                'numero' => 'required|regex:[A-Za-z1-9 ]',
+                                'poblacion' => 'required|regex:[A-Za-z1-9 ]',
+                                'ciudad' => 'required|regex:[A-Za-z1-9 ]']);
                             $dir_string = $request->get('calle').' / ';
                             $dir_string .= $request->get('numero'). ' / ';
                             $dir_string .= $request->get('departamento') ? $request->get('departamento').' / ' : '' ;
@@ -93,9 +93,9 @@ class CheckoutController extends Controller
                     }
                     if(!Auth::check()){
                         $request->validate([
-                            'nombre' => 'required',
-                            'email' => 'required|email',
-                            'telefono' => 'required',
+                            'nombre' => 'required|regex:[A-Za-z1-9 ]',
+                            'email' => 'required|email|regex:[A-Za-z1-9 ]',
+                            'telefono' => 'required|regex:[A-Za-z1-9 ]',
                         ]);
                     }else{
                         $nombre = Auth::user()->name.' '.Auth::user()->lastname;

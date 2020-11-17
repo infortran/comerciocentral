@@ -11,6 +11,8 @@ use App\SiteSocial;
 use App\TeamMember;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Auth;
+
 
 class LoginController extends Controller
 {
@@ -36,9 +38,17 @@ class LoginController extends Controller
     protected $redirectTo = '/';
 
 
-    public function authenticated($request,$user)
+
+    public function authenticated(Request $request)
     {
+        if(Auth::user()->tiendas && Auth::user()->role == 'admin'){
+            $tienda = Auth::user()->tiendas()->first();
+            $url = env('APP_PROTOCOL').'://'.$tienda->dominio.'.comerciocentral.'.env('APP_DOMAIN').'/admin';
+            return redirect($url);
+        }
+
         return redirect(session()->pull('from',$this->redirectTo));
+
     }
 
     /**

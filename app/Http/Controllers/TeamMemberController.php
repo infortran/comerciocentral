@@ -46,8 +46,8 @@ class TeamMemberController extends Controller
     {
         $request->validate([
             'img_member' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'nombre' => 'required|max:255',
-            'cargo' => 'required|max:255'
+            'nombre' => 'required|max:255|regex:[A-Za-z1-9 ]',
+            'cargo' => 'required|max:255|regex:[A-Za-z1-9 ]'
         ]);
 
         $img_member = $request->file('img_member');
@@ -105,8 +105,8 @@ class TeamMemberController extends Controller
         if($request->img_member){
             $request->validate([
                 'img_member' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:max_width=300,max_height=200',
-                'nombre' => 'required|max:255',
-                'cargo' => 'required|max:255'
+                'nombre' => 'required|max:255|regex:[A-Za-z1-9 ]',
+                'cargo' => 'required|max:255|regex:[A-Za-z1-9 ]'
             ]);
             $img_member = $request->file('img_member');
 

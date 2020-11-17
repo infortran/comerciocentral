@@ -34,7 +34,7 @@
         }
         .card{
             margin: 50px 0;
-            background:rgba(255,255,255,.2);
+            background:rgba(255,255,255,.7);
             color: #fff;
         }
 
@@ -81,6 +81,12 @@
         .btn-hover.color-12 {
             background-image: linear-gradient(to right, #0060eb, #5000f1, #659dff, #a26dff);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
         }
+
+        @media(max-width: 321px){
+            .card{
+                margin:0 !important;
+            }
+        }
     </style>
 </head>
 <body class="slider_bg_1">
@@ -91,7 +97,7 @@
                 <form action="{{ route('main.login.auth') }}" class="card" method="POST">
                     {{ csrf_field() }}
                     <div class="card-header text-center">
-                        <img class="mx-auto" src="{{ asset('images/system/navbar-new2.png') }}" alt="">
+                        <img class="mx-auto img-fluid" src="{{ asset('images/system/navbar-new2.png') }}" alt="">
                     </div>
 
 

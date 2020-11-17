@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="carousel-item">
+                                <!--div-- class="carousel-item">
                                     <div class="card cool-card">
 
                                         <div class="card-body">
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div-->
                                 <div class="carousel-item">
                                     <div class="card cool-card">
                                         <div class="card-body">

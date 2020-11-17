@@ -36,7 +36,7 @@ class EnvioController extends Controller
     public function store(Request $request, $domain)
     {
         $request->validate([
-            'descripcion' => 'required|min:5|max:255',
+            'descripcion' => 'required|min:5|max:255|regex:[A-Za-z1-9 ]',
             'precio' => 'required|numeric'
         ]);
         $envio = new Envio();
@@ -81,8 +81,8 @@ class EnvioController extends Controller
     public function update(Request $request, Envio $envio)
     {
         $request->validate([
-            'descripcion' => request('descripcion'),
-            'precio' => request('precio')
+            'descripcion' => 'required|regex:[A-Za-z1-9 ]',
+            'precio' => 'required|regex:[A-Za-z1-9 ]'
         ]);
 
         $envio->descripcion = request('descripcion');

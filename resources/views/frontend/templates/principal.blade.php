@@ -123,7 +123,7 @@
 							LOGOTIPO
 							===============-->
 						<div class="logo pull-left">
-							<a href="/"><img style="max-height:60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->dominio. '.png'}}" alt="" /></a>
+							<a href="/"><img style="max-height:60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->img}}" alt="" /></a>
 						</div>
 
 						<!--=================
@@ -178,7 +178,7 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-righ">
 							<ul class="nav navbar-nav pull-right">
-								<li><a class="{{ Request::segment(1) === 'cuenta' ? 'active' : null }}" href="{{url('/cuenta')}}"><i class="fa fa-user"></i> Cuenta</a></li>
+								<li><a class="{{ Request::segment(1) === 'cuenta' ? 'active' : null }}" href="{{env('APP_URL').'/cuenta?redirectID='.$tienda->id}}"><i class="fa fa-user"></i> Cuenta</a></li>
 								<li>
                                     <a class="{{ Request::segment(1) === 'carrito' ? 'active' : null }}"  href="{{url('/carrito')}}">
                                         <i class="fa fa-shopping-cart"></i>
@@ -193,7 +193,7 @@
                                     </a>
                                 </li>
 								@guest
-								<li><a href="/login"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
+								<li><a href="{{env('APP_URL').'/login?tienda='.$domain}}"><i class="fa fa-lock"></i> Iniciar sesion</a></li>
 								@else
 
 								<li><a href="{{ route('logout', ['domain' => $domain]) }}" onclick="event.preventDefault();
@@ -330,7 +330,7 @@
 				<div class="row">
 					<div class="col-sm-2">
 						<div class="companyinfo">
-							<h2><img style="max-height: 60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->dominio. '.png'}}"></h2>
+							<h2><img style="max-height: 60px" src="{{asset('images/uploads/tiendas/navbar').'/'.$tienda->img}}"></h2>
 							<p>{{$tienda->info}}</p>
 						</div>
 					</div>
@@ -381,9 +381,9 @@
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="#">Nosotros</a></li>
 								<li><a href="#">Servicios</a></li>
-								<li><a href="#">Garantia</a></li>
+								<!--li><a href="#">Garantia</a></li>
 								<li><a href="#">Politica de privacidad</a></li>
-								<li><a href="#">Terminos y condiciones</a></li>
+								<li><a href="#">Terminos y condiciones</a></li-->
 							</ul>
 						</div>
 					</div>
@@ -442,7 +442,7 @@
 			<div class="container">
 				<div class="row">
 					<p class="pull-left">Copyright © {{date("Y")}} {{config('app.name')}}. Todos los derechos reservados.</p>
-					<p class="pull-right">Ir a <span><a target="_blank" href="http://comerciocentral.chi">Comercio Central</a></span></p>
+					<p class="pull-right">Ir a <span><a target="_blank" href="{{env('APP_PROTOCOL')}}://comerciocentral.{{env('APP_DOMAIN')}}">Comercio Central</a></span></p>
 				</div>
 			</div>
 		</div>

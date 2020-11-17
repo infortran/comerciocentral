@@ -39,10 +39,10 @@
                 </div>
                 <div class="text-container">
                     <div class="numero-cont">
-                        <div class="numero">4.7</div>
+                        <div class="numero">{{number_format($puntaje, 1)}}</div>
                         <div class="text">Puntaje de la tienda</div>
                     </div>
-                    <div class="subtext">3 Votos</div>
+                    <div class="subtext">{{count($tienda->ratings)}} Votos</div>
                 </div>
             </div>
         </div><!--ROW TABLERO HOME-->
@@ -68,7 +68,7 @@
                                 Invitado
                             </div>
                         </div>
-                        <div class="text-container">
+                        <div class="text-container borde-r">
                             <div class="main">
                                 +56 9 4706 5823
                             </div>
@@ -77,21 +77,12 @@
                                 <div>Villa Juan Pablo II - San Felipe</div>
                             </div>
                         </div>
-                        <div class="detalle-pedido text-center">
-                            <div class="collapse text-left" id="collapse-pedido">
-                                <!-- FOREACH carrito as producto -->
-                                <div>2 x berlin de crema</div>
-                                <div>3 x berlin de manjar</div>
-                                <div class="ellipse-line">3 x churros tradicionales bañados en cocholate con azucar glass</div>
-                                <div>2 x berlin de crema</div>
-                                <div>3 x berlin de manjar</div>
-                                <div>3 x churros tradicionales</div>
-                                <!--ENDFOREACH carrito-->
-                            </div>
-                            <a class="btn btn-comerciocentral" href="#collapse-pedido" data-toggle="collapse">
-                                <i class="fa fa-eye"></i>
-                                <strong>Ver pedido</strong>
+                        <div class="detalle-pedido text-center borde">
+                            <a tabindex="0" class="btn btn-comerciocentral" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">
+                                <i class="fa fa-shopping-cart"></i>
+                                <strong>Carro</strong>
                             </a>
+
                         </div>
                         <div class="precio">
                             <div>$ 1.000</div>

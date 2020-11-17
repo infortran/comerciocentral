@@ -8,11 +8,11 @@ class Direccion extends Model
 {
     public $timestamps = false;
 
-    public function users(){
-        return $this->belongsToMany('App\User');
+    public function user(){
+        return $this->hasOne('App\DireccionUser');
     }
 
     public function tienda(){
-        return $this->belongsToMany('App\Tienda', '');
+        return $this->hasOne('App\DireccionTienda');
     }
 }

@@ -42,13 +42,14 @@ class MainController extends Controller
 
     public function login(Request $request){
         return view('main.login');
-        //$data['color'] = '#afafaf';
-        //return view('welcome', $data);
     }
 
 
 
     public function register(Request $request){
+        $request->validate([
+           'domain' => 'required|regex:/(^([a-zA-Z _]+)(\d+)?$)/u'
+        ]);
         $domain = $request->get('domain');
         $domain_trim = trim($domain);
         //eliminar espacios
@@ -112,15 +113,15 @@ class MainController extends Controller
     public function submitRegister(Request $request){
         //dd($request->get('telefono_tienda'));
         $request->validate([
-            'username' => 'required|min:3|max:255',
-            'userlastname' => 'required|min:3|max:255',
+            'username' => 'required|min:3|max:255|regex:[A-Za-z1-9 ]',
+            'userlastname' => 'required|min:3|max:255|regex:[A-Za-z1-9 ]',
             'email' => 'required|email|min:3|max:255',
             'password' => 'required|min:8',
             'confirm_password' => 'required|min:8|same:password',
-            'nombre_tienda' => 'required|min:2|max:50',
+            'nombre_tienda' => 'required|min:2|max:50|regex:[A-Za-z1-9 ]',
             'email_tienda' => 'required|email|min:3|max:50',
-            'telefono_tienda' => 'required|min:8|max:10',
-            'info_tienda' => 'required|min:20|max:200'
+            'telefono_tienda' => 'required|min:8|max:10|numeric',
+            'info_tienda' => 'required|min:20|max:200|regex:[A-Za-z1-9 ]'
         ]);
 
         $nombre = $request->get('nombre_tienda');
@@ -135,13 +136,17 @@ class MainController extends Controller
         $user->email = $request->get('email');
         $user->telefono = $request->get('telefono_tienda');
         $user->password = Hash::make($request->get('password'));
+        $user->img = 'avatar.png';
+
+        //guardar datos de la tienda
         $tienda = new Tienda();
         $tienda->nombre = $nombre;
         $tienda->dominio = $domain;
         $tienda->info = $request->get('info_tienda');
         $tienda->telefono = $request->get('telefono_tienda');
         $tienda->email = $request->get('email_tienda');
-
+        $tienda->img = 'logo-placeholder.jpg';
+        $tienda->is_active = false;
         $user->save();
         $user->tiendas()->save($tienda);
         return redirect(env('APP_PROTOCOL').'://'.$domain.'.comerciocentral.'.env('APP_DOMAIN'));

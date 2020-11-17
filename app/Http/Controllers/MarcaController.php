@@ -34,7 +34,7 @@ class MarcaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'marca' => 'required|max:50'
+            'marca' => 'required|max:50|regex:[A-Za-z1-9 ]'
         ]);
         $tienda = Tienda::findOrFail($request->get('tienda'));
         $marca = new Marca();
@@ -49,7 +49,7 @@ class MarcaController extends Controller
     {
         $marca = Marca::findOrFail($id);
         $request->validate([
-            'marca' => 'required|max:50'
+            'marca' => 'required|max:50|regex:[A-Za-z1-9 ]'
         ]);
         $marca->marca = $request->get('marca');
         $marca->update();

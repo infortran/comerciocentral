@@ -1776,6 +1776,7 @@
 }
 
 .cart-item .text-container{
+    flex:2;
     align-self: flex-start;
     padding:10px;
 }
@@ -1787,9 +1788,12 @@
     font-weight:lighter;
 }
 .cart-item .controls{
+    flex:.5;
     margin-left: auto;
 }
 .cart-item .precio{
+    text-align: center;
+    flex: 1;
     font-size: 25px;
     color:var(--color-primary);
     margin-left: auto;

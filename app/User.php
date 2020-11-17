@@ -45,7 +45,7 @@ class User extends Authenticatable
     }
 
     public function direcciones(){
-        return $this->belongsToMany('App\Direccion');
+        return $this->hasMany('App\DireccionUser');
     }
 
     public function comentarios(){
@@ -62,5 +62,9 @@ class User extends Authenticatable
 
     public function mensajes(){
         return $this->hasMany('App\Mensaje');
+    }
+
+    public function visita(){
+        return $this->hasOne('App\Visita');
     }
 }
