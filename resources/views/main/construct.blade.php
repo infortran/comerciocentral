@@ -5,6 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Encuentra tu comercio local o crea tu propia tienda virtual GRATIS. El comercio mas seguro para ti."/>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Infortran, https://infortran.tk">
     <title>Comercio Central</title>
 </head>
 <style>
