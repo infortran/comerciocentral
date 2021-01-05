@@ -26,7 +26,7 @@
 
                 <div class="cuenta-user-container col cuenta-container">
                     <h4>Datos personales</h4>
-                    <div class="form">
+                    <div class="form" >
                         <input type="text" class="form-control" placeholder="Nombre" value="{{Auth::user()->name}}">
                         <input type="text" class="form-control" placeholder="apellido" value="{{Auth::user()->lastname}}">
                     </div>
@@ -34,7 +34,7 @@
                         <input type="email" class="form-control" placeholder="email" value="{{Auth::user()->email}}">
                         <input type="text" class="form-control" placeholder="Telefono" value="{{Auth::user()->telefono}}">
                     </div>
-                    <button class="btn-comerciocentral-dark">Modificar</button>
+                    <button type="submit" class="btn-comerciocentral-dark">Modificar</button>
                 </div>
 
             </div>
