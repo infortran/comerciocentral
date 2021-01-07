@@ -81,7 +81,7 @@
                                                     Agregar red social al sitio
                                                 </li>
                                                 <li class="list-group-item" id="form-agregar-social-site">
-                                                    {!! Form::open(['route' => ['social.site.add']]) !!}
+
                                                     <div class="row" style="margin-top: 10px">
 
                                                         <div class="col-10">
@@ -107,7 +107,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    {!! Form::close() !!}
+
                                                 </li>
                                                 @foreach($tienda->socials as $social)
                                                     <li class="list-group-item">
@@ -117,11 +117,11 @@
                                                                 {{$social->uri }}
                                                             </div>
                                                             <div class="col-2" style="display: flex; align-items: center">
-                                                                {!! Form::open([ 'route' => ['social.site.delete', $social->id]]) !!}
+
                                                                 <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
                                                                     <i class="fa fa-times"></i>
                                                                 </button>
-                                                                {!! Form::close() !!}
+
                                                             </div>
                                                         </div>
                                                     </li>
@@ -482,7 +482,7 @@
                                 </li>
                                 <li style="display: none" class="list-group-item" id="form-agregar-social-user">
 
-                                    {!! Form::open(['route' => ['social.user.add', Auth::user()->id]]) !!}
+
                                     <div class="row" style="margin-top: 10px">
 
                                         <div class="col-10">
@@ -508,7 +508,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    {!! Form::close() !!}
+
                                 </li>
 
                                 @foreach(Auth::user()->socials as $social)
@@ -519,11 +519,11 @@
                                                 {{$social->pivot->uri }}
                                             </div>
                                             <div class="col-2" style="display: flex; align-items: center">
-                                                {!! Form::open([ 'route' => ['social.user.detach',Auth::user()->id, $social->id]]) !!}
+
                                                 <button type="submit" class="btn btn-danger" style="padding:0;border-radius: 50%; width: 30px;height: 30px">
                                                     <i class="fa fa-minus-circle"></i>
                                                 </button>
-                                                {!! Form::close() !!}
+                                               
                                             </div>
                                         </div>
 
