@@ -24,7 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "ckeditor4": "^4.15.0",
+        "ckeditor4": "^4.16.1",
         "csso": "^4.0.3",
         "csso-cli": "^3.0.0",
         "jquery-bar-rating": "^1.2.2",
